@@ -2,7 +2,7 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 
 import { JWT_KEY } from '../../constants.js'
-import { invalidRequest } from '../../utils.js'
+import { requestError } from '../../utils.js'
 
 /**
  * @swagger
@@ -57,12 +57,14 @@ const router = express.Router()
  *             schema:
  *               $ref: '#/components/schemas/Token'
  *       403:
- *         $ref: '#/components/responses/InvalidData'
+ *         $ref: '#/components/responses/InvalidParameters'
  */
 router.post("/login", (req, res) => {
-    if (!req.body || !req.body.email || !req.body.password) {
-        return invalidRequest(res)
-    }
+    if (!req.body)
+        return requestError(res, "invalid_parameters", "missing request body")
+
+    if (!req.body.email || !req.body.password)
+        return requestError(res, "invalid_parameters", req.body.email, req.body.password)
 
     const expireTime = 2592000
     const token = jwt.sign({ email: req.body.email }, JWT_KEY, {

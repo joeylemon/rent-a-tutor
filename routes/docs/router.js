@@ -31,58 +31,7 @@ const options = {
                     type: 'http',
                     scheme: 'bearer',
                     bearerFormat: 'JWT',
-                    description: "The usage of the API requires authentication with the [/api/v1/auth/login](#tag/Auth) route. Subsequent calls to the API must include the returned token in the `Authorization` header of each request.\n\nFor example, the [/api/v1/auth/login](#tag/Auth) may return the token \"aaa.bbb.ccc\". The next API call must set the `Authorization` header to `Bearer aaa.bbb.ccc`"
-                }
-            },
-            schemas: {
-                Error: {
-                    type: "object",
-                    properties: {
-                        code: { type: "string" },
-                        message: { type: "string" }
-                    },
-                    example: {
-                        code: "401",
-                        message: "The given authentication is invalid."
-                    }
-                }
-            },
-            responses: {
-                Unauthorized: {
-                    description: "The given API token in the Authorization header is invalid",
-                    content: {
-                        "application/json": {
-                            schema: {
-                                type: "object",
-                                properties: {
-                                    code: { type: "string" },
-                                    message: { type: "string" }
-                                },
-                                example: {
-                                    code: "401",
-                                    message: "The given authentication is invalid."
-                                }
-                            }
-                        }
-                    }
-                },
-                InvalidData: {
-                    description: "The request parameters are missing or are invalid",
-                    content: {
-                        "application/json": {
-                            schema: {
-                                type: "object",
-                                properties: {
-                                    code: { type: "string" },
-                                    message: { type: "string" }
-                                },
-                                example: {
-                                    code: "403",
-                                    message: "The request is missing parameters or has invalid parameters."
-                                }
-                            }
-                        }
-                    }
+                    description: "The usage of the API requires authentication with the [/api/v1/auth/login](#tag/Auth/paths/~1auth~1login/post) route. Subsequent calls to the API must include the returned token in the `Authorization` header of each request. For example, the [/api/v1/auth/login](#tag/Auth/paths/~1auth~1login/post) may return the token:\n\n`{\"token\": \"aaa.bbb.ccc\", \"expiration\": 1600788665199}`\n\nThe next API call must set the `Authorization` header to `Bearer aaa.bbb.ccc`"
                 }
             }
         },
@@ -90,7 +39,7 @@ const options = {
             bearerAuth: []
         }]
     },
-    apis: ["./routes/user/router.js", "./routes/auth/router.js"]
+    apis: ["./*.js", "./routes/*/*.js"]
 }
 
 const specs = swaggerDoc(options)
