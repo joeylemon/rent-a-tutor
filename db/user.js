@@ -37,19 +37,19 @@ import db from './db.js'
  *           description: Date of birth for the user
  *       example:
  *          - id: 10324
- *            created_at: 2020-09-22 16:35:31.0
- *            updated_at: 2020-09-22 16:35:31.0
- *            name: Joey
- *            email: joey@rentatutor.com
- *            phone: 5159998523
- *            dob: 2000-03-24
+ *            created_at: '2020-09-22T16:35:31.000Z'
+ *            updated_at: '2020-09-22T16:35:31.000Z'
+ *            name: 'Joey'
+ *            email: 'joey@rentatutor.com'
+ *            phone: '5159998523'
+ *            dob: '2000-03-24'
  *          - id: 120352
- *            created_at: 2020-09-22 16:35:31.0
- *            updated_at: 2020-09-22 16:35:31.0
- *            name: Dustin
- *            email: dustin@rentatutor.com
- *            phone: 1234567890
- *            dob: 2000-03-24
+ *            created_at: '2020-09-22T16:35:31.000Z'
+ *            updated_at: '2020-09-22T16:35:31.000Z'
+ *            name: 'Dustin'
+ *            email: 'dustin@rentatutor.com'
+ *            phone: '1234567890'
+ *            dob: '2000-03-24'
  */
 export default class User extends Sequelize.Model { }
 

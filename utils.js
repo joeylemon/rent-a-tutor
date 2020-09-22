@@ -1,13 +1,14 @@
 import jwt from 'jsonwebtoken'
 import { JWT_KEY } from './secrets.js'
 import { ERRORS } from './constants.js'
+import User from './db/user.js'
 
 /**
  * This checks the Authorization header for a valid JWT token and then searches the
  * database for the decrypted email. If all checks pass, the middleware continues.
  * Otherwise, a 401 status code will be returned with an unauthorized error message.
  */
-export function authorize(req, res, next) {
+export async function authorize(req, res, next) {
     try {
         const header = req.header('Authorization')
         if (!header) return requestError(res, "unauthorized")
@@ -16,7 +17,7 @@ export function authorize(req, res, next) {
         const decoded = jwt.verify(token, JWT_KEY)
 
         // Find user with token and id
-        const user = { id: 1, email: decoded.email, name: "Joey Lemon" }
+        const user = await User.findOne({ where: { email: decoded.email } })
         if (!user) return requestError(res, "unauthorized")
 
         // Save the user and token values in the response object
