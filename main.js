@@ -1,10 +1,19 @@
+/**
+ * Controller-Service Model
+ * 
+ * Controller: controllers are in charge of setting up endpoints and calling the 
+ *             appropriate service function. only the controllers have references to the req object
+ * Service:    services do most of the work and contain the business logic, editing database models when necessary
+ * 
+ */
+
 import express from 'express'
 
 import { authorize } from './utils.js'
 
 import docs from './routes/docs/router.js'
-import auth from './routes/auth/router.js'
-import user from './routes/user/router.js'
+import auth from './routes/auth/auth.controller.js'
+import user from './routes/user/user.controller.js'
 
 const router = express.Router()
 const app = express()

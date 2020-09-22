@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { JWT_KEY } from './secrets.js'
 import { ERRORS } from './constants.js'
-import User from './db/user.js'
+import User from './db/models/user.js'
 
 /**
  * This checks the Authorization header for a valid JWT token and then searches the
@@ -42,4 +42,19 @@ export function requestError(res, error_name, ...args) {
         throw new Error(`invalid error name ${error_name}`)
 
     res.status(err.code).send(err.toJSON(...args))
+}
+
+/**
+ * Given a list of form value definitions, check to see all values in the form exist and match
+ * @param {object} form The req.body object from a request
+ * @param {array} defs The array of form value definitions
+ * @returns False if the form is valid, an error string otherwise
+ * @example
+ *     invalidForm({a: 1, b: "hello"}, [{a: "int", b: "string"}])
+ */
+export function invalidForm(form, defs) {
+    if (!form) return "form is missing"
+
+    const invalidKey = Object.keys(defs).find(d => !form[d] || typeof form[d] !== defs[d])
+    return invalidKey === undefined ? false : `${invalidKey} is missing`
 }

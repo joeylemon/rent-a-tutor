@@ -1,5 +1,6 @@
 import express from 'express'
-import User from '../../db/user.js'
+import * as UserService from './user.service.js'
+import { requestError } from '../../utils.js'
 
 const router = express.Router()
 
@@ -26,8 +27,8 @@ const router = express.Router()
  *         $ref: '#/components/responses/Unauthorized'
  */
 router.get("/list", async (req, res) => {
-    const users = await User.findAll()
-    res.send(JSON.stringify(users))
+    const users = await UserService.getAllUsers()
+    res.status(200).json(users)
 })
 
 export default router

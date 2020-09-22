@@ -1,27 +1,8 @@
 import express from 'express'
-import jwt from 'jsonwebtoken'
-
-import { JWT_KEY } from '../../secrets.js'
 import { requestError } from '../../utils.js'
+import * as AuthService from './auth.service.js'
+import * as UserService from '../user/user.service.js'
 
-/**
- * @swagger
- * 
- * components:
- *   schemas:
- *     Token:
- *       type: object
- *       properties:
- *         token:
- *           type: string
- *           description: The API token
- *         expiration:
- *           type: number
- *           description: The UNIX timestamp at which the token will expire
- *       example:
- *         token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvZXljbGVtb25AZ21haWwuY29tIiwiaWF0IjoxNjAwNzMzMDE1LCJleHAiOjE2MDMzMjUwMTV9.a1KJ_zprLqxk38cEieO5Ksir6c-Oijywas5OLC7iULQ
- *         expiration: 1600732403449
- */
 const router = express.Router()
 
 /**
@@ -68,16 +49,34 @@ router.get("/login", (req, res) => {
     if (!req.body.email || !req.body.password)
         return requestError(res, "invalid_parameters", req.body.email, req.body.password)
 
-    const expireTime = 2592000
-    const token = jwt.sign({ email: req.body.email }, JWT_KEY, {
-        algorithm: "HS256",
-        expiresIn: expireTime,
-    })
+    // UserService.authenticate(email, password)
 
-    res.status(200).send({
-        token: token,
-        expiration: Date.now() + expireTime
-    })
+    res.status(200).json(AuthService.getAPIToken(req.body.email))
+})
+
+/**
+ * @swagger
+ *
+ * /auth/register:
+ *   post:
+ *     tags: [Auth]
+ *     summary: "Register user"
+ *     description: "Register a new user with Rent-a-Tutor"
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: OK
+ *       403:
+ *         $ref: '#/components/responses/InvalidParameters'
+ */
+router.post("/create", async (req, res) => {
+    try {
+        const user = await UserService.registerUser(req.body)
+        res.status(200).send("OK")
+    } catch (err) {
+        requestError(res, "invalid_parameters", err)
+    }
 })
 
 export default router

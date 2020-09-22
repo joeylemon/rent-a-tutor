@@ -39,3 +39,28 @@ export class RequestError {
         return JSON.stringify(obj)
     }
 }
+
+/**
+ * @swagger
+ * 
+ * components:
+ *   schemas:
+ *     Token:
+ *       type: object
+ *       properties:
+ *         token:
+ *           type: string
+ *           description: The API token
+ *         expiration:
+ *           type: number
+ *           description: The UNIX timestamp at which the token will expire
+ *       example:
+ *         token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvZXljbGVtb25AZ21haWwuY29tIiwiaWF0IjoxNjAwNzMzMDE1LCJleHAiOjE2MDMzMjUwMTV9.a1KJ_zprLqxk38cEieO5Ksir6c-Oijywas5OLC7iULQ
+ *         expiration: 1600732403449
+ */
+export class Token {
+    constructor(token, expiration) {
+        this.token = token
+        this.expiration = expiration
+    }
+}
