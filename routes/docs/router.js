@@ -39,7 +39,7 @@ const options = {
             bearerAuth: []
         }]
     },
-    apis: ["./*.js", "./routes/*/*.js"]
+    apis: ["./*.js", "./routes/*/*.js", "./db/*.js"]
 }
 
 const specs = swaggerDoc(options)

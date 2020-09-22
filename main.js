@@ -7,7 +7,11 @@ import auth from './routes/auth/router.js'
 import user from './routes/user/router.js'
 
 const router = express.Router()
+const app = express()
 
+/**
+ * Documentation endpoint
+ */
 router.use("/docs", docs)
 
 /**
@@ -26,10 +30,13 @@ router.use("/auth", auth)
  *   name: Users
  *   description: User management
  */
-router.use("/user", authorize, user)
+router.use("/user", user)
 
-const app = express()
+/**
+ * All endpoints fall under /api/v1 path
+ */
 app.use("/api/v1", router)
+
 const server = app.listen(6055, function () {
     console.log(`Listening on port ${server.address().port}`)
 })
