@@ -31,7 +31,7 @@ const options = {
                     type: 'http',
                     scheme: 'bearer',
                     bearerFormat: 'JWT',
-                    description: "The usage of the API requires authentication with the [/api/v1/user/login](#tag/Users) route. Subsequent calls to the API must include the returned token in the `Authorization` header of each request.\n\nFor example, the [/api/v1/user/login](#tag/Users) may return the token \"aaa.bbb.ccc\". The next API call must set the `Authorization` header to `Bearer aaa.bbb.ccc`"
+                    description: "The usage of the API requires authentication with the [/api/v1/auth/login](#tag/Auth) route. Subsequent calls to the API must include the returned token in the `Authorization` header of each request.\n\nFor example, the [/api/v1/auth/login](#tag/Auth) may return the token \"aaa.bbb.ccc\". The next API call must set the `Authorization` header to `Bearer aaa.bbb.ccc`"
                 }
             },
             schemas: {
@@ -90,7 +90,7 @@ const options = {
             bearerAuth: []
         }]
     },
-    apis: ["./routes/user/router.js"]
+    apis: ["./routes/user/router.js", "./routes/auth/router.js"]
 }
 
 const specs = swaggerDoc(options)
