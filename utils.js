@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
-import { JWT_KEY, ERRORS } from './constants.js'
+import { JWT_KEY } from './secrets.js'
+import { ERRORS } from './constants.js'
 
 /**
  * This checks the Authorization header for a valid JWT token and then searches the
@@ -39,5 +40,5 @@ export function requestError(res, error_name, ...args) {
     if (!err)
         throw new Error(`invalid error name ${error_name}`)
 
-    res.status(err.code).send(err.toJSON(args))
+    res.status(err.code).send(err.toJSON(...args))
 }

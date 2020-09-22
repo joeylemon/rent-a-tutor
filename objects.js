@@ -34,7 +34,7 @@ export class RequestError {
         const obj = { code: this.code, message: this.message }
 
         if (args.length > 0)
-            obj.values = args.flat()
+            obj.values = args
 
         return JSON.stringify(obj)
     }

@@ -1,7 +1,7 @@
 import express from 'express'
 import jwt from 'jsonwebtoken'
 
-import { JWT_KEY } from '../../constants.js'
+import { JWT_KEY } from '../../secrets.js'
 import { requestError } from '../../utils.js'
 
 /**
@@ -59,7 +59,7 @@ const router = express.Router()
  *       403:
  *         $ref: '#/components/responses/InvalidParameters'
  */
-router.post("/login", (req, res) => {
+router.get("/login", (req, res) => {
     if (!req.body)
         return requestError(res, "invalid_parameters", "missing request body")
 

@@ -1,7 +1,5 @@
 import { RequestError } from './objects.js'
 
-export const JWT_KEY = "nJimPrqTm@M9@Y5k6&G$ZqZbzZ8ZGAC1iFLYu&qByZu9m4Jz2U&nx6CQ*82nxw8QO@Fxgh^c5M%k5DexY$nffi77UYTDNF7$spE!"
-
 /**
  * @swagger
  * 
