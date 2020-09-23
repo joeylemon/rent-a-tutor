@@ -5,7 +5,7 @@ import * as UserService from '../user/user.service.js'
 
 /**
  * @apiDefine AuthGroup Auth
- * This endpoint defines routes to authenticate users
+ * These endpoints define routes to authenticate users
  */
 const router = express.Router()
 

@@ -3,7 +3,7 @@ import * as UserService from './user.service.js'
 
 /**
  * @apiDefine UserGroup User
- * This endpoint defines routes to update users.
+ * These endpoints define routes to interact with users.
  */
 const router = express.Router()
 

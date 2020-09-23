@@ -1,13 +1,17 @@
 import express from 'express'
 import path from 'path'
+import fs from 'fs'
 import apidoc from 'apidoc'
 
 const doc = apidoc.createDoc({
     src: path.resolve(),
-    dest: './routes/docs/html',
+    dest: '/tmp/apidoc',
     //template: "./routes/docs/template",
     excludeFilters: ['node_modules', './routes/docs/html', './routes/docs/template']
 })
+
+fs.writeFileSync("./routes/docs/html/api_data.js", `define({ "api": ${doc.data} });`)
+fs.writeFileSync("./routes/docs/html/api_project.js", `define(${doc.project});`)
 
 const router = express.Router()
 

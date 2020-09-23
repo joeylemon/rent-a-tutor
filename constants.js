@@ -1,20 +1,8 @@
 /**
  * @apiDefine Unauthorized
- * @apiError Unauthorized The request presents invalid authentication values
- *
- * @apiErrorExample Error Response:
- *     {
- *       "code": 401,
- *       "message": "The given authentication is invalid. Please check the API token in the Authorization header."
- *     }
+ * @apiError Unauthorized 401 - The request presents invalid authentication values
  */
 /**
  * @apiDefine InvalidParameters
- * @apiError InvalidParameters The request has missing or invalid parameters
- *
- * @apiErrorExample Error Response:
- *     {
- *       "code": 403,
- *       "message": "The request has missing or invalid parameters."
- *     }
+ * @apiError InvalidParameters 403 - The request has missing or invalid parameters
  */

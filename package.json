@@ -1,9 +1,9 @@
 {
     "type": "module",
     "apidoc": {
-        "name": "rent-a-tutor",
+        "name": "rent-a-tutor api",
         "version": "0.1.0",
-        "description": "Rent-a-Tutor (RAT) API provides the endpoints required to operate the RAT services",
+        "description": "The Rent-a-Tutor (RAT) API documentation provides an overview of the many endpoints available to front-end applications. This document outlines each endpoint's parameters and return values. You may test out an API request below each definition before implementing them in the application.",
         "title": "Rent-a-Tutor API Documentation",
         "sampleUrl": "https://jlemon.org/rat/api/v1",
         "url": "https://jlemon.org/rat/api/v1"
