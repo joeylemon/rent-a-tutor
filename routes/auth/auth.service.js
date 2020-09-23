@@ -17,7 +17,7 @@ export function getAPIToken(email) {
 }
 
 export async function login(form) {
-    validateForm(form, { email: "string", password: "string" })
+    validateForm(form, ["email", "password"])
 
     const user = await User.findOne({
         attributes: ["password"],

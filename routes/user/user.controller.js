@@ -1,10 +1,6 @@
 import express from 'express'
 import * as UserService from './user.service.js'
 
-/**
- * @apiDefine UserGroup User
- * These endpoints define routes to interact with users.
- */
 const router = express.Router()
 
 /**

@@ -17,7 +17,7 @@ export class RequestError {
  * @apiSuccess {Number} expiration The UNIX timestamp at which the token expires
  * @apiSuccessExample Success Response:
  *     {
- *       "token": "n8tMnthS$V5*8^iyu1HEhX63",
+ *       "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
  *       "expiration": 1600809341558
  *     }
  */

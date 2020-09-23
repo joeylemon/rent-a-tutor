@@ -24,19 +24,23 @@ const app = express()
  */
 router.use("/docs", docs)
 
+/**
+ * @apiDefine AuthGroup Auth
+ * These endpoints define routes to authenticate users
+ */
 router.use("/auth", auth)
 
+/**
+ * @apiDefine UserGroup User
+ * These endpoints define routes to interact with users.
+ */
 router.use("/user", authorize, user)
 
-/**
- * Parse request body
- */
+// Parse the request body to get req.body parameters
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-/**
- * All endpoints fall under /api/v1 path
- */
+// All endpoints fall under /api/v1 path
 app.use("/api/v1", router)
 
 const server = app.listen(6055, function () {

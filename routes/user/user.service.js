@@ -3,7 +3,7 @@ import { validateForm } from '../../utils.js'
 import User from '../../db/models/user.js'
 
 export async function registerUser(form) {
-    validateForm(form, { email: "string", password: "string", name: "string" })
+    validateForm(form, ["email", "password", "name"])
 
     form.password = await bcrypt.hash(form.password, 10)
 

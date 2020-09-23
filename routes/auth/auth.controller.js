@@ -1,12 +1,8 @@
 import express from 'express'
-import { requestError } from '../../utils.js'
+import { reqErr } from '../../utils.js'
 import * as AuthService from './auth.service.js'
 import * as UserService from '../user/user.service.js'
 
-/**
- * @apiDefine AuthGroup Auth
- * These endpoints define routes to authenticate users
- */
 const router = express.Router()
 
 /**
@@ -30,7 +26,7 @@ router.post("/login", async (req, res) => {
     try {
         res.status(200).json(await AuthService.login(req.body))
     } catch (err) {
-        requestError(res, 403, err.toString())
+        reqErr(res, 403, err)
     }
 })
 
@@ -54,7 +50,7 @@ router.post("/register", async (req, res) => {
         const user = await UserService.registerUser(req.body)
         res.status(200).json(user)
     } catch (err) {
-        requestError(res, 403, err.toString())
+        return reqErr(res, 403, err)
     }
 })
 
