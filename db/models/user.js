@@ -3,13 +3,13 @@ import db from '../db.js'
 
 /**
  * @apiDefine UserListReturn Return a list of user objects
- * @apiSuccess {Object[]} arr List of users
- * @apiSuccess {Number}   arr.id The user's unique id number
- * @apiSuccess {String}   arr.email The user's email
- * @apiSuccess {String}   arr.password The user's password
- * @apiSuccess {String}   arr.name The user's full name
- * @apiSuccess {String}   [arr.phone] The user's phone number
- * @apiSuccess {String}   [arr.dob] The user's date of birth
+ * @apiSuccess {User[]} _ List of users
+ * @apiSuccess {Number}   _.id The user's unique id number
+ * @apiSuccess {String}   _.email The user's email
+ * @apiSuccess {String}   _.password The user's password
+ * @apiSuccess {String}   _.name The user's full name
+ * @apiSuccess {String}   [_.phone] The user's phone number
+ * @apiSuccess {String}   [_.dob] The user's date of birth
  * @apiSuccessExample Success Response:
  *     [{
  *       "id": 1,

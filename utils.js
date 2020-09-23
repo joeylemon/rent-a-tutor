@@ -15,7 +15,7 @@ import User from './db/models/user.js'
  */
 /**
  * @apiDefine Header Request Headers
- * @apiHeader {String} Authorization The user's API token, set like <code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code>
+ * @apiHeader {String} Authorization The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code>
  */
 export async function authorize(req, res, next) {
     try {

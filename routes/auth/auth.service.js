@@ -7,7 +7,7 @@ import { JWT_KEY } from '../../secrets.js'
 import { validateForm } from '../../utils.js'
 
 export function getAPIToken(email) {
-    const expireTime = 2592000
+    const expireTime = 2000
     const token = jwt.sign({ email: email }, JWT_KEY, {
         algorithm: "HS256",
         expiresIn: expireTime,

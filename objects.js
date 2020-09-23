@@ -1,7 +1,9 @@
 export class RequestError {
     constructor(code, message) {
         this.code = code
-        this.message = message.replace("Error: ", "")
+
+        const arr = message.split("Error: ")
+        this.message = arr.length > 1 ? arr[1] : arr[0]
     }
 
     toString() {

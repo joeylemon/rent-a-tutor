@@ -1,6 +1,10 @@
 import express from 'express'
 import * as UserService from './user.service.js'
 
+/**
+ * @apiDefine UserGroup User
+ * This endpoint defines routes to update users.
+ */
 const router = express.Router()
 
 /**
@@ -8,7 +12,7 @@ const router = express.Router()
  * @apiDescription Get the list of all registered users
  * @apiPermission Token
  * @apiName ListUsers
- * @apiGroup Users
+ * @apiGroup UserGroup
  * 
  * @apiUse UserListReturn
  * @apiUse Unauthorized
