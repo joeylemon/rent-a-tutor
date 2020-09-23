@@ -8,6 +8,7 @@
  */
 
 import express from 'express'
+import bodyParser from 'body-parser'
 
 import { authorize } from './utils.js'
 
@@ -23,23 +24,15 @@ const app = express()
  */
 router.use("/docs", docs)
 
-/**
- * @swagger
- * 
- * tags:
- *   name: Auth
- *   description: Endpoints that handle authorization
- */
 router.use("/auth", auth)
 
+router.use("/user", authorize, user)
+
 /**
- * @swagger
- * 
- * tags:
- *   name: Users
- *   description: User management
+ * Parse request body
  */
-router.use("/user", user)
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 /**
  * All endpoints fall under /api/v1 path

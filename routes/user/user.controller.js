@@ -1,30 +1,18 @@
 import express from 'express'
 import * as UserService from './user.service.js'
-import { requestError } from '../../utils.js'
 
 const router = express.Router()
 
 /**
- * @swagger
- *
- * /user/list:
- *   get:
- *     tags: [Users]
- *     summary: "List users"
- *     description: "Retrieve the list of all users registered with RAT"
- *     security:
- *       - Authorization API Token: []
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: The list of all users
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       401:
- *         $ref: '#/components/responses/Unauthorized'
+ * @api {get} /user/list List users
+ * @apiDescription Get the list of all registered users
+ * @apiPermission Token
+ * @apiName ListUsers
+ * @apiGroup Users
+ * 
+ * @apiUse UserListReturn
+ * @apiUse Unauthorized
+ * @apiUse Header
  */
 router.get("/list", async (req, res) => {
     const users = await UserService.getAllUsers()

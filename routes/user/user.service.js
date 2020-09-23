@@ -1,12 +1,13 @@
-import { invalidForm } from '../../utils.js'
+import bcrypt from 'bcrypt'
+import { validateForm } from '../../utils.js'
 import User from '../../db/models/user.js'
 
-export function registerUser(form) {
-    const invalid = invalidForm(req.body, { email: "string", password: "string", name: "string", phone: "string", dob: "string" })
-    if (invalid)
-        throw new Error(invalid)
+export async function registerUser(form) {
+    validateForm(form, { email: "string", password: "string", name: "string" })
 
-    return User.create({ email: form.email, name: form.name, phone: form.phone, dob: form.dob })
+    form.password = await bcrypt.hash(form.password, 10)
+
+    return User.create(form)
 }
 
 export function getAllUsers() {

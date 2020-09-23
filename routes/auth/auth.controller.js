@@ -6,76 +6,48 @@ import * as UserService from '../user/user.service.js'
 const router = express.Router()
 
 /**
- * @swagger
- *
- * /auth/login:
- *   post:
- *     tags: [Auth]
- *     summary: "Authenticate the user"
- *     description: "Login using the user's credentials and receive an API token to use within the client"
- *     requestBody:
- *       description: The user's login information
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *               password:
- *                 type: string
- *                 format: password
- *           example:
- *             email: 'joeyclemon@gmail.com'
- *             password: 'hunter2'
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: OK
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Token'
- *       403:
- *         $ref: '#/components/responses/InvalidParameters'
+ * @api {post} /auth/login Login
+ * @apiDescription Authenticate the user and receive an API token to use with further requests
+ * @apiName UserLogin
+ * @apiGroup Auth
+ * 
+ * @apiParam {String} email The user's email
+ * @apiParam {String} password The user's password
+ * 
+ * @apiUse TokenReturn
+ * @apiUse InvalidParameters
+ * 
+ * @apiSampleRequest /auth/login
  */
-router.get("/login", (req, res) => {
-    if (!req.body)
-        return requestError(res, "invalid_parameters", "missing request body")
-
-    if (!req.body.email || !req.body.password)
-        return requestError(res, "invalid_parameters", req.body.email, req.body.password)
-
-    // UserService.authenticate(email, password)
-
-    res.status(200).json(AuthService.getAPIToken(req.body.email))
+router.post("/login", async (req, res) => {
+    try {
+        res.status(200).json(await AuthService.login(req.body))
+    } catch (err) {
+        requestError(res, 403, err.toString())
+    }
 })
 
 /**
- * @swagger
- *
- * /auth/register:
- *   post:
- *     tags: [Auth]
- *     summary: "Register user"
- *     description: "Register a new user with Rent-a-Tutor"
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: OK
- *       403:
- *         $ref: '#/components/responses/InvalidParameters'
+ * @api {post} /auth/register Register user
+ * @apiDescription Register a new user with the application
+ * @apiName UserRegister
+ * @apiGroup Auth
+ * 
+ * @apiParam (Request body) {String} email The user's email
+ * @apiParam (Request body) {String} password The user's password
+ * @apiParam (Request body) {String} name The user's name
+ * @apiParam (Request body) {String} [phone] The user's phone number
+ * @apiParam (Request body) {String} [dob] The user's date of birth
+ * 
+ * @apiUse UserReturn
+ * @apiUse InvalidParameters
  */
-router.post("/create", async (req, res) => {
+router.post("/register", async (req, res) => {
     try {
         const user = await UserService.registerUser(req.body)
-        res.status(200).send("OK")
+        res.status(200).json(user)
     } catch (err) {
-        requestError(res, "invalid_parameters", err)
+        requestError(res, 403, err.toString())
     }
 })
 
