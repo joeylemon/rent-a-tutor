@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import emailValidator from 'email-validator'
 import { RequestError } from './objects.js'
 import { JWT_KEY } from './secrets.js'
 import User from './db/models/user.js'
@@ -51,16 +52,19 @@ export function requestError(res, code, msg) {
 }
 
 /**
- * Given a list of form value definitions, check to see all values in the form exist and match
+ * Given a list of form value definitions, check to see all values in the form exist and match.
+ * If not, throw an error describing the invalid data
  * @param {object} form The req.body object from a request
  * @param {array} defs The array of form value definitions
- * @returns False if the form is valid, an error string otherwise
  * @example
  *     validateForm({a: 1, b: "hello"}, {a: "int", b: "string"})
  */
 export function validateForm(form, defs) {
     if (!form)
         throw new Error("form is missing")
+
+    if (form.email && !emailValidator.validate(form.email))
+        throw new Error("email is invalid")
 
     const invalidKey = Object.keys(defs).find(d => !form[d] || typeof form[d] !== defs[d])
     if (invalidKey)
