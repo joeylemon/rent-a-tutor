@@ -1,3 +1,4 @@
 node_modules
 .foreverignore
 routes/docs/html
+rat.log
