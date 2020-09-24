@@ -11,6 +11,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 
 import { authorize } from './utils.js'
+import { logger } from './constants.js'
 
 import docs from './routes/docs/router.js'
 import auth from './routes/auth/auth.controller.js'
@@ -44,5 +45,5 @@ app.use(bodyParser.json())
 app.use("/api/v1", router)
 
 const server = app.listen(6055, function () {
-    console.log(`Listening on port ${server.address().port}`)
+    logger.info("Listening on port %d", server.address().port)
 })

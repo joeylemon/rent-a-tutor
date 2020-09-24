@@ -4,6 +4,7 @@ import { RequestError } from './objects.js'
 import { JWT_KEY } from './secrets.js'
 import User from './db/models/user.js'
 
+
 /**
  * This checks the Authorization header for a valid JWT token and then searches the
  * database for the decrypted email. If all checks pass, the middleware continues.
