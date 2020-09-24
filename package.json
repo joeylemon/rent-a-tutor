@@ -18,6 +18,11 @@
         "mysql2": "^2.2.5",
         "pino": "^6.6.1",
         "sequelize": "^6.3.5",
+        "should": "^13.2.3",
+        "supertest": "^4.0.2",
         "swagger-jsdoc": "^4.0.0"
+    },
+    "scripts": {
+        "test": "mocha 'routes/**/*.test.js'"
     }
 }
