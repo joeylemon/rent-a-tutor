@@ -3,17 +3,17 @@ import bcrypt from 'bcrypt'
 
 import User from '../../db/models/user.js'
 import { Token } from '../../objects.js'
+import { API_TOKEN_EXPIRE_TIME } from '../../constants.js'
 import { JWT_KEY } from '../../secrets.js'
 import { validateForm } from '../../utils.js'
 
 export function getAPIToken(email) {
-    const expireTime = 2000
     const token = jwt.sign({ email: email }, JWT_KEY, {
         algorithm: "HS256",
-        expiresIn: expireTime,
+        expiresIn: API_TOKEN_EXPIRE_TIME,
     })
 
-    return new Token(token, Date.now() + expireTime)
+    return new Token(token, Date.now() + (API_TOKEN_EXPIRE_TIME * 1000))
 }
 
 export async function login(form) {
