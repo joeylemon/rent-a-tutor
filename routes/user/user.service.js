@@ -2,14 +2,14 @@ import bcrypt from 'bcrypt'
 import { validateForm } from '../../utils.js'
 import User from '../../db/models/user.js'
 
-export async function registerUser(form) {
-    validateForm(form, ["email", "password", "name"])
+export async function registerUser (form) {
+  validateForm(form, ['email', 'password', 'name'])
 
-    form.password = await bcrypt.hash(form.password, 10)
+  form.password = await bcrypt.hash(form.password, 10)
 
-    return User.create(form)
+  return User.create(form)
 }
 
-export function getAllUsers() {
-    return User.findAll()
+export function getAllUsers () {
+  return User.findAll()
 }

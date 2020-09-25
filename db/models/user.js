@@ -39,16 +39,16 @@ import db from '../db.js'
 export default class User extends Sequelize.Model { }
 
 User.init({
-    id: {
-        type: Sequelize.INTEGER(10),
-        primaryKey: true
-    },
-    email: Sequelize.STRING(100),
-    password: Sequelize.CHAR(60),
-    name: Sequelize.STRING(100),
-    phone: Sequelize.STRING(15),
-    dob: Sequelize.DATEONLY
+  id: {
+    type: Sequelize.INTEGER(10),
+    primaryKey: true
+  },
+  email: Sequelize.STRING(100),
+  password: Sequelize.CHAR(60),
+  name: Sequelize.STRING(100),
+  phone: Sequelize.STRING(15),
+  dob: Sequelize.DATEONLY
 }, {
-    sequelize: db,
-    tableName: 'user'
+  sequelize: db,
+  tableName: 'user'
 })

@@ -1,14 +1,14 @@
 export class RequestError {
-    constructor(code, message) {
-        this.code = code
+  constructor (code, message) {
+    this.code = code
 
-        const arr = message.split("Error: ")
-        this.message = arr.length > 1 ? arr[1] : arr[0]
-    }
+    const arr = message.split('Error: ')
+    this.message = arr.length > 1 ? arr[1] : arr[0]
+  }
 
-    toString() {
-        return JSON.stringify(this)
-    }
+  toString () {
+    return JSON.stringify(this)
+  }
 }
 
 /**
@@ -22,8 +22,8 @@ export class RequestError {
  *     }
  */
 export class Token {
-    constructor(token, expiration) {
-        this.token = token
-        this.expiration = expiration
-    }
+  constructor (token, expiration) {
+    this.token = token
+    this.expiration = expiration
+  }
 }
