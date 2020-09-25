@@ -13,19 +13,22 @@ const doc = apidoc.createDoc({
     excludeFilters: ['node_modules', './routes/docs/html']
 })
 
-apidocmd.generateMarkdown({
-    apiDocProjectData: JSON.parse(doc.project),
-    apiDocApiData: JSON.parse(doc.data)
-}).then(md => {
-    fs.writeFileSync('./README.md', md[0].content)
-}).catch(err => console.error(err))
-
 /**
  * Apidoc.js will overwrite all files in the destination folder, removing any custom styles we added to the page.
  * Instead, let's call createDoc() in another folder and write only the data files in our custom html.
  */
 fs.writeFileSync('./routes/docs/html/api_data.js', `define({ "api": ${doc.data} });`)
 fs.writeFileSync('./routes/docs/html/api_project.js', `define(${doc.project});`)
+
+/**
+ * Automatically generate markdown file
+ */
+apidocmd.generateMarkdown({
+    apiDocProjectData: JSON.parse(doc.project),
+    apiDocApiData: JSON.parse(doc.data)
+}).then(md => {
+    fs.writeFileSync('./README.md', md[0].content)
+}).catch(err => console.error(err))
 
 const router = express.Router()
 router.use(express.static('./routes/docs/html'))

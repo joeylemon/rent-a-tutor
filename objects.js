@@ -18,12 +18,16 @@ export class RequestError extends Error {
         this.code = code
     }
 
-    toString () {
-        return JSON.stringify({
+    toJSON () {
+        return {
             name: this.name,
             code: this.code,
             message: this.message
-        })
+        }
+    }
+
+    toString () {
+        return JSON.stringify(this.toJSON())
     }
 }
 

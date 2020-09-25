@@ -48,10 +48,10 @@ app.use('/api/v1', router)
 // Error handler middleware
 app.use((err, req, res, next) => {
     if (err instanceof RequestError) {
-        return res.status(err.code).send(err.toString())
+        return res.status(err.code).json(err.toJSON())
     }
 
-    res.status(500).send({ name: 'InternalServerError', code: 500, message: err.toString() })
+    res.status(500).json({ name: 'InternalServerError', code: 500, message: err.toString() })
 })
 
 const server = app.listen(6055, function () {

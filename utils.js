@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import emailValidator from 'email-validator'
-import { BadRequestError } from './objects.js'
+import { BadRequestError, UnauthorizedError } from './objects.js'
 import { JWT_KEY } from './secrets.js'
 import User from './db/models/user.js'
 
@@ -19,21 +19,28 @@ import User from './db/models/user.js'
  * @apiHeader {String} Authorization The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code>
  */
 export async function authorize (req, res, next) {
-    const header = req.header('Authorization')
-    if (!header) { return next(new BadRequestError('authorization header is missing')) }
+    try {
+        const header = req.header('Authorization')
+        if (!header) { return next(new BadRequestError('authorization header is missing')) }
 
-    const token = header.replace('Bearer ', '')
-    const decoded = jwt.verify(token, JWT_KEY)
+        const token = header.replace('Bearer ', '')
+        const decoded = jwt.verify(token, JWT_KEY)
 
-    // Find user with token and id
-    const user = await User.findOne({ where: { email: decoded.email } })
-    if (!user) { return next(new BadRequestError('cannot find user')) }
+        // Find user with token and id
+        const user = await User.findOne({ where: { email: decoded.email } })
+        if (!user) { return next(new BadRequestError('cannot find user')) }
 
-    // Save the user and token values in the response object
-    res.locals.user = user
-    res.locals.token = token
+        // Save the user and token values in the response object
+        res.locals.user = user
+        res.locals.token = token
 
-    next()
+        next()
+    } catch (err) {
+        if (err instanceof jwt.JsonWebTokenError) {
+            return next(new UnauthorizedError(err.toString()))
+        }
+        next(err)
+    }
 }
 
 /**
