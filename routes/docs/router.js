@@ -7,9 +7,9 @@ import apidoc from 'apidoc'
  * Automatically generate documentation files from in-line comments in the project
  */
 const doc = apidoc.createDoc({
-  src: path.resolve(),
-  dest: '/tmp/apidoc',
-  excludeFilters: ['node_modules', './routes/docs/html']
+    src: path.resolve(),
+    dest: '/tmp/apidoc',
+    excludeFilters: ['node_modules', './routes/docs/html']
 })
 
 /**

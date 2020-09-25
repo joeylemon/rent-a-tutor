@@ -18,13 +18,13 @@ const router = express.Router()
  * @apiUse Header
  */
 router.get('/list', async (req, res) => {
-  try {
-    logger.info('request from user')
-    const users = await UserService.getAllUsers()
-    res.status(200).json(users)
-  } catch (err) {
-    return reqErr(res, 403, err)
-  }
+    try {
+        logger.info('request from user')
+        const users = await UserService.getAllUsers()
+        res.status(200).json(users)
+    } catch (err) {
+        return reqErr(res, 403, err)
+    }
 })
 
 export default router

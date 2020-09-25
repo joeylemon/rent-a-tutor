@@ -23,11 +23,11 @@ const router = express.Router()
  * @apiSampleRequest /auth/login
  */
 router.post('/login', async (req, res) => {
-  try {
-    res.status(200).json(await AuthService.login(req.body))
-  } catch (err) {
-    return reqErr(res, 403, err)
-  }
+    try {
+        res.status(200).json(await AuthService.login(req.body))
+    } catch (err) {
+        return reqErr(res, 403, err)
+    }
 })
 
 /**
@@ -46,11 +46,11 @@ router.post('/login', async (req, res) => {
  * @apiUse InvalidParameters
  */
 router.post('/register', async (req, res) => {
-  try {
-    res.status(200).json(await UserService.registerUser(req.body))
-  } catch (err) {
-    return reqErr(res, 403, err)
-  }
+    try {
+        res.status(200).json(await UserService.registerUser(req.body))
+    } catch (err) {
+        return reqErr(res, 403, err)
+    }
 })
 
 export default router

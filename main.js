@@ -45,5 +45,5 @@ app.use(bodyParser.json())
 app.use('/api/v1', router)
 
 const server = app.listen(6055, function () {
-  logger.info('Listening on port %d', server.address().port)
+    logger.info('Listening on port %d', server.address().port)
 })

@@ -14,5 +14,7 @@
     "ignorePatterns": [
         "routes/docs/html"
     ],
-    "rules": {}
+    "rules": {
+        "indent": ["error", 4]
+    }
 }

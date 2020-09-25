@@ -8,25 +8,25 @@ import { JWT_KEY } from '../../secrets.js'
 import { validateForm } from '../../utils.js'
 
 export function getAPIToken (email) {
-  const token = jwt.sign({ email: email }, JWT_KEY, {
-    algorithm: 'HS256',
-    expiresIn: API_TOKEN_EXPIRE_TIME
-  })
+    const token = jwt.sign({ email: email }, JWT_KEY, {
+        algorithm: 'HS256',
+        expiresIn: API_TOKEN_EXPIRE_TIME
+    })
 
-  return new Token(token, Date.now() + (API_TOKEN_EXPIRE_TIME * 1000))
+    return new Token(token, Date.now() + (API_TOKEN_EXPIRE_TIME * 1000))
 }
 
 export async function login (form) {
-  validateForm(form, ['email', 'password'])
+    validateForm(form, ['email', 'password'])
 
-  const user = await User.findOne({
-    attributes: ['password'],
-    where: { email: form.email }
-  })
-  if (!user) { throw new Error('invalid login information') }
+    const user = await User.findOne({
+        attributes: ['password'],
+        where: { email: form.email }
+    })
+    if (!user) { throw new Error('invalid login information') }
 
-  const same = await bcrypt.compare(form.password, user.password)
-  if (!same) { throw new Error('invalid login information') }
+    const same = await bcrypt.compare(form.password, user.password)
+    if (!same) { throw new Error('invalid login information') }
 
-  return getAPIToken(form.email)
+    return getAPIToken(form.email)
 }
