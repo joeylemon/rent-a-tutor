@@ -8,6 +8,10 @@ import pino from 'pino'
  * @apiDefine InvalidParameters
  * @apiError InvalidParameters 403 - The request has missing or invalid parameters
  */
+/**
+ * @apiDefine DatabaseError
+ * @apiError DatabaseError 500 - An error occurred with the database
+ */
 
 /**
  * A custom logger

@@ -2,9 +2,7 @@
     "type": "module",
     "apidoc": {
         "name": "rent-a-tutor api",
-        "version": "0.1.0",
-        "description": "The Rent-a-Tutor (RAT) API documentation provides an overview of the many endpoints available to front-end applications. This document outlines each endpoint's parameters and return values. You may test out an API request below each definition before implementing them in the application.",
-        "title": "Rent-a-Tutor API Documentation",
+        "version": "1.0.0",
         "sampleUrl": "https://jlemon.org/rat/api/v1",
         "url": "https://jlemon.org/rat/api/v1"
     },
@@ -19,8 +17,7 @@
         "pino": "^6.6.1",
         "sequelize": "^6.3.5",
         "should": "^13.2.3",
-        "supertest": "^4.0.2",
-        "swagger-jsdoc": "^4.0.0"
+        "supertest": "^4.0.2"
     },
     "scripts": {
         "test": "mocha 'routes/**/*.test.js'"

@@ -81,4 +81,7 @@ export function validateForm(form, defs) {
         else if (form.password.length > 70)
             throw new Error("password is too long")
     }
+
+    if (form.phone && !/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/.test(form.phone))
+        throw new Error("phone number is invalid")
 }

@@ -26,7 +26,7 @@ router.post("/login", async (req, res) => {
     try {
         res.status(200).json(await AuthService.login(req.body))
     } catch (err) {
-        reqErr(res, 403, err)
+        return reqErr(res, 403, err)
     }
 })
 
