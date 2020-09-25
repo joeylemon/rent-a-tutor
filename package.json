@@ -1,5 +1,9 @@
 {
     "type": "module",
+    "scripts": {
+        "test": "mocha 'routes/**/*.test.js'",
+        "lint": "eslint . --ext .js,.ts --fix"
+    },
     "apidoc": {
         "name": "rent-a-tutor api",
         "version": "1.0.0",
@@ -18,10 +22,6 @@
         "sequelize": "^6.3.5",
         "should": "^13.2.3",
         "supertest": "^4.0.2"
-    },
-    "scripts": {
-        "test": "mocha 'routes/**/*.test.js'",
-        "lint": "eslint . --ext .js,.ts --fix"
     },
     "devDependencies": {
         "eslint": "^7.9.0",

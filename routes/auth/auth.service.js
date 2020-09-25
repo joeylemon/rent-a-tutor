@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
 import User from '../../db/models/user.js'
-import { Token } from '../../objects.js'
+import { Token, UnauthorizedError } from '../../objects.js'
 import { API_TOKEN_EXPIRE_TIME } from '../../constants.js'
 import { JWT_KEY } from '../../secrets.js'
 import { validateForm } from '../../utils.js'
@@ -23,10 +23,10 @@ export async function login (form) {
         attributes: ['password'],
         where: { email: form.email }
     })
-    if (!user) { throw new Error('invalid login information') }
+    if (!user) { throw new UnauthorizedError('invalid login information') }
 
     const same = await bcrypt.compare(form.password, user.password)
-    if (!same) { throw new Error('invalid login information') }
+    if (!same) { throw new UnauthorizedError('invalid login information') }
 
     return getAPIToken(form.email)
 }

@@ -13,3 +13,11 @@ export async function registerUser (form) {
 export function getAllUsers () {
     return User.findAll()
 }
+
+export function getUserByID (id) {
+    return User.findOne({ where: { id: id } })
+}
+
+export function getUserByEmail (email) {
+    return User.findOne({ where: { email: email } })
+}

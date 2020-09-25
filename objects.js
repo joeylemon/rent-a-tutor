@@ -1,13 +1,49 @@
-export class RequestError {
-    constructor (code, message) {
-        this.code = code
+const HTTP_CODE = {
+    OK: 200,
+    BAD_REQUEST: 400,
+    UNAUTHORIZED: 401,
+    FORBIDDEN: 403,
+    NOT_FOUND: 404,
+    INTERNAL_SERVER: 500
+}
 
-        const arr = message.split('Error: ')
-        this.message = arr.length > 1 ? arr[1] : arr[0]
+/**
+ * @apiDefine DatabaseError
+ * @apiError DatabaseError 500 - An error occurred with the database
+ */
+export class RequestError extends Error {
+    constructor (desc, name, code) {
+        super(desc)
+        this.name = name
+        this.code = code
     }
 
     toString () {
-        return JSON.stringify(this)
+        return JSON.stringify({
+            name: this.name,
+            code: this.code,
+            message: this.message
+        })
+    }
+}
+
+/**
+ * @apiDefine UnauthorizedError
+ * @apiError UnauthorizedError 401 - The request presents invalid authentication values
+ */
+export class UnauthorizedError extends RequestError {
+    constructor (desc, name = 'Unauthorized Error', code = HTTP_CODE.UNAUTHORIZED) {
+        super(desc, name, code)
+    }
+}
+
+/**
+ * @apiDefine BadRequestError
+ * @apiError BadRequestError 403 - The request has missing or invalid parameters
+ */
+export class BadRequestError extends RequestError {
+    constructor (desc, name = 'Bad Request Error', code = HTTP_CODE.BAD_REQUEST) {
+        super(desc, name, code)
     }
 }
 

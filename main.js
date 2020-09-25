@@ -10,6 +10,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
+import { RequestError } from './objects.js'
 import { authorize } from './utils.js'
 import { logger } from './constants.js'
 
@@ -43,6 +44,15 @@ app.use(bodyParser.json())
 
 // All endpoints fall under /api/v1 path
 app.use('/api/v1', router)
+
+// Error handler middleware
+app.use((err, req, res, next) => {
+    if (err instanceof RequestError) {
+        return res.status(err.code).send(err.toString())
+    }
+
+    res.status(500).send({ name: 'InternalServerError', code: 500, message: err.toString() })
+})
 
 const server = app.listen(6055, function () {
     logger.info('Listening on port %d', server.address().port)

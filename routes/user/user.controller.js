@@ -1,6 +1,5 @@
 import express from 'express'
 import { logger } from '../../constants.js'
-import { reqErr } from '../../utils.js'
 import * as UserService from './user.service.js'
 
 const router = express.Router()
@@ -13,17 +12,17 @@ const router = express.Router()
  * @apiGroup UserGroup
  *
  * @apiUse UserListReturn
- * @apiUse Unauthorized
+ * @apiUse UnauthorizedError
  * @apiUse DatabaseError
  * @apiUse Header
  */
-router.get('/list', async (req, res) => {
+router.get('/list', async (req, res, next) => {
     try {
         logger.info('request from user')
         const users = await UserService.getAllUsers()
         res.status(200).json(users)
     } catch (err) {
-        return reqErr(res, 403, err)
+        next(err)
     }
 })
 

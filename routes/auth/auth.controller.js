@@ -1,5 +1,4 @@
 import express from 'express'
-import { reqErr } from '../../utils.js'
 import * as AuthService from './auth.service.js'
 import * as UserService from '../user/user.service.js'
 
@@ -18,15 +17,15 @@ const router = express.Router()
  * @apiParam {String} password The user's password
  *
  * @apiUse TokenReturn
- * @apiUse InvalidParameters
+ * @apiUse BadRequestError
  *
  * @apiSampleRequest /auth/login
  */
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
     try {
         res.status(200).json(await AuthService.login(req.body))
     } catch (err) {
-        return reqErr(res, 403, err)
+        next(err)
     }
 })
 
@@ -43,13 +42,13 @@ router.post('/login', async (req, res) => {
  * @apiParam {String} [dob] The user's date of birth
  *
  * @apiUse UserReturn
- * @apiUse InvalidParameters
+ * @apiUse BadRequestError
  */
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
     try {
         res.status(200).json(await UserService.registerUser(req.body))
     } catch (err) {
-        return reqErr(res, 403, err)
+        next(err)
     }
 })
 
