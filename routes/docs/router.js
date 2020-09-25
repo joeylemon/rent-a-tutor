@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import fs from 'fs'
 import apidoc from 'apidoc'
+import apidocmd from 'apidoc-markdown'
 
 /**
  * Automatically generate documentation files from in-line comments in the project
@@ -11,6 +12,13 @@ const doc = apidoc.createDoc({
     dest: '/tmp/apidoc',
     excludeFilters: ['node_modules', './routes/docs/html']
 })
+
+apidocmd.generateMarkdown({
+    apiDocProjectData: JSON.parse(doc.project),
+    apiDocApiData: JSON.parse(doc.data)
+}).then(md => {
+    fs.writeFileSync('./README.md', md[0].content)
+}).catch(err => console.error(err))
 
 /**
  * Apidoc.js will overwrite all files in the destination folder, removing any custom styles we added to the page.

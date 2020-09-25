@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "apidoc": "^0.25.0",
+        "apidoc-markdown": "^5.1.8",
         "bcrypt": "^5.0.0",
         "body-parser": "^1.19.0",
         "email-validator": "^2.0.4",
