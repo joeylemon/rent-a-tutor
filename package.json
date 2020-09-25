@@ -1,8 +1,8 @@
 {
     "type": "module",
     "scripts": {
-        "test": "mocha 'routes/**/*.test.js'",
-        "lint": "eslint . --ext .js,.ts --fix"
+        "test": "mocha 'src/routes/**/*.test.js'",
+        "lint": "eslint src --ext .js,.ts --fix"
     },
     "apidoc": {
         "name": "rent-a-tutor api",

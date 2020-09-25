@@ -12,7 +12,7 @@
         "sourceType": "module"
     },
     "ignorePatterns": [
-        "routes/docs/html"
+        "src/routes/docs/html"
     ],
     "rules": {
         "indent": ["error", 4]

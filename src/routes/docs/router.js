@@ -10,15 +10,15 @@ import apidocmd from 'apidoc-markdown'
 const doc = apidoc.createDoc({
     src: path.resolve(),
     dest: '/tmp/apidoc',
-    excludeFilters: ['node_modules', './routes/docs/html']
+    excludeFilters: ['node_modules', './src/routes/docs/html']
 })
 
 /**
  * Apidoc.js will overwrite all files in the destination folder, removing any custom styles we added to the page.
  * Instead, let's call createDoc() in another folder and write only the data files in our custom html.
  */
-fs.writeFileSync('./routes/docs/html/api_data.js', `define({ "api": ${doc.data} });`)
-fs.writeFileSync('./routes/docs/html/api_project.js', `define(${doc.project});`)
+fs.writeFileSync('./src/routes/docs/html/api_data.js', `define({ "api": ${doc.data} });`)
+fs.writeFileSync('./src/routes/docs/html/api_project.js', `define(${doc.project});`)
 
 /**
  * Automatically generate markdown file
@@ -31,5 +31,5 @@ apidocmd.generateMarkdown({
 }).catch(err => console.error(err))
 
 const router = express.Router()
-router.use(express.static('./routes/docs/html'))
+router.use(express.static('./src/routes/docs/html'))
 export default router
