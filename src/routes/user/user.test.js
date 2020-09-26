@@ -22,25 +22,25 @@ describe('User Endpoints', () => {
             })
     })
 
-    it('should return list of users', done => {
-        api
-            .post('/auth/login')
-            .send({ email: 'test@test.net', password: '12345678' })
-            .expect('Content-type', /json/)
-            .expect(200)
-            .then(res => {
-                return api
-                    .get('/user/list')
-                    .auth(res.body.token, { type: 'bearer' })
-                    .expect('Content-type', /json/)
-                    .expect(200)
-            })
-            .then(res => {
-                res.body.should.be.instanceof(Array)
-                done()
-            })
-            .catch(err => done(err))
-    })
+    // it('should return list of users', done => {
+    //     api
+    //         .post('/auth/login')
+    //         .send({ email: 'test@test.net', password: '12345678' })
+    //         .expect('Content-type', /json/)
+    //         .expect(200)
+    //         .then(res => {
+    //             return api
+    //                 .get('/user/list')
+    //                 .auth(res.body.token, { type: 'bearer' })
+    //                 .expect('Content-type', /json/)
+    //                 .expect(200)
+    //         })
+    //         .then(res => {
+    //             res.body.should.be.instanceof(Array)
+    //             done()
+    //         })
+    //         .catch(err => done(err))
+    // })
 
     it("shouldn't allow malformed api tokens", done => {
         api
