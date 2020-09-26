@@ -176,13 +176,41 @@ define({ "api": [
             "optional": true,
             "field": "dob",
             "description": "<p>The user's date of birth</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": true,
+            "field": "genderId",
+            "description": "<p>The user's gender id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Gender",
+            "optional": true,
+            "field": "gender",
+            "description": "<p>The user's gender object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": true,
+            "field": "gender.id",
+            "description": "<p>The user's gender id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": true,
+            "field": "gender.name",
+            "description": "<p>The user's gender</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success Response:",
-          "content": "{\n  \"id\": 1,\n  \"email\": \"joeyclemon@gmail.com\",\n  \"password\": \"$2b$10$De765bJQ6XJV7CgloIxGkOfpetjiDzsbfcWkApas1Ez3DsjHkGJ5S\",\n  \"name\": \"Joey Lemon\",\n  \"phone\": \"6159468534\"\n}",
+          "content": "{\n  \"id\": 1,\n  \"email\": \"joeyclemon@gmail.com\",\n  \"name\": \"Joey Lemon\",\n  \"phone\": \"6159468534\",\n  \"genderId\": 1,\n  \"gender\": {\n    \"id\": 1,\n    \"name\": \"Male\"\n  }\n}",
           "type": "json"
         }
       ]
@@ -202,9 +230,9 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/user/list",
-    "title": "List users",
-    "description": "<p>Get the list of all registered users</p>",
+    "url": "/user/profile/me",
+    "title": "Current user profile",
+    "description": "<p>Get the current user's profile information</p>",
     "permission": [
       {
         "name": "Token",
@@ -212,7 +240,7 @@ define({ "api": [
         "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
       }
     ],
-    "name": "ListUsers",
+    "name": "CurrentUserProfile",
     "group": "UserGroup",
     "version": "0.0.0",
     "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
@@ -220,7 +248,7 @@ define({ "api": [
     "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
     "sampleRequest": [
       {
-        "url": "https://jlemon.org/rat/api/v1/user/list"
+        "url": "https://jlemon.org/rat/api/v1/user/profile/me"
       }
     ],
     "success": {
@@ -228,59 +256,231 @@ define({ "api": [
         "Success 200": [
           {
             "group": "Success 200",
-            "type": "User[]",
-            "optional": false,
-            "field": "_",
-            "description": "<p>List of users</p>"
-          },
-          {
-            "group": "Success 200",
             "type": "Number",
             "optional": false,
-            "field": "_.id",
+            "field": "id",
             "description": "<p>The user's unique id number</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "_.email",
+            "field": "email",
             "description": "<p>The user's email</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "_.password",
+            "field": "password",
             "description": "<p>The user's password</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "_.name",
+            "field": "name",
             "description": "<p>The user's full name</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": true,
-            "field": "_.phone",
+            "field": "phone",
             "description": "<p>The user's phone number</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": true,
-            "field": "_.dob",
+            "field": "dob",
             "description": "<p>The user's date of birth</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": true,
+            "field": "genderId",
+            "description": "<p>The user's gender id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Gender",
+            "optional": true,
+            "field": "gender",
+            "description": "<p>The user's gender object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": true,
+            "field": "gender.id",
+            "description": "<p>The user's gender id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": true,
+            "field": "gender.name",
+            "description": "<p>The user's gender</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success Response:",
-          "content": "[{\n  \"id\": 1,\n  \"email\": \"joeyclemon@gmail.com\",\n  \"password\": \"$2b$10$De765bJQ6XJV7CgloIxGkOfpetjiDzsbfcWkApas1Ez3DsjHkGJ5S\",\n  \"name\": \"Joey Lemon\",\n  \"phone\": \"6159468534\"\n}]",
+          "content": "{\n  \"id\": 1,\n  \"email\": \"joeyclemon@gmail.com\",\n  \"name\": \"Joey Lemon\",\n  \"phone\": \"6159468534\",\n  \"genderId\": 1,\n  \"gender\": {\n    \"id\": 1,\n    \"name\": \"Male\"\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Request Headers": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/user/profile/:id",
+    "title": "User profile",
+    "description": "<p>Get a user's profile information</p>",
+    "permission": [
+      {
+        "name": "Token",
+        "title": "The Authorization header must be set",
+        "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
+      }
+    ],
+    "name": "UserProfile",
+    "group": "UserGroup",
+    "parameter": {
+      "fields": {
+        "URL Parameters": [
+          {
+            "group": "URL Parameters",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The id of the user to retrieve</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
+    "groupTitle": "User",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/user/profile/:id"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The user's unique id number</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>The user's email</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>The user's password</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>The user's full name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": true,
+            "field": "phone",
+            "description": "<p>The user's phone number</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": true,
+            "field": "dob",
+            "description": "<p>The user's date of birth</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": true,
+            "field": "genderId",
+            "description": "<p>The user's gender id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Gender",
+            "optional": true,
+            "field": "gender",
+            "description": "<p>The user's gender object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": true,
+            "field": "gender.id",
+            "description": "<p>The user's gender id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": true,
+            "field": "gender.name",
+            "description": "<p>The user's gender</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n  \"id\": 1,\n  \"email\": \"joeyclemon@gmail.com\",\n  \"name\": \"Joey Lemon\",\n  \"phone\": \"6159468534\",\n  \"genderId\": 1,\n  \"gender\": {\n    \"id\": 1,\n    \"name\": \"Male\"\n  }\n}",
           "type": "json"
         }
       ]

@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import { validateForm } from '../../utils.js'
 import User from '../../db/models/user.js'
+import Gender from '../../db/models/gender.js'
 
 export async function registerUser (form) {
     validateForm(form, ['email', 'password', 'name'])
@@ -10,14 +11,16 @@ export async function registerUser (form) {
     return User.create(form)
 }
 
-export function getAllUsers () {
-    return User.findAll()
-}
-
 export function getUserByID (id) {
-    return User.findOne({ where: { id: id } })
+    return User.findOne({
+        include: Gender,
+        where: { id: id }
+    })
 }
 
 export function getUserByEmail (email) {
-    return User.findOne({ where: { email: email } })
+    return User.findOne({
+        include: Gender,
+        where: { email: email }
+    })
 }

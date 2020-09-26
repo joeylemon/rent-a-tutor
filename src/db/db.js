@@ -5,9 +5,6 @@ import { MYSQL_CONNECTION } from '../secrets.js'
 const db = new Sequelize(MYSQL_CONNECTION.db, MYSQL_CONNECTION.user, MYSQL_CONNECTION.pass, {
     host: MYSQL_CONNECTION.host,
     dialect: 'mysql',
-    define: {
-        underscored: true
-    },
     logging: (str) => {
         logger.child({ sql: str }).info()
     }

@@ -7,7 +7,8 @@
    - [Login](#Login)
    - [Register user](#Register-user)
  - [UserGroup](#UserGroup)
-   - [List users](#List-users)
+   - [Current user profile](#Current-user-profile)
+   - [User profile](#User-profile)
 
 ___
 
@@ -89,6 +90,10 @@ POST /auth/register
 | name | `String` | <p>The user's full name</p> |
 | phone | `String` | **optional**<p>The user's phone number</p> |
 | dob | `String` | **optional**<p>The user's date of birth</p> |
+| genderId | `Number` | **optional**<p>The user's gender id</p> |
+| gender | `Gender` | **optional**<p>The user's gender object</p> |
+| gender.id | `Number` | **optional**<p>The user's gender id</p> |
+| gender.name | `String` | **optional**<p>The user's gender</p> |
 
 ### Success response example
 
@@ -98,9 +103,13 @@ POST /auth/register
 {
   "id": 1,
   "email": "joeyclemon@gmail.com",
-  "password": "$2b$10$De765bJQ6XJV7CgloIxGkOfpetjiDzsbfcWkApas1Ez3DsjHkGJ5S",
   "name": "Joey Lemon",
-  "phone": "6159468534"
+  "phone": "6159468534",
+  "genderId": 1,
+  "gender": {
+    "id": 1,
+    "name": "Male"
+  }
 }
 ```
 
@@ -114,13 +123,13 @@ POST /auth/register
 
 # <a name='UserGroup'></a> UserGroup
 
-## <a name='List-users'></a> List users
+## <a name='Current-user-profile'></a> Current user profile
 [Back to top](#top)
 
-<p>Get the list of all registered users</p>
+<p>Get the current user's profile information</p>
 
 ```
-GET /user/list
+GET /user/profile/me
 ```
 
 ### Headers - `Request Headers`
@@ -135,26 +144,98 @@ GET /user/list
 
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
-| _ | `User[]` | <p>List of users</p> |
-| _.id | `Number` | <p>The user's unique id number</p> |
-| _.email | `String` | <p>The user's email</p> |
-| _.password | `String` | <p>The user's password</p> |
-| _.name | `String` | <p>The user's full name</p> |
-| _.phone | `String` | **optional**<p>The user's phone number</p> |
-| _.dob | `String` | **optional**<p>The user's date of birth</p> |
+| id | `Number` | <p>The user's unique id number</p> |
+| email | `String` | <p>The user's email</p> |
+| password | `String` | <p>The user's password</p> |
+| name | `String` | <p>The user's full name</p> |
+| phone | `String` | **optional**<p>The user's phone number</p> |
+| dob | `String` | **optional**<p>The user's date of birth</p> |
+| genderId | `Number` | **optional**<p>The user's gender id</p> |
+| gender | `Gender` | **optional**<p>The user's gender object</p> |
+| gender.id | `Number` | **optional**<p>The user's gender id</p> |
+| gender.name | `String` | **optional**<p>The user's gender</p> |
 
 ### Success response example
 
 #### Success response example - `Success Response:`
 
 ```json
-[{
+{
   "id": 1,
   "email": "joeyclemon@gmail.com",
-  "password": "$2b$10$De765bJQ6XJV7CgloIxGkOfpetjiDzsbfcWkApas1Ez3DsjHkGJ5S",
   "name": "Joey Lemon",
-  "phone": "6159468534"
-}]
+  "phone": "6159468534",
+  "genderId": 1,
+  "gender": {
+    "id": 1,
+    "name": "Male"
+  }
+}
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='User-profile'></a> User profile
+[Back to top](#top)
+
+<p>Get a user's profile information</p>
+
+```
+GET /user/profile/:id
+```
+
+### Headers - `Request Headers`
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
+
+### Parameters - `URL Parameters`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| id | `Number` | <p>The id of the user to retrieve</p> |
+
+### Success response
+
+#### Success response - `Success 200`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| id | `Number` | <p>The user's unique id number</p> |
+| email | `String` | <p>The user's email</p> |
+| password | `String` | <p>The user's password</p> |
+| name | `String` | <p>The user's full name</p> |
+| phone | `String` | **optional**<p>The user's phone number</p> |
+| dob | `String` | **optional**<p>The user's date of birth</p> |
+| genderId | `Number` | **optional**<p>The user's gender id</p> |
+| gender | `Gender` | **optional**<p>The user's gender object</p> |
+| gender.id | `Number` | **optional**<p>The user's gender id</p> |
+| gender.name | `String` | **optional**<p>The user's gender</p> |
+
+### Success response example
+
+#### Success response example - `Success Response:`
+
+```json
+{
+  "id": 1,
+  "email": "joeyclemon@gmail.com",
+  "name": "Joey Lemon",
+  "phone": "6159468534",
+  "genderId": 1,
+  "gender": {
+    "id": 1,
+    "name": "Male"
+  }
+}
 ```
 
 ### Error response

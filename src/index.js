@@ -10,7 +10,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import { RequestError } from './objects.js'
+import { RequestError, UndefinedRouteError } from './objects.js'
 import { authorize } from './utils.js'
 import { logger } from './constants.js'
 
@@ -48,10 +48,19 @@ app.use('/api/v1', router)
 // Error handler middleware
 app.use((err, req, res, next) => {
     if (err instanceof RequestError) {
+        logger.child({ error: err.toJSON() }).error()
         return res.status(err.code).json(err.toJSON())
     }
 
-    res.status(500).json({ name: 'Internal Server Error', code: 500, message: err.toString() })
+    err = { name: 'Internal Server Error', code: 500, message: err.toString() }
+    logger.child({ error: err }).error()
+    res.status(500).json(err)
+})
+
+// Unknown routes
+app.get('*', (req, res) => {
+    const err = new UndefinedRouteError()
+    res.status(err.code).json(err.toJSON())
 })
 
 const server = app.listen(6055, function () {

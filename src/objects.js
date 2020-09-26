@@ -12,15 +12,17 @@ const HTTP_CODE = {
  * @apiError DatabaseError 500 - An error occurred with the database
  */
 export class RequestError extends Error {
-    constructor (desc, name, code) {
+    constructor (desc, name, code, id) {
         super(desc)
         this.name = name
         this.code = code
+        this.id = id
     }
 
     toJSON () {
         return {
             name: this.name,
+            id: this.id,
             code: this.code,
             message: this.message
         }
@@ -36,8 +38,8 @@ export class RequestError extends Error {
  * @apiError UnauthorizedError 401 - The request presents invalid authentication values
  */
 export class UnauthorizedError extends RequestError {
-    constructor (desc, name = 'Unauthorized Error', code = HTTP_CODE.UNAUTHORIZED) {
-        super(desc, name, code)
+    constructor (desc, name = 'Unauthorized Error', code = HTTP_CODE.UNAUTHORIZED, id = 1) {
+        super(desc, name, code, id)
     }
 }
 
@@ -46,8 +48,18 @@ export class UnauthorizedError extends RequestError {
  * @apiError BadRequestError 403 - The request has missing or invalid parameters
  */
 export class BadRequestError extends RequestError {
-    constructor (desc, name = 'Bad Request Error', code = HTTP_CODE.BAD_REQUEST) {
-        super(desc, name, code)
+    constructor (desc, name = 'Bad Request Error', code = HTTP_CODE.BAD_REQUEST, id = 2) {
+        super(desc, name, code, id)
+    }
+}
+
+/**
+ * @apiDefine UndefinedRouteError
+ * @apiError UndefinedRouteError 404 - The route/method doesn't exist
+ */
+export class UndefinedRouteError extends RequestError {
+    constructor (desc = 'You have possibly forgotten to specify a url parameter, used the wrong method (POST, GET), or tried to access a route that does not exist', name = 'Undefined Route Error', code = HTTP_CODE.BAD_REQUEST, id = 3) {
+        super(desc, name, code, id)
     }
 }
 

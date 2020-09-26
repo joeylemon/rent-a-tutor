@@ -1,26 +1,45 @@
 import express from 'express'
-import { logger } from '../../constants.js'
 import * as UserService from './user.service.js'
 
 const router = express.Router()
 
 /**
- * @api {get} /user/list List users
- * @apiDescription Get the list of all registered users
+ * @api {get} /user/profile/me Current user profile
+ * @apiDescription Get the current user's profile information
  * @apiPermission Token
- * @apiName ListUsers
+ * @apiName CurrentUserProfile
  * @apiGroup UserGroup
  *
- * @apiUse UserListReturn
+ * @apiUse UserReturn
  * @apiUse UnauthorizedError
  * @apiUse DatabaseError
  * @apiUse Header
  */
-router.get('/list', async (req, res, next) => {
+router.get('/profile/me', async (req, res, next) => {
     try {
-        logger.info('request from user')
-        const users = await UserService.getAllUsers()
-        res.status(200).json(users)
+        res.status(200).json(await UserService.getUserByEmail(res.locals.user.email))
+    } catch (err) {
+        next(err)
+    }
+})
+
+/**
+ * @api {get} /user/profile/:id User profile
+ * @apiDescription Get a user's profile information
+ * @apiPermission Token
+ * @apiName UserProfile
+ * @apiGroup UserGroup
+ *
+ * @apiParam (URL Parameters) {Number} id The id of the user to retrieve
+ *
+ * @apiUse UserReturn
+ * @apiUse UnauthorizedError
+ * @apiUse DatabaseError
+ * @apiUse Header
+ */
+router.get('/profile/:id', async (req, res, next) => {
+    try {
+        res.status(200).json(await UserService.getUserByID(req.params.id))
     } catch (err) {
         next(err)
     }
