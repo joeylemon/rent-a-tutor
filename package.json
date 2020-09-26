@@ -1,10 +1,11 @@
 {
+    "main": "src/index.js",
     "type": "module",
     "scripts": {
         "test": "mocha 'src/routes/**/*.test.js'",
         "lint": "eslint src --ext .js,.ts --fix",
-        "dev": "node src/main.js",
-        "start": "forever start -o rat.log --uid=rat --append -w src/main.js",
+        "dev": "node src/index.js",
+        "start": "forever start -o rat.log --uid=rat --append -w src/index.js",
         "stop": "forever stop rat",
         "log": "tail -fn 500 rat.log"
     },
