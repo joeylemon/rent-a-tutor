@@ -1,6 +1,6 @@
 # User Authentication
 
-The chosen design for rent-a-tutor authorization follows a JWT (JSON Web Token) pattern. This readme will explore how and why this scheme will work on the frontend..
+The chosen design for rent-a-tutor authorization follows a JWT (JSON Web Token) pattern. This readme will explore how and why this scheme will work on the frontend.
 
 - [Keeping Users Authenticated](#maintain-auth)
 - [Example Implementation](#example)
