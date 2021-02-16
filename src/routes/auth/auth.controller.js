@@ -20,6 +20,8 @@ const router = express.Router()
  *
  * Since refresh tokens expire in 30 days, users must only re-enter their credentials once
  * every month.
+ *
+ * You can find more in-depth information on authorization in the [repository's README](https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth)
  * @apiName UserLogin
  * @apiGroup AuthGroup
  *

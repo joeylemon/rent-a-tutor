@@ -28,7 +28,8 @@ router.use('/docs', docs)
 
 /**
  * @apiDefine AuthGroup Auth
- * These endpoints define routes to authenticate users
+ * These endpoints define routes to authenticate users. There is in-depth documentation on the
+ * authorization process in the [repository's README](https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth).
  */
 router.use('/auth', auth)
 
