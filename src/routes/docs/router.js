@@ -29,7 +29,7 @@ apidocmd.generateMarkdown({
     apiDocProjectData: JSON.parse(doc.project),
     apiDocApiData: JSON.parse(doc.data)
 }).then(md => {
-    fs.writeFileSync('./README.md', md[0].content)
+    fs.writeFileSync('./src/routes/README.md', md[0].content)
 }).catch(err => console.error(err))
 
 const router = express.Router()
