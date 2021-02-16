@@ -64,7 +64,27 @@ export class UndefinedRouteError extends RequestError {
 }
 
 /**
- * @apiDefine TokenReturn Return an API token
+ * @apiDefine LoginTokensReturn Return a login object
+ * @apiSuccess {String} api The API token
+ * @apiSuccess {String} api.token The token string to put in the Authorization header
+ * @apiSuccess {String} api.expiration The UNIX timestamp at which the token expires (5 minutes after)
+ * @apiSuccess {String} refresh The refresh token
+ * @apiSuccess {String} refresh.token The token string to store on the device
+ * @apiSuccess {String} refresh.expiration The UNIX timestamp at which the token expires (30 days after)
+ * @apiSuccessExample Success Response:
+ *     {
+ *       "api": {
+ *           "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
+ *           "expiration": 1600809341558
+ *       },
+ *       "refresh": {
+ *           "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz.RVcYtudHgdZBZmgqlERsZfe",
+ *           "expiration": 1601441505925
+ *       }
+ *     }
+ */
+/**
+ * @apiDefine APITokenReturn Return an API token
  * @apiSuccess {String} token The token string to put in the Authorization header
  * @apiSuccess {Number} expiration The UNIX timestamp at which the token expires
  * @apiSuccessExample Success Response:

@@ -3,17 +3,30 @@ import bcrypt from 'bcrypt'
 
 import User from '../../db/models/user.js'
 import { Token, UnauthorizedError } from '../../objects.js'
-import { API_TOKEN_EXPIRE_TIME } from '../../constants.js'
-import { JWT_KEY } from '../../secrets.js'
+import { API_TOKEN_EXPIRE_TIME, REFRESH_TOKEN_EXPIRE_TIME } from '../../constants.js'
+import { JWT_KEY, REFRESH_SECRET } from '../../secrets.js'
 import { validateForm } from '../../utils.js'
 
-export function getAPIToken (email) {
-    const token = jwt.sign({ email: email }, JWT_KEY, {
+export function getAPIToken (refreshToken) {
+    if (!refreshToken || refreshToken === '') { throw new Error('refresh_token is missing') }
+
+    const decoded = jwt.verify(refreshToken, REFRESH_SECRET)
+
+    const token = jwt.sign({ email: decoded.email }, JWT_KEY, {
         algorithm: 'HS256',
         expiresIn: API_TOKEN_EXPIRE_TIME
     })
 
     return new Token(token, Date.now() + (API_TOKEN_EXPIRE_TIME * 1000))
+}
+
+export function getRefreshToken (email) {
+    const token = jwt.sign({ email: email }, REFRESH_SECRET, {
+        algorithm: 'HS256',
+        expiresIn: REFRESH_TOKEN_EXPIRE_TIME
+    })
+
+    return new Token(token, Date.now() + (REFRESH_TOKEN_EXPIRE_TIME * 1000))
 }
 
 export async function login (form) {
@@ -28,5 +41,11 @@ export async function login (form) {
     const same = await bcrypt.compare(form.password, user.password)
     if (!same) { throw new UnauthorizedError('invalid login information') }
 
-    return getAPIToken(form.email)
+    const refreshToken = getRefreshToken(form.email)
+    const apiToken = getAPIToken(refreshToken.token)
+
+    return {
+        api: apiToken,
+        refresh: refreshToken
+    }
 }
