@@ -62,10 +62,10 @@ app.use((err, req, res, next) => {
         return res.status(err.code).json(err.toJSON())
     }
 
-    err = new InternalServerError()
-    err.message = err.toString()
-    logger.child({ error: err }).error()
-    res.status(500).json(err)
+    const internalErr = new InternalServerError()
+    internalErr.message = err.toString()
+    logger.child({ error: internalErr }).error()
+    res.status(500).json(internalErr)
 })
 
 // Unknown routes
