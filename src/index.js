@@ -17,6 +17,7 @@ import { logger } from './constants.js'
 import docs from './routes/docs/router.js'
 import auth from './routes/auth/auth.controller.js'
 import user from './routes/user/user.controller.js'
+import lists from './routes/lists/lists.controller.js'
 
 const router = express.Router()
 const app = express()
@@ -38,6 +39,14 @@ router.use('/auth', auth)
  * These endpoints define routes to interact with users.
  */
 router.use('/user', authorize, user)
+
+/**
+ * @apiDefine ListsGroup Lists
+ * These endpoints define routes to retrieve serverside lists that can be used throughout
+ * the application via foreign key ids. Use the endpoints to populate front-end dropdowns
+ * such as profile creation genders.
+ */
+router.use('/lists', lists)
 
 // Parse the request body to get req.body parameters
 app.use(bodyParser.urlencoded({ extended: false }))
