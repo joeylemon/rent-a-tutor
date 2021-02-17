@@ -47,8 +47,8 @@ class API {
     return !currentAPIToken || currentAPIToken.expired
   }
   
-  refreshAPIToken() {
-    currentAPIToken = request.post("/auth/refresh").withParameter({refresh_token: this.getRefreshToken()})
+  async refreshAPIToken() {
+    currentAPIToken = await request.post("/auth/refresh").withParameter({refresh_token: this.getRefreshToken()})
   }
   
   sendPostRequest(endpointURL, parameters) {
@@ -56,7 +56,7 @@ class API {
     if (isTokenExpired())
       refreshAPIToken()
       
-    request.post(endpointURL).withAuthorizationHeader(currentAPIToken.token).withParameters(parameters)
+    return request.post(endpointURL).withAuthorizationHeader(currentAPIToken.token).withParameters(parameters)
   }
 }
 ```
@@ -64,8 +64,8 @@ class API {
 Now, elsewhere in the application, we can simply focus on the logic:
 
 ```js
-function getProfile() {
-  const profile = API.sendPostRequest(ENDPOINTS["profile"])
+async function getProfile() {
+  const profile = await API.sendPostRequest(ENDPOINTS["profile"])
   /// ... perform actions with the profile
 }
 ```
