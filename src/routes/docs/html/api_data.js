@@ -206,16 +206,44 @@ define({ "api": [
           {
             "group": "Parameter",
             "type": "String",
-            "optional": true,
+            "optional": false,
+            "field": "city",
+            "description": "<p>The user's city</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "state",
+            "description": "<p>The user's state</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
             "field": "phone",
             "description": "<p>The user's phone number</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
-            "optional": true,
+            "optional": false,
             "field": "dob",
             "description": "<p>The user's date of birth</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "genderId",
+            "description": "<p>The user's gender ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "roleId",
+            "description": "<p>The user's role ID</p>"
           }
         ]
       }
@@ -276,13 +304,6 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "Number",
-            "optional": true,
-            "field": "genderId",
-            "description": "<p>The user's gender id</p>"
-          },
-          {
-            "group": "Success 200",
             "type": "Gender",
             "optional": true,
             "field": "gender",
@@ -301,13 +322,34 @@ define({ "api": [
             "optional": true,
             "field": "gender.name",
             "description": "<p>The user's gender</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Role",
+            "optional": true,
+            "field": "role",
+            "description": "<p>The user's role object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": true,
+            "field": "role.id",
+            "description": "<p>The user's role id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": true,
+            "field": "role.name",
+            "description": "<p>The user's role</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success Response:",
-          "content": "{\n  \"id\": 1,\n  \"email\": \"joeyclemon@gmail.com\",\n  \"name\": \"Joey Lemon\",\n  \"phone\": \"6159468534\",\n  \"genderId\": 1,\n  \"gender\": {\n    \"id\": 1,\n    \"name\": \"Male\"\n  }\n}",
+          "content": " {\n   \"id\": 11,\n   \"email\": \"t@t.com\",\n   \"name\": \"Joey\",\n   \"phone\": \"6159468534\",\n   \"dob\": \"2000-03-24\",\n   \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n   \"updatedAt\": \"2021-02-16T16:27:21.000Z\",\n   \"gender\": {\n       \"id\": 1,\n       \"name\": \"Male\"\n   },\n   \"role\": {\n       \"id\": 1,\n       \"name\": \"Student\"\n   }\n}",
           "type": "json"
         }
       ]
@@ -320,6 +362,64 @@ define({ "api": [
             "optional": false,
             "field": "BadRequestError",
             "description": "<p>403 - The request has missing or invalid parameters</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/lists/genders",
+    "title": "List of genders",
+    "description": "<p>Retrieve the list of genders</p>",
+    "name": "ListsGenders",
+    "group": "ListsGroup",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/lists/genders"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
+    "groupTitle": "Lists",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists that can be used throughout the application via foreign key ids. Use the endpoints to populate front-end dropdowns such as profile creation genders.</p>",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/lists/roles",
+    "title": "List of user roles",
+    "description": "<p>Retrieve the list of user roles</p>",
+    "name": "ListsRoles",
+    "group": "ListsGroup",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/lists/roles"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
+    "groupTitle": "Lists",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists that can be used throughout the application via foreign key ids. Use the endpoints to populate front-end dropdowns such as profile creation genders.</p>",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
           }
         ]
       }
@@ -395,13 +495,6 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "Number",
-            "optional": true,
-            "field": "genderId",
-            "description": "<p>The user's gender id</p>"
-          },
-          {
-            "group": "Success 200",
             "type": "Gender",
             "optional": true,
             "field": "gender",
@@ -420,13 +513,34 @@ define({ "api": [
             "optional": true,
             "field": "gender.name",
             "description": "<p>The user's gender</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Role",
+            "optional": true,
+            "field": "role",
+            "description": "<p>The user's role object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": true,
+            "field": "role.id",
+            "description": "<p>The user's role id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": true,
+            "field": "role.name",
+            "description": "<p>The user's role</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success Response:",
-          "content": "{\n  \"id\": 1,\n  \"email\": \"joeyclemon@gmail.com\",\n  \"name\": \"Joey Lemon\",\n  \"phone\": \"6159468534\",\n  \"genderId\": 1,\n  \"gender\": {\n    \"id\": 1,\n    \"name\": \"Male\"\n  }\n}",
+          "content": " {\n   \"id\": 11,\n   \"email\": \"t@t.com\",\n   \"name\": \"Joey\",\n   \"phone\": \"6159468534\",\n   \"dob\": \"2000-03-24\",\n   \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n   \"updatedAt\": \"2021-02-16T16:27:21.000Z\",\n   \"gender\": {\n       \"id\": 1,\n       \"name\": \"Male\"\n   },\n   \"role\": {\n       \"id\": 1,\n       \"name\": \"Student\"\n   }\n}",
           "type": "json"
         }
       ]
@@ -546,13 +660,6 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "Number",
-            "optional": true,
-            "field": "genderId",
-            "description": "<p>The user's gender id</p>"
-          },
-          {
-            "group": "Success 200",
             "type": "Gender",
             "optional": true,
             "field": "gender",
@@ -571,13 +678,34 @@ define({ "api": [
             "optional": true,
             "field": "gender.name",
             "description": "<p>The user's gender</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Role",
+            "optional": true,
+            "field": "role",
+            "description": "<p>The user's role object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": true,
+            "field": "role.id",
+            "description": "<p>The user's role id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": true,
+            "field": "role.name",
+            "description": "<p>The user's role</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success Response:",
-          "content": "{\n  \"id\": 1,\n  \"email\": \"joeyclemon@gmail.com\",\n  \"name\": \"Joey Lemon\",\n  \"phone\": \"6159468534\",\n  \"genderId\": 1,\n  \"gender\": {\n    \"id\": 1,\n    \"name\": \"Male\"\n  }\n}",
+          "content": " {\n   \"id\": 11,\n   \"email\": \"t@t.com\",\n   \"name\": \"Joey\",\n   \"phone\": \"6159468534\",\n   \"dob\": \"2000-03-24\",\n   \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n   \"updatedAt\": \"2021-02-16T16:27:21.000Z\",\n   \"gender\": {\n       \"id\": 1,\n       \"name\": \"Male\"\n   },\n   \"role\": {\n       \"id\": 1,\n       \"name\": \"Student\"\n   }\n}",
           "type": "json"
         }
       ]

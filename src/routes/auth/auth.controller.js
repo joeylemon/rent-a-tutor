@@ -72,8 +72,12 @@ router.post('/refresh', async (req, res, next) => {
  * @apiParam {String} email The user's email
  * @apiParam {String} password The user's password
  * @apiParam {String} name The user's name
- * @apiParam {String} [phone] The user's phone number
- * @apiParam {String} [dob] The user's date of birth
+ * @apiParam {String} city The user's city
+ * @apiParam {String} state The user's state
+ * @apiParam {String} phone The user's phone number
+ * @apiParam {String} dob The user's date of birth
+ * @apiParam {String} genderId The user's gender ID
+ * @apiParam {String} roleId The user's role ID
  *
  * @apiUse UserReturn
  * @apiUse BadRequestError

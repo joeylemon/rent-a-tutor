@@ -7,6 +7,9 @@
    - [Login](#Login)
    - [Refresh API token](#Refresh-API-token)
    - [Register user](#Register-user)
+ - [ListsGroup](#ListsGroup)
+   - [List of genders](#List-of-genders)
+   - [List of user roles](#List-of-user-roles)
  - [UserGroup](#UserGroup)
    - [Current user profile](#Current-user-profile)
    - [User profile](#User-profile)
@@ -129,8 +132,12 @@ POST /auth/register
 | email | `String` | <p>The user's email</p> |
 | password | `String` | <p>The user's password</p> |
 | name | `String` | <p>The user's name</p> |
-| phone | `String` | **optional** <p>The user's phone number</p> |
-| dob | `String` | **optional** <p>The user's date of birth</p> |
+| city | `String` | <p>The user's city</p> |
+| state | `String` | <p>The user's state</p> |
+| phone | `String` | <p>The user's phone number</p> |
+| dob | `String` | <p>The user's date of birth</p> |
+| genderId | `String` | <p>The user's gender ID</p> |
+| roleId | `String` | <p>The user's role ID</p> |
 
 ### Success response
 
@@ -144,26 +151,34 @@ POST /auth/register
 | name | `String` | <p>The user's full name</p> |
 | phone | `String` | **optional**<p>The user's phone number</p> |
 | dob | `String` | **optional**<p>The user's date of birth</p> |
-| genderId | `Number` | **optional**<p>The user's gender id</p> |
 | gender | `Gender` | **optional**<p>The user's gender object</p> |
 | gender.id | `Number` | **optional**<p>The user's gender id</p> |
 | gender.name | `String` | **optional**<p>The user's gender</p> |
+| role | `Role` | **optional**<p>The user's role object</p> |
+| role.id | `Number` | **optional**<p>The user's role id</p> |
+| role.name | `String` | **optional**<p>The user's role</p> |
 
 ### Success response example
 
 #### Success response example - `Success Response:`
 
 ```json
-{
-  "id": 1,
-  "email": "joeyclemon@gmail.com",
-  "name": "Joey Lemon",
-  "phone": "6159468534",
-  "genderId": 1,
-  "gender": {
-    "id": 1,
-    "name": "Male"
-  }
+ {
+   "id": 11,
+   "email": "t@t.com",
+   "name": "Joey",
+   "phone": "6159468534",
+   "dob": "2000-03-24",
+   "createdAt": "2021-02-16T16:27:21.000Z",
+   "updatedAt": "2021-02-16T16:27:21.000Z",
+   "gender": {
+       "id": 1,
+       "name": "Male"
+   },
+   "role": {
+       "id": 1,
+       "name": "Student"
+   }
 }
 ```
 
@@ -174,6 +189,42 @@ POST /auth/register
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
 | BadRequestError |  | <p>403 - The request has missing or invalid parameters</p> |
+
+# <a name='ListsGroup'></a> ListsGroup
+
+## <a name='List-of-genders'></a> List of genders
+[Back to top](#top)
+
+<p>Retrieve the list of genders</p>
+
+```
+GET /lists/genders
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='List-of-user-roles'></a> List of user roles
+[Back to top](#top)
+
+<p>Retrieve the list of user roles</p>
+
+```
+GET /lists/roles
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
 # <a name='UserGroup'></a> UserGroup
 
@@ -204,26 +255,34 @@ GET /user/profile/me
 | name | `String` | <p>The user's full name</p> |
 | phone | `String` | **optional**<p>The user's phone number</p> |
 | dob | `String` | **optional**<p>The user's date of birth</p> |
-| genderId | `Number` | **optional**<p>The user's gender id</p> |
 | gender | `Gender` | **optional**<p>The user's gender object</p> |
 | gender.id | `Number` | **optional**<p>The user's gender id</p> |
 | gender.name | `String` | **optional**<p>The user's gender</p> |
+| role | `Role` | **optional**<p>The user's role object</p> |
+| role.id | `Number` | **optional**<p>The user's role id</p> |
+| role.name | `String` | **optional**<p>The user's role</p> |
 
 ### Success response example
 
 #### Success response example - `Success Response:`
 
 ```json
-{
-  "id": 1,
-  "email": "joeyclemon@gmail.com",
-  "name": "Joey Lemon",
-  "phone": "6159468534",
-  "genderId": 1,
-  "gender": {
-    "id": 1,
-    "name": "Male"
-  }
+ {
+   "id": 11,
+   "email": "t@t.com",
+   "name": "Joey",
+   "phone": "6159468534",
+   "dob": "2000-03-24",
+   "createdAt": "2021-02-16T16:27:21.000Z",
+   "updatedAt": "2021-02-16T16:27:21.000Z",
+   "gender": {
+       "id": 1,
+       "name": "Male"
+   },
+   "role": {
+       "id": 1,
+       "name": "Student"
+   }
 }
 ```
 
@@ -269,26 +328,34 @@ GET /user/profile/:id
 | name | `String` | <p>The user's full name</p> |
 | phone | `String` | **optional**<p>The user's phone number</p> |
 | dob | `String` | **optional**<p>The user's date of birth</p> |
-| genderId | `Number` | **optional**<p>The user's gender id</p> |
 | gender | `Gender` | **optional**<p>The user's gender object</p> |
 | gender.id | `Number` | **optional**<p>The user's gender id</p> |
 | gender.name | `String` | **optional**<p>The user's gender</p> |
+| role | `Role` | **optional**<p>The user's role object</p> |
+| role.id | `Number` | **optional**<p>The user's role id</p> |
+| role.name | `String` | **optional**<p>The user's role</p> |
 
 ### Success response example
 
 #### Success response example - `Success Response:`
 
 ```json
-{
-  "id": 1,
-  "email": "joeyclemon@gmail.com",
-  "name": "Joey Lemon",
-  "phone": "6159468534",
-  "genderId": 1,
-  "gender": {
-    "id": 1,
-    "name": "Male"
-  }
+ {
+   "id": 11,
+   "email": "t@t.com",
+   "name": "Joey",
+   "phone": "6159468534",
+   "dob": "2000-03-24",
+   "createdAt": "2021-02-16T16:27:21.000Z",
+   "updatedAt": "2021-02-16T16:27:21.000Z",
+   "gender": {
+       "id": 1,
+       "name": "Male"
+   },
+   "role": {
+       "id": 1,
+       "name": "Student"
+   }
 }
 ```
 
