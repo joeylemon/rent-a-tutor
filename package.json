@@ -7,7 +7,7 @@
         "dev": "node src/index.js",
         "start": "forever start -o rat.log --uid=rat --append -w src/index.js",
         "stop": "forever stop rat",
-        "log": "tail -fn 500 rat.log"
+        "log": "tail -fn 100 ~/.forever/rat.log | pino-pretty -t 'SYS:yyyy-mm-dd HH:MM:ss'"
     },
     "apidoc": {
         "name": "rent-a-tutor api",
