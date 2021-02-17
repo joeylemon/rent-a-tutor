@@ -17,7 +17,7 @@ const router = express.Router()
  */
 router.get('/profile/me', async (req, res, next) => {
     try {
-        res.status(200).json(await UserService.getUserByEmail(res.locals.user.email))
+        res.status(200).json(await UserService.getUserByID(res.locals.user.id))
     } catch (err) {
         next(err)
     }

@@ -27,7 +27,7 @@ export async function authorize (req, res, next) {
         const decoded = jwt.verify(token, JWT_KEY)
 
         // Find user with token and id
-        const user = await User.findOne({ where: { email: decoded.email } })
+        const user = await User.findOne({ where: { id: decoded.id } })
         if (!user) { return next(new BadRequestError('cannot find user')) }
 
         // Save the user and token values in the response object
