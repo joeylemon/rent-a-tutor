@@ -50,7 +50,7 @@ describe('User Endpoints', () => {
             .expect(200)
             .then(res => {
                 return api
-                    .get('/user/list')
+                    .get('/user/profile/me')
                     .auth('1' + res.body.token + '1', { type: 'bearer' })
                     .expect('Content-type', /json/)
                     .expect(401)
