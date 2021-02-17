@@ -235,6 +235,48 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/lists/cities/:state",
+    "title": "List of U.S. cities",
+    "description": "<p>Retrieve a list of U.S. cities within a state</p>",
+    "name": "ListsCities",
+    "group": "ListsGroup",
+    "parameter": {
+      "fields": {
+        "URL Parameters": [
+          {
+            "group": "URL Parameters",
+            "type": "String",
+            "optional": false,
+            "field": "state",
+            "description": "<p>The state to find cities within</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/lists/cities/:state"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
+    "groupTitle": "Lists",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists that can be used throughout the application via foreign key ids. Use the endpoints to populate front-end dropdowns such as profile creation genders.</p>",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
     "url": "/lists/genders",
     "title": "List of genders",
     "description": "<p>Retrieve the list of genders</p>",
@@ -272,6 +314,35 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "https://jlemon.org/rat/api/v1/lists/roles"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
+    "groupTitle": "Lists",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists that can be used throughout the application via foreign key ids. Use the endpoints to populate front-end dropdowns such as profile creation genders.</p>",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/lists/states",
+    "title": "List of U.S. states",
+    "description": "<p>Retrieve the list of U.S. states</p>",
+    "name": "ListsStates",
+    "group": "ListsGroup",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/lists/states"
       }
     ],
     "version": "0.0.0",

@@ -9,6 +9,8 @@
    - [Register user](#Register-user)
  - [ListsGroup](#ListsGroup)
    - [List of genders](#List-of-genders)
+   - [List of U.S. cities](#List-of-U.S.-cities)
+   - [List of U.S. states](#List-of-U.S.-states)
    - [List of user roles](#List-of-user-roles)
  - [UserGroup](#UserGroup)
    - [Current user profile](#Current-user-profile)
@@ -161,6 +163,46 @@ POST /auth/register
 
 ```
 GET /lists/genders
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='List-of-U.S.-cities'></a> List of U.S. cities
+[Back to top](#top)
+
+<p>Retrieve a list of U.S. cities within a state</p>
+
+```
+GET /lists/cities/:state
+```
+
+### Parameters - `URL Parameters`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| state | `String` | <p>The state to find cities within</p> |
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='List-of-U.S.-states'></a> List of U.S. states
+[Back to top](#top)
+
+<p>Retrieve the list of U.S. states</p>
+
+```
+GET /lists/states
 ```
 
 ### Error response
