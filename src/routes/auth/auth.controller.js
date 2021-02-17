@@ -27,9 +27,20 @@ const router = express.Router()
  *
  * @apiParam {String} email The user's email
  * @apiParam {String} password The user's password
+ * @apiSuccessExample Success Response:
+ *     {
+ *       "api": {
+ *           "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
+ *           "expiration": 1600809341558
+ *       },
+ *       "refresh": {
+ *           "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz.RVcYtudHgdZBZmgqlERsZfe",
+ *           "expiration": 1601441505925
+ *       }
+ *     }
  *
- * @apiUse LoginTokensReturn
  * @apiUse BadRequestError
+ * @apiUse DatabaseError
  *
  * @apiSampleRequest /auth/login
  */
@@ -49,9 +60,14 @@ router.post('/login', async (req, res, next) => {
  * @apiGroup AuthGroup
  *
  * @apiParam {String} refresh_token The user's stored refresh token
+ * @apiSuccessExample Success Response:
+ *     {
+ *       "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
+ *       "expiration": 1600809341558
+ *     }
  *
- * @apiUse APITokenReturn
  * @apiUse BadRequestError
+ * @apiUse DatabaseError
  *
  * @apiSampleRequest /auth/refresh
  */
@@ -81,6 +97,7 @@ router.post('/refresh', async (req, res, next) => {
  *
  * @apiUse UserReturn
  * @apiUse BadRequestError
+ * @apiUse DatabaseError
  */
 router.post('/register', async (req, res, next) => {
     try {

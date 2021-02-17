@@ -26,6 +26,15 @@ define({ "api": [
         ]
       }
     },
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n  \"api\": {\n      \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF\",\n      \"expiration\": 1600809341558\n  },\n  \"refresh\": {\n      \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz.RVcYtudHgdZBZmgqlERsZfe\",\n      \"expiration\": 1601441505925\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
     "sampleRequest": [
       {
         "url": "https://jlemon.org/rat/api/v1/auth/login"
@@ -35,61 +44,6 @@ define({ "api": [
     "filename": "/home/dustin/rat/src/routes/auth/auth.controller.js",
     "groupTitle": "Auth",
     "groupDescription": "<p>These endpoints define routes to authenticate users. There is in-depth documentation on the authorization process in the <a href=\"https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth\">repository's README</a>.</p>",
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "api",
-            "description": "<p>The API token</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "api.token",
-            "description": "<p>The token string to put in the Authorization header</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "api.expiration",
-            "description": "<p>The UNIX timestamp at which the token expires (5 minutes after)</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "refresh",
-            "description": "<p>The refresh token</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "refresh.token",
-            "description": "<p>The token string to store on the device</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "refresh.expiration",
-            "description": "<p>The UNIX timestamp at which the token expires (30 days after)</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success Response:",
-          "content": "{\n  \"api\": {\n      \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF\",\n      \"expiration\": 1600809341558\n  },\n  \"refresh\": {\n      \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz.RVcYtudHgdZBZmgqlERsZfe\",\n      \"expiration\": 1601441505925\n  }\n}",
-          "type": "json"
-        }
-      ]
-    },
     "error": {
       "fields": {
         "Error 4xx": [
@@ -97,7 +51,13 @@ define({ "api": [
             "group": "Error 4xx",
             "optional": false,
             "field": "BadRequestError",
-            "description": "<p>403 - The request has missing or invalid parameters</p>"
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
           }
         ]
       }
@@ -123,6 +83,15 @@ define({ "api": [
         ]
       }
     },
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n  \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF\",\n  \"expiration\": 1600809341558\n}",
+          "type": "json"
+        }
+      ]
+    },
     "sampleRequest": [
       {
         "url": "https://jlemon.org/rat/api/v1/auth/refresh"
@@ -132,33 +101,6 @@ define({ "api": [
     "filename": "/home/dustin/rat/src/routes/auth/auth.controller.js",
     "groupTitle": "Auth",
     "groupDescription": "<p>These endpoints define routes to authenticate users. There is in-depth documentation on the authorization process in the <a href=\"https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth\">repository's README</a>.</p>",
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "token",
-            "description": "<p>The token string to put in the Authorization header</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "expiration",
-            "description": "<p>The UNIX timestamp at which the token expires</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success Response:",
-          "content": "{\n  \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF\",\n  \"expiration\": 1600809341558\n}",
-          "type": "json"
-        }
-      ]
-    },
     "error": {
       "fields": {
         "Error 4xx": [
@@ -166,7 +108,13 @@ define({ "api": [
             "group": "Error 4xx",
             "optional": false,
             "field": "BadRequestError",
-            "description": "<p>403 - The request has missing or invalid parameters</p>"
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
           }
         ]
       }
@@ -258,94 +206,6 @@ define({ "api": [
       }
     ],
     "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "id",
-            "description": "<p>The user's unique id number</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "email",
-            "description": "<p>The user's email</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "password",
-            "description": "<p>The user's password</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "name",
-            "description": "<p>The user's full name</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "phone",
-            "description": "<p>The user's phone number</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "dob",
-            "description": "<p>The user's date of birth</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Gender",
-            "optional": true,
-            "field": "gender",
-            "description": "<p>The user's gender object</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": true,
-            "field": "gender.id",
-            "description": "<p>The user's gender id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "gender.name",
-            "description": "<p>The user's gender</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Role",
-            "optional": true,
-            "field": "role",
-            "description": "<p>The user's role object</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": true,
-            "field": "role.id",
-            "description": "<p>The user's role id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "role.name",
-            "description": "<p>The user's role</p>"
-          }
-        ]
-      },
       "examples": [
         {
           "title": "Success Response:",
@@ -361,7 +221,13 @@ define({ "api": [
             "group": "Error 4xx",
             "optional": false,
             "field": "BadRequestError",
-            "description": "<p>403 - The request has missing or invalid parameters</p>"
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
           }
         ]
       }
@@ -449,94 +315,6 @@ define({ "api": [
       }
     ],
     "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "id",
-            "description": "<p>The user's unique id number</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "email",
-            "description": "<p>The user's email</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "password",
-            "description": "<p>The user's password</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "name",
-            "description": "<p>The user's full name</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "phone",
-            "description": "<p>The user's phone number</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "dob",
-            "description": "<p>The user's date of birth</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Gender",
-            "optional": true,
-            "field": "gender",
-            "description": "<p>The user's gender object</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": true,
-            "field": "gender.id",
-            "description": "<p>The user's gender id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "gender.name",
-            "description": "<p>The user's gender</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Role",
-            "optional": true,
-            "field": "role",
-            "description": "<p>The user's role object</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": true,
-            "field": "role.id",
-            "description": "<p>The user's role id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "role.name",
-            "description": "<p>The user's role</p>"
-          }
-        ]
-      },
       "examples": [
         {
           "title": "Success Response:",
@@ -614,94 +392,6 @@ define({ "api": [
       }
     ],
     "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "id",
-            "description": "<p>The user's unique id number</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "email",
-            "description": "<p>The user's email</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "password",
-            "description": "<p>The user's password</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "name",
-            "description": "<p>The user's full name</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "phone",
-            "description": "<p>The user's phone number</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "dob",
-            "description": "<p>The user's date of birth</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Gender",
-            "optional": true,
-            "field": "gender",
-            "description": "<p>The user's gender object</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": true,
-            "field": "gender.id",
-            "description": "<p>The user's gender id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "gender.name",
-            "description": "<p>The user's gender</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Role",
-            "optional": true,
-            "field": "role",
-            "description": "<p>The user's role object</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": true,
-            "field": "role.id",
-            "description": "<p>The user's role id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "role.name",
-            "description": "<p>The user's role</p>"
-          }
-        ]
-      },
       "examples": [
         {
           "title": "Success Response:",

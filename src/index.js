@@ -10,7 +10,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import { RequestError, UndefinedRouteError } from './objects.js'
+import { RequestError, UndefinedRouteError, InternalServerError } from './objects.js'
 import { authorize } from './utils.js'
 import { logger } from './constants.js'
 
@@ -62,7 +62,8 @@ app.use((err, req, res, next) => {
         return res.status(err.code).json(err.toJSON())
     }
 
-    err = { name: 'Internal Server Error', code: 500, message: err.toString() }
+    err = new InternalServerError()
+    err.message = err.toString()
     logger.child({ error: err }).error()
     res.status(500).json(err)
 })

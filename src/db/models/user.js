@@ -5,18 +5,6 @@ import Role from './role.js'
 
 /**
  * @apiDefine UserReturn Return a user object
- * @apiSuccess {Number} id The user's unique id number
- * @apiSuccess {String} email The user's email
- * @apiSuccess {String} password The user's password
- * @apiSuccess {String} name The user's full name
- * @apiSuccess {String} [phone] The user's phone number
- * @apiSuccess {String} [dob] The user's date of birth
- * @apiSuccess {Gender} [gender] The user's gender object
- * @apiSuccess {Number} [gender.id] The user's gender id
- * @apiSuccess {String} [gender.name] The user's gender
- * @apiSuccess {Role} [role] The user's role object
- * @apiSuccess {Number} [role.id] The user's role id
- * @apiSuccess {String} [role.name] The user's role
  * @apiSuccessExample Success Response:
  *   {
  *     "id": 11,

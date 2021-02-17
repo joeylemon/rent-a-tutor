@@ -35,19 +35,6 @@ POST /auth/login
 | email | `String` | <p>The user's email</p> |
 | password | `String` | <p>The user's password</p> |
 
-### Success response
-
-#### Success response - `Success 200`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| api | `String` | <p>The API token</p> |
-| api.token | `String` | <p>The token string to put in the Authorization header</p> |
-| api.expiration | `String` | <p>The UNIX timestamp at which the token expires (5 minutes after)</p> |
-| refresh | `String` | <p>The refresh token</p> |
-| refresh.token | `String` | <p>The token string to store on the device</p> |
-| refresh.expiration | `String` | <p>The UNIX timestamp at which the token expires (30 days after)</p> |
-
 ### Success response example
 
 #### Success response example - `Success Response:`
@@ -71,7 +58,8 @@ POST /auth/login
 
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
-| BadRequestError |  | <p>403 - The request has missing or invalid parameters</p> |
+| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
 ## <a name='Refresh-API-token'></a> Refresh API token
 [Back to top](#top)
@@ -87,15 +75,6 @@ POST /auth/refresh
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
 | refresh_token | `String` | <p>The user's stored refresh token</p> |
-
-### Success response
-
-#### Success response - `Success 200`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| token | `String` | <p>The token string to put in the Authorization header</p> |
-| expiration | `Number` | <p>The UNIX timestamp at which the token expires</p> |
 
 ### Success response example
 
@@ -114,7 +93,8 @@ POST /auth/refresh
 
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
-| BadRequestError |  | <p>403 - The request has missing or invalid parameters</p> |
+| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
 ## <a name='Register-user'></a> Register user
 [Back to top](#top)
@@ -138,25 +118,6 @@ POST /auth/register
 | dob | `String` | <p>The user's date of birth</p> |
 | genderId | `String` | <p>The user's gender ID</p> |
 | roleId | `String` | <p>The user's role ID</p> |
-
-### Success response
-
-#### Success response - `Success 200`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| id | `Number` | <p>The user's unique id number</p> |
-| email | `String` | <p>The user's email</p> |
-| password | `String` | <p>The user's password</p> |
-| name | `String` | <p>The user's full name</p> |
-| phone | `String` | **optional**<p>The user's phone number</p> |
-| dob | `String` | **optional**<p>The user's date of birth</p> |
-| gender | `Gender` | **optional**<p>The user's gender object</p> |
-| gender.id | `Number` | **optional**<p>The user's gender id</p> |
-| gender.name | `String` | **optional**<p>The user's gender</p> |
-| role | `Role` | **optional**<p>The user's role object</p> |
-| role.id | `Number` | **optional**<p>The user's role id</p> |
-| role.name | `String` | **optional**<p>The user's role</p> |
 
 ### Success response example
 
@@ -188,7 +149,8 @@ POST /auth/register
 
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
-| BadRequestError |  | <p>403 - The request has missing or invalid parameters</p> |
+| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
 # <a name='ListsGroup'></a> ListsGroup
 
@@ -243,25 +205,6 @@ GET /user/profile/me
 |---------|-----------|--------------------------------------|
 | Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
 
-### Success response
-
-#### Success response - `Success 200`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| id | `Number` | <p>The user's unique id number</p> |
-| email | `String` | <p>The user's email</p> |
-| password | `String` | <p>The user's password</p> |
-| name | `String` | <p>The user's full name</p> |
-| phone | `String` | **optional**<p>The user's phone number</p> |
-| dob | `String` | **optional**<p>The user's date of birth</p> |
-| gender | `Gender` | **optional**<p>The user's gender object</p> |
-| gender.id | `Number` | **optional**<p>The user's gender id</p> |
-| gender.name | `String` | **optional**<p>The user's gender</p> |
-| role | `Role` | **optional**<p>The user's role object</p> |
-| role.id | `Number` | **optional**<p>The user's role id</p> |
-| role.name | `String` | **optional**<p>The user's role</p> |
-
 ### Success response example
 
 #### Success response example - `Success Response:`
@@ -315,25 +258,6 @@ GET /user/profile/:id
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
 | id | `Number` | <p>The id of the user to retrieve</p> |
-
-### Success response
-
-#### Success response - `Success 200`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| id | `Number` | <p>The user's unique id number</p> |
-| email | `String` | <p>The user's email</p> |
-| password | `String` | <p>The user's password</p> |
-| name | `String` | <p>The user's full name</p> |
-| phone | `String` | **optional**<p>The user's phone number</p> |
-| dob | `String` | **optional**<p>The user's date of birth</p> |
-| gender | `Gender` | **optional**<p>The user's gender object</p> |
-| gender.id | `Number` | **optional**<p>The user's gender id</p> |
-| gender.name | `String` | **optional**<p>The user's gender</p> |
-| role | `Role` | **optional**<p>The user's role object</p> |
-| role.id | `Number` | **optional**<p>The user's role id</p> |
-| role.name | `String` | **optional**<p>The user's role</p> |
 
 ### Success response example
 
