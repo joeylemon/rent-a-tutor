@@ -371,6 +371,83 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "/user/nearby/:distance",
+    "title": "Nearby tutors",
+    "description": "<p>Get nearby tutors ordered by distance</p>",
+    "permission": [
+      {
+        "name": "Token",
+        "title": "The Authorization header must be set",
+        "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
+      }
+    ],
+    "name": "UserNearby",
+    "group": "UserGroup",
+    "parameter": {
+      "fields": {
+        "URL Parameters": [
+          {
+            "group": "URL Parameters",
+            "type": "Number",
+            "optional": false,
+            "field": "distance",
+            "description": "<p>The distance in miles to search</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
+    "groupTitle": "User",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/user/nearby/:distance"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": " [{\n   \"id\": 11,\n   \"name\": \"Joey\",\n   \"phone\": \"6159468534\",\n   \"dob\": \"2000-03-24\",\n   \"gender\": \"Male\",\n   \"role\": \"Tutor\"\n}]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Request Headers": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
     "url": "/user/profile/:id",
     "title": "User profile",
     "description": "<p>Get a user's profile information</p>",

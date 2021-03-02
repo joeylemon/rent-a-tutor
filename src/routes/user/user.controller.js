@@ -45,4 +45,26 @@ router.get('/profile/:id', async (req, res, next) => {
     }
 })
 
+/**
+ * @api {get} /user/nearby/:distance Nearby tutors
+ * @apiDescription Get nearby tutors ordered by distance
+ * @apiPermission Token
+ * @apiName UserNearby
+ * @apiGroup UserGroup
+ *
+ * @apiParam (URL Parameters) {Number} distance The distance in miles to search
+ *
+ * @apiUse UserSimpleArrayReturn
+ * @apiUse UnauthorizedError
+ * @apiUse DatabaseError
+ * @apiUse Header
+ */
+router.get('/nearby/:distance', async (req, res, next) => {
+    try {
+        res.status(200).json(await UserService.getNearbyTutors(res.locals.user, req.params.distance))
+    } catch (err) {
+        next(err)
+    }
+})
+
 export default router
