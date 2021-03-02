@@ -11,7 +11,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 
 import { RequestError, UndefinedRouteError, InternalServerError } from './objects.js'
-import { authorize } from './utils.js'
+import { authorize } from './routes/auth/auth.service.js'
 import { logger } from './constants.js'
 
 import docs from './routes/docs/router.js'
