@@ -7,19 +7,13 @@ const router = express.Router()
 /**
  * @api {post} /auth/login Login
  * @apiDescription Authenticate the user with their email and password and receive an API
- * token and a refresh token. Subsequent calls to the API should set the Authorization
- * header with the API token, such as:
+ * token. Subsequent calls to the API should set the Authorization header with the API
+ * token, such as below:
  *
  * <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOj._X_oyzQ9Lz-MedQeXUX7LdFNZyC3</code>
  *
- * Each API token expires in five minutes. Therefore, you must use the refresh token with
- * /auth/refresh to receive a new API token.
- *
- * With this infrastructure, only the refresh token must be stored on the user's device to keep
- * the user logged in upon reopening the application (instead of the user's email and password).
- *
- * Since refresh tokens expire in 30 days, users must only re-enter their credentials once
- * every month.
+ * Each API token expires in thirty days. The API token should be stored locally on the user's
+ * device to prevent logging in every time the application is opened.
  *
  * You can find more in-depth information on authorization in the [repository's README](https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth)
  * @apiName UserLogin
@@ -29,14 +23,8 @@ const router = express.Router()
  * @apiParam {String} password The user's password
  * @apiSuccessExample Success Response:
  *     {
- *       "api": {
- *           "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
- *           "expiration": 1600809341558
- *       },
- *       "refresh": {
- *           "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz.RVcYtudHgdZBZmgqlERsZfe",
- *           "expiration": 1601441505925
- *       }
+ *         "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
+ *         "expiration": 1600809341558
  *     }
  *
  * @apiUse BadRequestError
@@ -47,33 +35,6 @@ const router = express.Router()
 router.post('/login', async (req, res, next) => {
     try {
         res.status(200).json(await AuthService.login(req.body))
-    } catch (err) {
-        next(err)
-    }
-})
-
-/**
- * @api {post} /auth/refresh Refresh API token
- * @apiDescription Using the user's stored refresh token, receive a new API token that will
- * be used in subsequent calls to the API within the Authorization header.
- * @apiName UserRefreshToken
- * @apiGroup AuthGroup
- *
- * @apiParam {String} refresh_token The user's stored refresh token
- * @apiSuccessExample Success Response:
- *     {
- *       "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
- *       "expiration": 1600809341558
- *     }
- *
- * @apiUse BadRequestError
- * @apiUse DatabaseError
- *
- * @apiSampleRequest /auth/refresh
- */
-router.post('/refresh', async (req, res, next) => {
-    try {
-        res.status(200).json(await AuthService.getAPIToken(req.body.refresh_token))
     } catch (err) {
         next(err)
     }

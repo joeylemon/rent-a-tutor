@@ -5,7 +5,6 @@
 
  - [AuthGroup](#AuthGroup)
    - [Login](#Login)
-   - [Refresh API token](#Refresh-API-token)
    - [Register user](#Register-user)
  - [ListsGroup](#ListsGroup)
    - [List of genders](#List-of-genders)
@@ -24,7 +23,7 @@ ___
 ## <a name='Login'></a> Login
 [Back to top](#top)
 
-<p>Authenticate the user with their email and password and receive an API token and a refresh token. Subsequent calls to the API should set the Authorization header with the API token, such as:</p> <p><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOj._X_oyzQ9Lz-MedQeXUX7LdFNZyC3</code></p> <p>Each API token expires in five minutes. Therefore, you must use the refresh token with /auth/refresh to receive a new API token.</p> <p>With this infrastructure, only the refresh token must be stored on the user's device to keep the user logged in upon reopening the application (instead of the user's email and password).</p> <p>Since refresh tokens expire in 30 days, users must only re-enter their credentials once every month.</p> <p>You can find more in-depth information on authorization in the <a href="https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth">repository's README</a></p>
+<p>Authenticate the user with their email and password and receive an API token. Subsequent calls to the API should set the Authorization header with the API token, such as below:</p> <p><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOj._X_oyzQ9Lz-MedQeXUX7LdFNZyC3</code></p> <p>Each API token expires in thirty days. The API token should be stored locally on the user's device to prevent logging in every time the application is opened.</p> <p>You can find more in-depth information on authorization in the <a href="https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth">repository's README</a></p>
 
 ```
 POST /auth/login
@@ -43,49 +42,8 @@ POST /auth/login
 
 ```json
 {
-  "api": {
-      "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
-      "expiration": 1600809341558
-  },
-  "refresh": {
-      "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz.RVcYtudHgdZBZmgqlERsZfe",
-      "expiration": 1601441505925
-  }
-}
-```
-
-### Error response
-
-#### Error response - `Error 4xx`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
-| DatabaseError |  | <p>500 - An error occurred with the database</p> |
-
-## <a name='Refresh-API-token'></a> Refresh API token
-[Back to top](#top)
-
-<p>Using the user's stored refresh token, receive a new API token that will be used in subsequent calls to the API within the Authorization header.</p>
-
-```
-POST /auth/refresh
-```
-
-### Parameters - `Parameter`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| refresh_token | `String` | <p>The user's stored refresh token</p> |
-
-### Success response example
-
-#### Success response example - `Success Response:`
-
-```json
-{
-  "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
-  "expiration": 1600809341558
+    "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
+    "expiration": 1600809341558
 }
 ```
 

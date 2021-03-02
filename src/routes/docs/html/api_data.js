@@ -3,7 +3,7 @@ define({ "api": [
     "type": "post",
     "url": "/auth/login",
     "title": "Login",
-    "description": "<p>Authenticate the user with their email and password and receive an API token and a refresh token. Subsequent calls to the API should set the Authorization header with the API token, such as:</p> <p><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOj._X_oyzQ9Lz-MedQeXUX7LdFNZyC3</code></p> <p>Each API token expires in five minutes. Therefore, you must use the refresh token with /auth/refresh to receive a new API token.</p> <p>With this infrastructure, only the refresh token must be stored on the user's device to keep the user logged in upon reopening the application (instead of the user's email and password).</p> <p>Since refresh tokens expire in 30 days, users must only re-enter their credentials once every month.</p> <p>You can find more in-depth information on authorization in the <a href=\"https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth\">repository's README</a></p>",
+    "description": "<p>Authenticate the user with their email and password and receive an API token. Subsequent calls to the API should set the Authorization header with the API token, such as below:</p> <p><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOj._X_oyzQ9Lz-MedQeXUX7LdFNZyC3</code></p> <p>Each API token expires in thirty days. The API token should be stored locally on the user's device to prevent logging in every time the application is opened.</p> <p>You can find more in-depth information on authorization in the <a href=\"https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth\">repository's README</a></p>",
     "name": "UserLogin",
     "group": "AuthGroup",
     "parameter": {
@@ -30,7 +30,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success Response:",
-          "content": "{\n  \"api\": {\n      \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF\",\n      \"expiration\": 1600809341558\n  },\n  \"refresh\": {\n      \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz.RVcYtudHgdZBZmgqlERsZfe\",\n      \"expiration\": 1601441505925\n  }\n}",
+          "content": "{\n    \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF\",\n    \"expiration\": 1600809341558\n}",
           "type": "json"
         }
       ]
@@ -38,63 +38,6 @@ define({ "api": [
     "sampleRequest": [
       {
         "url": "https://jlemon.org/rat/api/v1/auth/login"
-      }
-    ],
-    "version": "0.0.0",
-    "filename": "/home/dustin/rat/src/routes/auth/auth.controller.js",
-    "groupTitle": "Auth",
-    "groupDescription": "<p>These endpoints define routes to authenticate users. There is in-depth documentation on the authorization process in the <a href=\"https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth\">repository's README</a>.</p>",
-    "error": {
-      "fields": {
-        "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "BadRequestError",
-            "description": "<p>400 - The request has missing or invalid parameters</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "DatabaseError",
-            "description": "<p>500 - An error occurred with the database</p>"
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "post",
-    "url": "/auth/refresh",
-    "title": "Refresh API token",
-    "description": "<p>Using the user's stored refresh token, receive a new API token that will be used in subsequent calls to the API within the Authorization header.</p>",
-    "name": "UserRefreshToken",
-    "group": "AuthGroup",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "refresh_token",
-            "description": "<p>The user's stored refresh token</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success Response:",
-          "content": "{\n  \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF\",\n  \"expiration\": 1600809341558\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "sampleRequest": [
-      {
-        "url": "https://jlemon.org/rat/api/v1/auth/refresh"
       }
     ],
     "version": "0.0.0",
