@@ -13,6 +13,7 @@
    - [List of user roles](#List-of-user-roles)
  - [UserGroup](#UserGroup)
    - [Current user profile](#Current-user-profile)
+   - [Nearby tutors](#Nearby-tutors)
    - [User profile](#User-profile)
 
 ___
@@ -227,6 +228,51 @@ GET /user/profile/me
        "name": "Student"
    }
 }
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='Nearby-tutors'></a> Nearby tutors
+[Back to top](#top)
+
+<p>Get nearby tutors ordered by distance</p>
+
+```
+GET /user/nearby/:distance
+```
+
+### Headers - `Request Headers`
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
+
+### Parameters - `URL Parameters`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| distance | `Number` | <p>The distance in miles to search</p> |
+
+### Success response example
+
+#### Success response example - `Success Response:`
+
+```json
+ [{
+   "id": 11,
+   "name": "Joey",
+   "phone": "6159468534",
+   "dob": "2000-03-24",
+   "gender": "Male",
+   "role": "Tutor"
+}]
 ```
 
 ### Error response

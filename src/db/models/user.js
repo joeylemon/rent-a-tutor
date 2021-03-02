@@ -24,6 +24,18 @@ import Role from './role.js'
  *     }
  *  }
  */
+/**
+ * @apiDefine UserSimpleArrayReturn Return an array of simplified user objects
+ * @apiSuccessExample Success Response:
+ *   [{
+ *     "id": 11,
+ *     "name": "Joey",
+ *     "phone": "6159468534",
+ *     "dob": "2000-03-24",
+ *     "gender": "Male",
+ *     "role": "Tutor"
+ *  }]
+ */
 export default class User extends Sequelize.Model { }
 
 User.init({
@@ -38,8 +50,7 @@ User.init({
     dob: Sequelize.DATEONLY,
     city: Sequelize.STRING(20),
     state: Sequelize.STRING(20),
-    latitude: Sequelize.FLOAT,
-    longitude: Sequelize.FLOAT,
+    location: Sequelize.GEOMETRY('POINT'),
     genderId: Sequelize.INTEGER(10),
     roleId: Sequelize.INTEGER(10)
 }, {
