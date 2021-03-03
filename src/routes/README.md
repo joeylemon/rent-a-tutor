@@ -85,22 +85,31 @@ POST /auth/register
 #### Success response example - `Success Response:`
 
 ```json
- {
-   "id": 11,
-   "email": "t@t.com",
-   "name": "Joey",
-   "phone": "6159468534",
-   "dob": "2000-03-24",
-   "createdAt": "2021-02-16T16:27:21.000Z",
-   "updatedAt": "2021-02-16T16:27:21.000Z",
-   "gender": {
-       "id": 1,
-       "name": "Male"
-   },
-   "role": {
-       "id": 1,
-       "name": "Student"
-   }
+{
+    "id": 14,
+    "email": "j@j.com",
+    "name": "jimmy",
+    "phone": "8657777777",
+    "dob": "1991-08-15",
+    "city": "Alabaster",
+    "state": "Alabama",
+    "location": {
+        "type": "Point",
+        "coordinates": [
+            35.9116543,
+            -84.0866346
+        ]
+    },
+    "createdAt": "2021-03-01T23:47:37.000Z",
+    "updatedAt": "2021-03-01T23:47:37.000Z",
+    "gender": {
+        "id": 1,
+        "name": "Male"
+    },
+    "role": {
+        "id": 1,
+        "name": "Student"
+    }
 }
 ```
 
@@ -211,22 +220,31 @@ GET /user/profile/me
 #### Success response example - `Success Response:`
 
 ```json
- {
-   "id": 11,
-   "email": "t@t.com",
-   "name": "Joey",
-   "phone": "6159468534",
-   "dob": "2000-03-24",
-   "createdAt": "2021-02-16T16:27:21.000Z",
-   "updatedAt": "2021-02-16T16:27:21.000Z",
-   "gender": {
-       "id": 1,
-       "name": "Male"
-   },
-   "role": {
-       "id": 1,
-       "name": "Student"
-   }
+{
+    "id": 14,
+    "email": "j@j.com",
+    "name": "jimmy",
+    "phone": "8657777777",
+    "dob": "1991-08-15",
+    "city": "Alabaster",
+    "state": "Alabama",
+    "location": {
+        "type": "Point",
+        "coordinates": [
+            35.9116543,
+            -84.0866346
+        ]
+    },
+    "createdAt": "2021-03-01T23:47:37.000Z",
+    "updatedAt": "2021-03-01T23:47:37.000Z",
+    "gender": {
+        "id": 1,
+        "name": "Male"
+    },
+    "role": {
+        "id": 1,
+        "name": "Student"
+    }
 }
 ```
 
@@ -310,22 +328,31 @@ GET /user/profile/:id
 #### Success response example - `Success Response:`
 
 ```json
- {
-   "id": 11,
-   "email": "t@t.com",
-   "name": "Joey",
-   "phone": "6159468534",
-   "dob": "2000-03-24",
-   "createdAt": "2021-02-16T16:27:21.000Z",
-   "updatedAt": "2021-02-16T16:27:21.000Z",
-   "gender": {
-       "id": 1,
-       "name": "Male"
-   },
-   "role": {
-       "id": 1,
-       "name": "Student"
-   }
+{
+    "id": 14,
+    "email": "j@j.com",
+    "name": "jimmy",
+    "phone": "8657777777",
+    "dob": "1991-08-15",
+    "city": "Alabaster",
+    "state": "Alabama",
+    "location": {
+        "type": "Point",
+        "coordinates": [
+            35.9116543,
+            -84.0866346
+        ]
+    },
+    "createdAt": "2021-03-01T23:47:37.000Z",
+    "updatedAt": "2021-03-01T23:47:37.000Z",
+    "gender": {
+        "id": 1,
+        "name": "Male"
+    },
+    "role": {
+        "id": 1,
+        "name": "Student"
+    }
 }
 ```
 

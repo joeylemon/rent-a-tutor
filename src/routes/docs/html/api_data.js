@@ -152,7 +152,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success Response:",
-          "content": " {\n   \"id\": 11,\n   \"email\": \"t@t.com\",\n   \"name\": \"Joey\",\n   \"phone\": \"6159468534\",\n   \"dob\": \"2000-03-24\",\n   \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n   \"updatedAt\": \"2021-02-16T16:27:21.000Z\",\n   \"gender\": {\n       \"id\": 1,\n       \"name\": \"Male\"\n   },\n   \"role\": {\n       \"id\": 1,\n       \"name\": \"Student\"\n   }\n}",
+          "content": "{\n    \"id\": 14,\n    \"email\": \"j@j.com\",\n    \"name\": \"jimmy\",\n    \"phone\": \"8657777777\",\n    \"dob\": \"1991-08-15\",\n    \"city\": \"Alabaster\",\n    \"state\": \"Alabama\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"createdAt\": \"2021-03-01T23:47:37.000Z\",\n    \"updatedAt\": \"2021-03-01T23:47:37.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 1,\n        \"name\": \"Student\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -332,7 +332,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success Response:",
-          "content": " {\n   \"id\": 11,\n   \"email\": \"t@t.com\",\n   \"name\": \"Joey\",\n   \"phone\": \"6159468534\",\n   \"dob\": \"2000-03-24\",\n   \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n   \"updatedAt\": \"2021-02-16T16:27:21.000Z\",\n   \"gender\": {\n       \"id\": 1,\n       \"name\": \"Male\"\n   },\n   \"role\": {\n       \"id\": 1,\n       \"name\": \"Student\"\n   }\n}",
+          "content": "{\n    \"id\": 14,\n    \"email\": \"j@j.com\",\n    \"name\": \"jimmy\",\n    \"phone\": \"8657777777\",\n    \"dob\": \"1991-08-15\",\n    \"city\": \"Alabaster\",\n    \"state\": \"Alabama\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"createdAt\": \"2021-03-01T23:47:37.000Z\",\n    \"updatedAt\": \"2021-03-01T23:47:37.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 1,\n        \"name\": \"Student\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -486,7 +486,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success Response:",
-          "content": " {\n   \"id\": 11,\n   \"email\": \"t@t.com\",\n   \"name\": \"Joey\",\n   \"phone\": \"6159468534\",\n   \"dob\": \"2000-03-24\",\n   \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n   \"updatedAt\": \"2021-02-16T16:27:21.000Z\",\n   \"gender\": {\n       \"id\": 1,\n       \"name\": \"Male\"\n   },\n   \"role\": {\n       \"id\": 1,\n       \"name\": \"Student\"\n   }\n}",
+          "content": "{\n    \"id\": 14,\n    \"email\": \"j@j.com\",\n    \"name\": \"jimmy\",\n    \"phone\": \"8657777777\",\n    \"dob\": \"1991-08-15\",\n    \"city\": \"Alabaster\",\n    \"state\": \"Alabama\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"createdAt\": \"2021-03-01T23:47:37.000Z\",\n    \"updatedAt\": \"2021-03-01T23:47:37.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 1,\n        \"name\": \"Student\"\n    }\n}",
           "type": "json"
         }
       ]
