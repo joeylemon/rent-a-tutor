@@ -31,6 +31,8 @@ export async function getUserByID (id) {
         where: { id: id }
     })
 
+    if (!user) { throw new BadRequestError(`user with id ${id} doesn't exist`) }
+
     user.avatar = baseURL + user.getAvatarURL()
 
     return user

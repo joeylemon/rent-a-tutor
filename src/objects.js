@@ -7,6 +7,16 @@ const HTTP_CODE = {
     INTERNAL_SERVER: 500
 }
 
+/**
+ * @apiDefine SuccessResponse
+ * @apiSuccessExample Success Response:
+ * {
+ *     "name": "Success",
+ *     "id": 1,
+ *     "code": 200,
+ *     "message": "..."
+ * }
+ */
 export class SuccessResponse {
     constructor (message = '200 OK', name = 'Success', code = HTTP_CODE.OK, id = 1) {
         this.message = message

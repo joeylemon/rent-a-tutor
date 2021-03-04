@@ -4,27 +4,27 @@
 
 
  - [AuthGroup](#AuthGroup)
-   - [Login](#Login)
-   - [Register user](#Register-user)
+   - [1. Login](#1.-Login)
+   - [2. Register user](#2.-Register-user)
  - [ListsGroup](#ListsGroup)
-   - [List of genders](#List-of-genders)
-   - [List of U.S. cities](#List-of-U.S.-cities)
-   - [List of U.S. states](#List-of-U.S.-states)
-   - [List of user roles](#List-of-user-roles)
+   - [1. List of genders](#1.-List-of-genders)
+   - [2. List of user roles](#2.-List-of-user-roles)
+   - [3. List of U.S. states](#3.-List-of-U.S.-states)
+   - [4. List of U.S. cities](#4.-List-of-U.S.-cities)
  - [UserGroup](#UserGroup)
-   - [Change user avatar](#Change-user-avatar)
-   - [Current user profile](#Current-user-profile)
-   - [Nearby tutors](#Nearby-tutors)
-   - [Other user profile](#Other-user-profile)
-   - [Update user location](#Update-user-location)
-   - [Update user profile](#Update-user-profile)
+   - [1. Current user profile](#1.-Current-user-profile)
+   - [2. Update user profile](#2.-Update-user-profile)
+   - [3. Update user location](#3.-Update-user-location)
+   - [4. Update user avatar](#4.-Update-user-avatar)
+   - [5. Find nearby tutors](#5.-Find-nearby-tutors)
+   - [6. View other user profile](#6.-View-other-user-profile)
 
 ___
 
 
 # <a name='AuthGroup'></a> AuthGroup
 
-## <a name='Login'></a> Login
+## <a name='1.-Login'></a> 1. Login
 [Back to top](#top)
 
 <p>Authenticate the user with their email and password and receive an API token. Subsequent calls to the API should set the Authorization header with the API token, such as below:</p> <p><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOj._X_oyzQ9Lz-MedQeXUX7LdFNZyC3</code></p> <p>Each API token expires in thirty days. The API token should be stored locally on the user's device to prevent logging in every time the application is opened.</p> <p>You can find more in-depth information on authorization in the <a href="https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth">repository's README</a></p>
@@ -60,7 +60,7 @@ POST /auth/login
 | BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='Register-user'></a> Register user
+## <a name='2.-Register-user'></a> 2. Register user
 [Back to top](#top)
 
 <p>Register a new user with the application</p>
@@ -128,7 +128,7 @@ POST /auth/register
 
 # <a name='ListsGroup'></a> ListsGroup
 
-## <a name='List-of-genders'></a> List of genders
+## <a name='1.-List-of-genders'></a> 1. List of genders
 [Back to top](#top)
 
 <p>Retrieve the list of genders</p>
@@ -145,7 +145,41 @@ GET /lists/genders
 |----------|------------|---------------------------------------|
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='List-of-U.S.-cities'></a> List of U.S. cities
+## <a name='2.-List-of-user-roles'></a> 2. List of user roles
+[Back to top](#top)
+
+<p>Retrieve the list of user roles</p>
+
+```
+GET /lists/roles
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='3.-List-of-U.S.-states'></a> 3. List of U.S. states
+[Back to top](#top)
+
+<p>Retrieve the list of U.S. states</p>
+
+```
+GET /lists/states
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='4.-List-of-U.S.-cities'></a> 4. List of U.S. cities
 [Back to top](#top)
 
 <p>Retrieve a list of U.S. cities within a state</p>
@@ -168,82 +202,9 @@ GET /lists/cities/:state
 |----------|------------|---------------------------------------|
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='List-of-U.S.-states'></a> List of U.S. states
-[Back to top](#top)
-
-<p>Retrieve the list of U.S. states</p>
-
-```
-GET /lists/states
-```
-
-### Error response
-
-#### Error response - `Error 4xx`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| DatabaseError |  | <p>500 - An error occurred with the database</p> |
-
-## <a name='List-of-user-roles'></a> List of user roles
-[Back to top](#top)
-
-<p>Retrieve the list of user roles</p>
-
-```
-GET /lists/roles
-```
-
-### Error response
-
-#### Error response - `Error 4xx`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| DatabaseError |  | <p>500 - An error occurred with the database</p> |
-
 # <a name='UserGroup'></a> UserGroup
 
-## <a name='Change-user-avatar'></a> Change user avatar
-[Back to top](#top)
-
-<p>Upload a new image to be the user's avatar</p> <p>Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so, so you can try it out at the <a href="https://jlemon.org/rat/api/v1/docs/multipart.html">multipart/form test page</a></p>
-
-```
-POST /user/profile/edit/avatar
-```
-
-### Headers - `Request Headers`
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| Content-Type | `String` | <p>multipart/form-data</p> |
-| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
-
-### Parameters - `Parameter`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| image | `File` | <p>The user's new profile picture</p> |
-
-### Success response example
-
-#### Success response example - `Success Response:`
-
-```json
-OK
-```
-
-### Error response
-
-#### Error response - `Error 4xx`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
-| DatabaseError |  | <p>500 - An error occurred with the database</p> |
-
-## <a name='Current-user-profile'></a> Current user profile
+## <a name='1.-Current-user-profile'></a> 1. Current user profile
 [Back to top](#top)
 
 <p>Get the current user's profile information</p>
@@ -301,7 +262,147 @@ GET /user/profile/me
 | UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='Nearby-tutors'></a> Nearby tutors
+## <a name='2.-Update-user-profile'></a> 2. Update user profile
+[Back to top](#top)
+
+<p>Update a specific field of a user's profile</p>
+
+```
+POST /user/profile/edit/:field
+```
+
+### Headers - `Request Headers`
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
+
+### Parameters - `URL Parameters`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| field | `String` | <p>The field of the profile to update</p> |
+
+### Parameters - `Parameter`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| value | `String` | <p>The field value</p> |
+
+### Success response example
+
+#### Success response example - `Success Response:`
+
+```json
+{
+    "name": "Success",
+    "id": 1,
+    "code": 200,
+    "message": "..."
+}
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
+| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='3.-Update-user-location'></a> 3. Update user location
+[Back to top](#top)
+
+<p>Update the user's location to provide more accurate nearby tutors</p>
+
+```
+POST /user/profile/edit/location
+```
+
+### Headers - `Request Headers`
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
+
+### Parameters - `Parameter`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| latitude | `Float` | <p>The new latitude value</p> |
+| longitude | `Float` | <p>The new longitude value</p> |
+
+### Success response example
+
+#### Success response example - `Success Response:`
+
+```json
+{
+    "name": "Success",
+    "id": 1,
+    "code": 200,
+    "message": "..."
+}
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
+| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='4.-Update-user-avatar'></a> 4. Update user avatar
+[Back to top](#top)
+
+<p>Upload a new image to be the user's avatar</p> <p>Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so, so you can try it out at the <a href="https://jlemon.org/rat/api/v1/docs/multipart.html">multipart/form test page</a></p>
+
+```
+POST /user/profile/edit/avatar
+```
+
+### Headers - `Request Headers`
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| Content-Type | `String` | <p>multipart/form-data</p> |
+| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
+
+### Parameters - `Parameter`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| image | `File` | <p>The user's new profile picture</p> |
+
+### Success response example
+
+#### Success response example - `Success Response:`
+
+```json
+{
+    "name": "Success",
+    "id": 1,
+    "code": 200,
+    "message": "..."
+}
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
+| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='5.-Find-nearby-tutors'></a> 5. Find nearby tutors
 [Back to top](#top)
 
 <p>Get nearby tutors ordered by distance</p>
@@ -346,7 +447,7 @@ GET /user/nearby/:distance
 | UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='Other-user-profile'></a> Other user profile
+## <a name='6.-View-other-user-profile'></a> 6. View other user profile
 [Back to top](#top)
 
 <p>Get another user's profile information</p>
@@ -407,88 +508,6 @@ GET /user/profile/:id
 
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
-| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
-| DatabaseError |  | <p>500 - An error occurred with the database</p> |
-
-## <a name='Update-user-location'></a> Update user location
-[Back to top](#top)
-
-<p>Update the user's location to provide more accurate nearby tutors</p>
-
-```
-POST /user/profile/edit/location
-```
-
-### Headers - `Request Headers`
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
-
-### Parameters - `Parameter`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| latitude | `Float` | <p>The new latitude value</p> |
-| longitude | `Float` | <p>The new longitude value</p> |
-
-### Success response example
-
-#### Success response example - `Success Response:`
-
-```json
-OK
-```
-
-### Error response
-
-#### Error response - `Error 4xx`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
-| DatabaseError |  | <p>500 - An error occurred with the database</p> |
-
-## <a name='Update-user-profile'></a> Update user profile
-[Back to top](#top)
-
-<p>Update a specific field of a user's profile</p>
-
-```
-POST /user/profile/edit/:field
-```
-
-### Headers - `Request Headers`
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
-
-### Parameters - `URL Parameters`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| field | `String` | <p>The field of the profile to update</p> |
-
-### Parameters - `Parameter`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| value | `String` | <p>The field value</p> |
-
-### Success response example
-
-#### Success response example - `Success Response:`
-
-```json
-OK
-```
-
-### Error response
-
-#### Error response - `Error 4xx`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
+| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
 | UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |

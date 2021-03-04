@@ -5,7 +5,7 @@ import * as ListService from './lists.service.js'
 const router = express.Router()
 
 /**
- * @api {get} /lists/genders List of genders
+ * @api {get} /lists/genders 1. List of genders
  * @apiDescription Retrieve the list of genders
  * @apiName ListsGenders
  * @apiGroup ListsGroup
@@ -23,7 +23,7 @@ router.get('/genders', async (req, res, next) => {
 })
 
 /**
- * @api {get} /lists/roles List of user roles
+ * @api {get} /lists/roles 2. List of user roles
  * @apiDescription Retrieve the list of user roles
  * @apiName ListsRoles
  * @apiGroup ListsGroup
@@ -41,7 +41,7 @@ router.get('/roles', async (req, res, next) => {
 })
 
 /**
- * @api {get} /lists/states List of U.S. states
+ * @api {get} /lists/states 3. List of U.S. states
  * @apiDescription Retrieve the list of U.S. states
  * @apiName ListsStates
  * @apiGroup ListsGroup
@@ -59,7 +59,7 @@ router.get('/states', async (req, res, next) => {
 })
 
 /**
- * @api {get} /lists/cities/:state List of U.S. cities
+ * @api {get} /lists/cities/:state 4. List of U.S. cities
  * @apiDescription Retrieve a list of U.S. cities within a state
  * @apiName ListsCities
  * @apiGroup ListsGroup

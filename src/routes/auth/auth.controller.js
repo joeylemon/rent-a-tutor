@@ -5,7 +5,7 @@ import * as UserService from '../user/user.service.js'
 const router = express.Router()
 
 /**
- * @api {post} /auth/login Login
+ * @api {post} /auth/login 1. Login
  * @apiDescription Authenticate the user with their email and password and receive an API
  * token. Subsequent calls to the API should set the Authorization header with the API
  * token, such as below:
@@ -41,7 +41,7 @@ router.post('/login', async (req, res, next) => {
 })
 
 /**
- * @api {post} /auth/register Register user
+ * @api {post} /auth/register 2. Register user
  * @apiDescription Register a new user with the application
  * @apiName UserRegister
  * @apiGroup AuthGroup

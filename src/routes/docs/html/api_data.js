@@ -2,7 +2,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "/auth/login",
-    "title": "Login",
+    "title": "1. Login",
     "description": "<p>Authenticate the user with their email and password and receive an API token. Subsequent calls to the API should set the Authorization header with the API token, such as below:</p> <p><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOj._X_oyzQ9Lz-MedQeXUX7LdFNZyC3</code></p> <p>Each API token expires in thirty days. The API token should be stored locally on the user's device to prevent logging in every time the application is opened.</p> <p>You can find more in-depth information on authorization in the <a href=\"https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth\">repository's README</a></p>",
     "name": "UserLogin",
     "group": "AuthGroup",
@@ -66,7 +66,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "/auth/register",
-    "title": "Register user",
+    "title": "2. Register user",
     "description": "<p>Register a new user with the application</p>",
     "name": "UserRegister",
     "group": "AuthGroup",
@@ -179,7 +179,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/lists/cities/:state",
-    "title": "List of U.S. cities",
+    "title": "4. List of U.S. cities",
     "description": "<p>Retrieve a list of U.S. cities within a state</p>",
     "name": "ListsCities",
     "group": "ListsGroup",
@@ -221,7 +221,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/lists/genders",
-    "title": "List of genders",
+    "title": "1. List of genders",
     "description": "<p>Retrieve the list of genders</p>",
     "name": "ListsGenders",
     "group": "ListsGroup",
@@ -250,7 +250,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/lists/roles",
-    "title": "List of user roles",
+    "title": "2. List of user roles",
     "description": "<p>Retrieve the list of user roles</p>",
     "name": "ListsRoles",
     "group": "ListsGroup",
@@ -279,7 +279,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/lists/states",
-    "title": "List of U.S. states",
+    "title": "3. List of U.S. states",
     "description": "<p>Retrieve the list of U.S. states</p>",
     "name": "ListsStates",
     "group": "ListsGroup",
@@ -308,7 +308,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/user/profile/me",
-    "title": "Current user profile",
+    "title": "1. Current user profile",
     "description": "<p>Get the current user's profile information</p>",
     "permission": [
       {
@@ -372,7 +372,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "/user/profile/edit/avatar",
-    "title": "Change user avatar",
+    "title": "4. Update user avatar",
     "description": "<p>Upload a new image to be the user's avatar</p> <p>Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so, so you can try it out at the <a href=\"https://jlemon.org/rat/api/v1/docs/multipart.html\">multipart/form test page</a></p>",
     "permission": [
       {
@@ -416,22 +416,28 @@ define({ "api": [
         ]
       }
     },
-    "success": {
-      "examples": [
-        {
-          "title": "Success Response:",
-          "content": "OK",
-          "type": "json"
-        }
-      ]
-    },
     "version": "0.0.0",
     "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
     "groupTitle": "User",
     "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n    \"name\": \"Success\",\n    \"id\": 1,\n    \"code\": 200,\n    \"message\": \"...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "error": {
       "fields": {
         "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequestError",
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
           {
             "group": "Error 4xx",
             "optional": false,
@@ -451,7 +457,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/user/nearby/:distance",
-    "title": "Nearby tutors",
+    "title": "5. Find nearby tutors",
     "description": "<p>Get nearby tutors ordered by distance</p>",
     "permission": [
       {
@@ -528,7 +534,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/user/profile/:id",
-    "title": "Other user profile",
+    "title": "6. View other user profile",
     "description": "<p>Get another user's profile information</p>",
     "permission": [
       {
@@ -576,6 +582,12 @@ define({ "api": [
           {
             "group": "Error 4xx",
             "optional": false,
+            "field": "BadRequestError",
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
             "field": "UnauthorizedError",
             "description": "<p>401 - The request presents invalid authentication values</p>"
           },
@@ -605,7 +617,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "/user/profile/edit/location",
-    "title": "Update user location",
+    "title": "3. Update user location",
     "description": "<p>Update the user's location to provide more accurate nearby tutors</p>",
     "permission": [
       {
@@ -636,15 +648,6 @@ define({ "api": [
         ]
       }
     },
-    "success": {
-      "examples": [
-        {
-          "title": "Success Response:",
-          "content": "OK",
-          "type": "json"
-        }
-      ]
-    },
     "version": "0.0.0",
     "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
     "groupTitle": "User",
@@ -654,9 +657,24 @@ define({ "api": [
         "url": "https://jlemon.org/rat/api/v1/user/profile/edit/location"
       }
     ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n    \"name\": \"Success\",\n    \"id\": 1,\n    \"code\": 200,\n    \"message\": \"...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "error": {
       "fields": {
         "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequestError",
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
           {
             "group": "Error 4xx",
             "optional": false,
@@ -689,7 +707,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "/user/profile/edit/:field",
-    "title": "Update user profile",
+    "title": "2. Update user profile",
     "description": "<p>Update a specific field of a user's profile</p>",
     "permission": [
       {
@@ -722,15 +740,6 @@ define({ "api": [
         ]
       }
     },
-    "success": {
-      "examples": [
-        {
-          "title": "Success Response:",
-          "content": "OK",
-          "type": "json"
-        }
-      ]
-    },
     "version": "0.0.0",
     "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
     "groupTitle": "User",
@@ -740,6 +749,15 @@ define({ "api": [
         "url": "https://jlemon.org/rat/api/v1/user/profile/edit/:field"
       }
     ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n    \"name\": \"Success\",\n    \"id\": 1,\n    \"code\": 200,\n    \"message\": \"...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "error": {
       "fields": {
         "Error 4xx": [
@@ -748,6 +766,12 @@ define({ "api": [
             "optional": false,
             "field": "UnauthorizedError",
             "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequestError",
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
           },
           {
             "group": "Error 4xx",
