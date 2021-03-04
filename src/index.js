@@ -40,8 +40,7 @@ router.use('/user', user)
 
 /**
  * @apiDefine ListsGroup Lists
- * These endpoints define routes to retrieve serverside lists that can be used throughout
- * the application via foreign key ids. Use the endpoints to populate front-end dropdowns
+ * These endpoints define routes to retrieve serverside lists. Use these endpoints to populate front-end dropdowns.
  * such as profile creation genders.
  */
 router.use('/lists', lists)

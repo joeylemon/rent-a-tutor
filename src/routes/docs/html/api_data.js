@@ -204,7 +204,7 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
     "groupTitle": "Lists",
-    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists that can be used throughout the application via foreign key ids. Use the endpoints to populate front-end dropdowns such as profile creation genders.</p>",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists. Use these endpoints to populate front-end dropdowns. such as profile creation genders.</p>",
     "error": {
       "fields": {
         "Error 4xx": [
@@ -233,7 +233,7 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
     "groupTitle": "Lists",
-    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists that can be used throughout the application via foreign key ids. Use the endpoints to populate front-end dropdowns such as profile creation genders.</p>",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists. Use these endpoints to populate front-end dropdowns. such as profile creation genders.</p>",
     "error": {
       "fields": {
         "Error 4xx": [
@@ -262,7 +262,7 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
     "groupTitle": "Lists",
-    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists that can be used throughout the application via foreign key ids. Use the endpoints to populate front-end dropdowns such as profile creation genders.</p>",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists. Use these endpoints to populate front-end dropdowns. such as profile creation genders.</p>",
     "error": {
       "fields": {
         "Error 4xx": [
@@ -291,7 +291,7 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
     "groupTitle": "Lists",
-    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists that can be used throughout the application via foreign key ids. Use the endpoints to populate front-end dropdowns such as profile creation genders.</p>",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists. Use these endpoints to populate front-end dropdowns. such as profile creation genders.</p>",
     "error": {
       "fields": {
         "Error 4xx": [

@@ -103,6 +103,8 @@ CREATE TABLE `user` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `createdAt` datetime DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP,
+  `genderId` int(10) DEFAULT NULL,
+  `roleId` int(10) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `password` char(60) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
@@ -110,15 +112,14 @@ CREATE TABLE `user` (
   `phone` varchar(15) DEFAULT NULL,
   `city` varchar(20) DEFAULT NULL,
   `state` varchar(20) DEFAULT NULL,
-  `genderId` int(10) DEFAULT NULL,
-  `roleId` int(10) DEFAULT NULL,
   `location` point DEFAULT NULL,
+  `avatar` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_gender_FK` (`genderId`),
   KEY `user_role_FK` (`roleId`),
   CONSTRAINT `user_gender_FK` FOREIGN KEY (`genderId`) REFERENCES `gender` (`id`),
   CONSTRAINT `user_role_FK` FOREIGN KEY (`roleId`) REFERENCES `role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +128,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'2020-09-22 19:00:34','2020-09-22 19:00:34','joeyclemon@gmail.com','dfdsfdsf','Joey Lemon',NULL,'6159468534','Knoxville','TN',1,2,_binary '\0\0\0\0\0\0\0≥R\ÏÛ\÷ıA@+!\ƒ\ÈLU¿'),(6,'2020-09-23 01:38:39','2020-09-23 01:38:39','test@test.com','$2b$10$JH4PDBq6ddDViUvYFVJXo.NdsYv5t9UCPCymK559RtHk/y42nBd2y','test smith',NULL,'111','Knoxville','TN',1,2,_binary '\0\0\0\0\0\0\0p>ˆA@	xˇ\ÈWU¿'),(8,'2020-09-23 18:13:38','2020-09-23 18:13:38','dsgr@gf.dfg','$2b$10$j.c8w3XtTiA5jjvQLmwyCOA0zazRox3JhIO3GQmMXs97NrCtIoHXu','dsgr',NULL,NULL,'Knoxville','TN',1,1,_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿'),(9,'2020-09-23 18:32:21','2020-09-23 18:32:21','test@test.net','$2b$10$sdLmcKrTK.vmLBWA/6Pwiej3kXGvflYF5NJHLJmM5SC5xdLjaK7mO','123',NULL,NULL,'Knoxville','TN',1,1,_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿'),(10,'2020-09-25 01:31:00','2020-09-25 01:31:00','joey@jlemon.org','$2b$10$oN8hDIaAGGy4OpO/Nami0OEICuvSZ/AVNglxpqxw1bb1Xfeitypia','joey',NULL,NULL,'Knoxville','TN',1,1,_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿'),(11,'2021-02-16 16:27:21','2021-02-16 16:27:21','t@t.com','$2b$10$/tdYAjEPg3Fc10O0VBiMNO9U9PI5k8eQI8V0oiw/7ppVnefS6Lq1q','Joey','2000-03-24','6159468534','Knoxville','TN',1,2,_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿'),(13,'2021-03-01 23:41:17','2021-03-01 23:41:17','jneville0815@yahoo.com','$2b$10$nOjT07dTm9SXg4TjnzFOF.fD7gMmWZyZarj1iKSRW7VtYOVZMEiQa','James','1991-08-15','8654408251','Knoxville','Tennessee',1,1,_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿'),(14,'2021-03-01 23:47:37','2021-03-01 23:47:37','j@j.com','$2b$10$.9.8HJFLbqJHKc5010YhfOc51pbPqF9VweANY.30w8AGVH19an1Ju','jimmy','1991-08-15','8657777777','Alabaster','Alabama',1,1,_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿'),(16,'2021-03-02 02:01:10','2021-03-02 02:01:10','asdf@aewgf.com','$2b$10$xTsrKouUKGJnb/VXUdw3L./EeOabG1ESLuR4KG0udsZZKiVIc1bk2','asdfasdfasdf','1991-07-30','1111111111','Concord','North Carolina',1,1,_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿'),(17,'2021-03-02 02:01:27','2021-03-02 02:01:27','asdf@aa.com','$2b$10$kaE8vfX8WgjjmFIib7/rT.kDCwp3FvGoIlH4vM2x6knUJx3reHZNG','asdfasdfasdf','1991-07-30','1111111111','Concord','North Carolina',2,2,_binary '\0\0\0\0\0\0\0ò¨Z®\„˜A@(E∞é>U¿'),(20,'2021-03-02 02:40:38','2021-03-02 02:40:38','y@y.com','$2b$10$9ESF4oE0e17iOUSpD6wZ1Oek8seAGyM0ZH/a4bi9EbRwq6R66dtIy','jimmy','1991-08-15','3334445555','Batesville','Arkansas',1,1,_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿');
+INSERT INTO `user` VALUES (1,'2020-09-22 19:00:34','2020-09-22 19:00:34',1,2,'joeyclemon@gmail.com','dfdsfdsf','Joey Lemon',NULL,'6159468534','Knoxville','TN',_binary '\0\0\0\0\0\0\0≥R\ÏÛ\÷ıA@+!\ƒ\ÈLU¿',NULL),(6,'2020-09-23 01:38:39','2020-09-23 01:38:39',1,2,'test@test.com','$2b$10$JH4PDBq6ddDViUvYFVJXo.NdsYv5t9UCPCymK559RtHk/y42nBd2y','test smith',NULL,'111','Knoxville','TN',_binary '\0\0\0\0\0\0\0p>ˆA@	xˇ\ÈWU¿',NULL),(8,'2020-09-23 18:13:38','2020-09-23 18:13:38',1,1,'dsgr@gf.dfg','$2b$10$j.c8w3XtTiA5jjvQLmwyCOA0zazRox3JhIO3GQmMXs97NrCtIoHXu','dsgr',NULL,NULL,'Knoxville','TN',_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿',NULL),(9,'2020-09-23 18:32:21','2020-09-23 18:32:21',1,1,'test@test.net','$2b$10$sdLmcKrTK.vmLBWA/6Pwiej3kXGvflYF5NJHLJmM5SC5xdLjaK7mO','123',NULL,NULL,'Knoxville','TN',_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿',NULL),(10,'2020-09-25 01:31:00','2020-09-25 01:31:00',1,1,'joey@jlemon.org','$2b$10$oN8hDIaAGGy4OpO/Nami0OEICuvSZ/AVNglxpqxw1bb1Xfeitypia','joey',NULL,NULL,'Knoxville','TN',_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿',NULL),(11,'2021-02-16 16:27:21','2021-03-04 21:59:07',1,2,'t@t.com','$2b$10$/tdYAjEPg3Fc10O0VBiMNO9U9PI5k8eQI8V0oiw/7ppVnefS6Lq1q','Joey','2000-03-24','6159468534','Knoxville','TN',_binary '\0\0\0\0\0\0\0\0\0\0\0\0\0B@\0\0\0\0\0\0U¿','72efc655702a6732304a58ac13e2b2.png'),(13,'2021-03-01 23:41:17','2021-03-01 23:41:17',1,1,'jneville0815@yahoo.com','$2b$10$nOjT07dTm9SXg4TjnzFOF.fD7gMmWZyZarj1iKSRW7VtYOVZMEiQa','James','1991-08-15','8654408251','Knoxville','Tennessee',_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿',NULL),(14,'2021-03-01 23:47:37','2021-03-01 23:47:37',1,1,'j@j.com','$2b$10$.9.8HJFLbqJHKc5010YhfOc51pbPqF9VweANY.30w8AGVH19an1Ju','jimmy','1991-08-15','8657777777','Alabaster','Alabama',_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿',NULL),(16,'2021-03-02 02:01:10','2021-03-02 02:01:10',1,1,'asdf@aewgf.com','$2b$10$xTsrKouUKGJnb/VXUdw3L./EeOabG1ESLuR4KG0udsZZKiVIc1bk2','asdfasdfasdf','1991-07-30','1111111111','Concord','North Carolina',_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿',NULL),(17,'2021-03-02 02:01:27','2021-03-02 02:01:27',2,2,'asdf@aa.com','$2b$10$kaE8vfX8WgjjmFIib7/rT.kDCwp3FvGoIlH4vM2x6knUJx3reHZNG','asdfasdfasdf','1991-07-30','1111111111','Concord','North Carolina',_binary '\0\0\0\0\0\0\0ò¨Z®\„˜A@(E∞é>U¿',NULL),(20,'2021-03-02 02:40:38','2021-03-02 02:40:38',1,1,'y@y.com','$2b$10$9ESF4oE0e17iOUSpD6wZ1Oek8seAGyM0ZH/a4bi9EbRwq6R66dtIy','jimmy','1991-08-15','3334445555','Batesville','Arkansas',_binary '\0\0\0\0\0\0\0ˇ\‡ç±ÙA@\Ól\ŸkãU¿',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -140,4 +141,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-03  2:47:15
+-- Dump completed on 2021-03-04 22:18:13

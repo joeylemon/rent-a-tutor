@@ -115,6 +115,7 @@ export async function getAvatarPath (id) {
         where: { id: id }
     })
 
+    if (!user) { throw new BadRequestError(`user with id ${id} doesn't exist`) }
     if (!user.avatar) { return `${imagesDirectory}/default_avatar.png` }
 
     return user.getAvatarFilepath()
