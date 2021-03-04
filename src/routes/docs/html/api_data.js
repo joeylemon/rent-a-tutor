@@ -152,7 +152,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success Response:",
-          "content": "{\n    \"id\": 14,\n    \"email\": \"j@j.com\",\n    \"name\": \"jimmy\",\n    \"phone\": \"8657777777\",\n    \"dob\": \"1991-08-15\",\n    \"city\": \"Alabaster\",\n    \"state\": \"Alabama\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"createdAt\": \"2021-03-01T23:47:37.000Z\",\n    \"updatedAt\": \"2021-03-01T23:47:37.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 1,\n        \"name\": \"Student\"\n    }\n}",
+          "content": "{\n    \"id\": 11,\n    \"email\": \"t@t.com\",\n    \"name\": \"Joey\",\n    \"phone\": \"6159468534\",\n    \"dob\": \"2000-03-24\",\n    \"city\": \"Knoxville\",\n    \"state\": \"TN\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"avatar\": \"https://jlemon.org/rat/api/v1/user/profile/11/avatar\",\n    \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n    \"updatedAt\": \"2021-03-04T21:28:26.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 2,\n        \"name\": \"Tutor\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -332,7 +332,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success Response:",
-          "content": "{\n    \"id\": 14,\n    \"email\": \"j@j.com\",\n    \"name\": \"jimmy\",\n    \"phone\": \"8657777777\",\n    \"dob\": \"1991-08-15\",\n    \"city\": \"Alabaster\",\n    \"state\": \"Alabama\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"createdAt\": \"2021-03-01T23:47:37.000Z\",\n    \"updatedAt\": \"2021-03-01T23:47:37.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 1,\n        \"name\": \"Student\"\n    }\n}",
+          "content": "{\n    \"id\": 11,\n    \"email\": \"t@t.com\",\n    \"name\": \"Joey\",\n    \"phone\": \"6159468534\",\n    \"dob\": \"2000-03-24\",\n    \"city\": \"Knoxville\",\n    \"state\": \"TN\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"avatar\": \"https://jlemon.org/rat/api/v1/user/profile/11/avatar\",\n    \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n    \"updatedAt\": \"2021-03-04T21:28:26.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 2,\n        \"name\": \"Tutor\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -364,6 +364,85 @@ define({ "api": [
             "optional": false,
             "field": "Authorization",
             "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/user/profile/edit/avatar",
+    "title": "Change user avatar",
+    "description": "<p>Upload a new image to be the user's avatar</p> <p>Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so, so you can try it out at the <a href=\"https://jlemon.org/rat/api/v1/docs/multipart.html\">multipart/form test page</a></p>",
+    "permission": [
+      {
+        "name": "Token",
+        "title": "The Authorization header must be set",
+        "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
+      }
+    ],
+    "name": "UserEditAvatar",
+    "group": "UserGroup",
+    "header": {
+      "fields": {
+        "Request Headers": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>multipart/form-data</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "File",
+            "optional": false,
+            "field": "image",
+            "description": "<p>The user's new profile picture</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "OK",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
+    "groupTitle": "User",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
           }
         ]
       }
@@ -449,8 +528,8 @@ define({ "api": [
   {
     "type": "get",
     "url": "/user/profile/:id",
-    "title": "User profile",
-    "description": "<p>Get a user's profile information</p>",
+    "title": "Other user profile",
+    "description": "<p>Get another user's profile information</p>",
     "permission": [
       {
         "name": "Token",
@@ -486,11 +565,181 @@ define({ "api": [
       "examples": [
         {
           "title": "Success Response:",
-          "content": "{\n    \"id\": 14,\n    \"email\": \"j@j.com\",\n    \"name\": \"jimmy\",\n    \"phone\": \"8657777777\",\n    \"dob\": \"1991-08-15\",\n    \"city\": \"Alabaster\",\n    \"state\": \"Alabama\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"createdAt\": \"2021-03-01T23:47:37.000Z\",\n    \"updatedAt\": \"2021-03-01T23:47:37.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 1,\n        \"name\": \"Student\"\n    }\n}",
+          "content": "{\n    \"id\": 11,\n    \"email\": \"t@t.com\",\n    \"name\": \"Joey\",\n    \"phone\": \"6159468534\",\n    \"dob\": \"2000-03-24\",\n    \"city\": \"Knoxville\",\n    \"state\": \"TN\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"avatar\": \"https://jlemon.org/rat/api/v1/user/profile/11/avatar\",\n    \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n    \"updatedAt\": \"2021-03-04T21:28:26.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 2,\n        \"name\": \"Tutor\"\n    }\n}",
           "type": "json"
         }
       ]
     },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Request Headers": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/user/profile/edit/location",
+    "title": "Update user location",
+    "description": "<p>Update the user's location to provide more accurate nearby tutors</p>",
+    "permission": [
+      {
+        "name": "Token",
+        "title": "The Authorization header must be set",
+        "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
+      }
+    ],
+    "name": "UserUpdateLocation",
+    "group": "UserGroup",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Float",
+            "optional": false,
+            "field": "latitude",
+            "description": "<p>The new latitude value</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Float",
+            "optional": false,
+            "field": "longitude",
+            "description": "<p>The new longitude value</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "OK",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
+    "groupTitle": "User",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/user/profile/edit/location"
+      }
+    ],
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Request Headers": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/user/profile/edit/:field",
+    "title": "Update user profile",
+    "description": "<p>Update a specific field of a user's profile</p>",
+    "permission": [
+      {
+        "name": "Token",
+        "title": "The Authorization header must be set",
+        "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
+      }
+    ],
+    "name": "UserUpdateProfile",
+    "group": "UserGroup",
+    "parameter": {
+      "fields": {
+        "URL Parameters": [
+          {
+            "group": "URL Parameters",
+            "type": "String",
+            "optional": false,
+            "field": "field",
+            "description": "<p>The field of the profile to update</p>"
+          }
+        ],
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "value",
+            "description": "<p>The field value</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "OK",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
+    "groupTitle": "User",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/user/profile/edit/:field"
+      }
+    ],
     "error": {
       "fields": {
         "Error 4xx": [

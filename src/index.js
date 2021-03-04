@@ -1,9 +1,8 @@
 /**
- * Controller-Service Model
+ * TODO:
  *
- * Controller: controllers are in charge of setting up endpoints and calling the
- *             appropriate service function. only the controllers have references to the req object
- * Service:    services do most of the work and contain the business logic, editing database models when necessary
+ * - endpoint to modify profile value
+ * - endpoint to upload profile picture
  *
  */
 
@@ -11,7 +10,6 @@ import express from 'express'
 import bodyParser from 'body-parser'
 
 import { RequestError, UndefinedRouteError, InternalServerError } from './objects.js'
-import { authorize } from './routes/auth/auth.service.js'
 import { logger } from './constants.js'
 
 import docs from './routes/docs/router.js'
@@ -38,7 +36,7 @@ router.use('/auth', auth)
  * @apiDefine UserGroup User
  * These endpoints define routes to interact with users.
  */
-router.use('/user', authorize, user)
+router.use('/user', user)
 
 /**
  * @apiDefine ListsGroup Lists
@@ -69,7 +67,7 @@ app.use((err, req, res, next) => {
 })
 
 // Unknown routes
-app.get('*', (req, res) => {
+app.all('*', (req, res) => {
     const err = new UndefinedRouteError()
     res.status(err.code).json(err.toJSON())
 })

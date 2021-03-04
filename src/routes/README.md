@@ -12,9 +12,12 @@
    - [List of U.S. states](#List-of-U.S.-states)
    - [List of user roles](#List-of-user-roles)
  - [UserGroup](#UserGroup)
+   - [Change user avatar](#Change-user-avatar)
    - [Current user profile](#Current-user-profile)
    - [Nearby tutors](#Nearby-tutors)
-   - [User profile](#User-profile)
+   - [Other user profile](#Other-user-profile)
+   - [Update user location](#Update-user-location)
+   - [Update user profile](#Update-user-profile)
 
 ___
 
@@ -86,13 +89,13 @@ POST /auth/register
 
 ```json
 {
-    "id": 14,
-    "email": "j@j.com",
-    "name": "jimmy",
-    "phone": "8657777777",
-    "dob": "1991-08-15",
-    "city": "Alabaster",
-    "state": "Alabama",
+    "id": 11,
+    "email": "t@t.com",
+    "name": "Joey",
+    "phone": "6159468534",
+    "dob": "2000-03-24",
+    "city": "Knoxville",
+    "state": "TN",
     "location": {
         "type": "Point",
         "coordinates": [
@@ -100,15 +103,16 @@ POST /auth/register
             -84.0866346
         ]
     },
-    "createdAt": "2021-03-01T23:47:37.000Z",
-    "updatedAt": "2021-03-01T23:47:37.000Z",
+    "avatar": "https://jlemon.org/rat/api/v1/user/profile/11/avatar",
+    "createdAt": "2021-02-16T16:27:21.000Z",
+    "updatedAt": "2021-03-04T21:28:26.000Z",
     "gender": {
         "id": 1,
         "name": "Male"
     },
     "role": {
-        "id": 1,
-        "name": "Student"
+        "id": 2,
+        "name": "Tutor"
     }
 }
 ```
@@ -200,6 +204,45 @@ GET /lists/roles
 
 # <a name='UserGroup'></a> UserGroup
 
+## <a name='Change-user-avatar'></a> Change user avatar
+[Back to top](#top)
+
+<p>Upload a new image to be the user's avatar</p> <p>Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so, so you can try it out at the <a href="https://jlemon.org/rat/api/v1/docs/multipart.html">multipart/form test page</a></p>
+
+```
+POST /user/profile/edit/avatar
+```
+
+### Headers - `Request Headers`
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| Content-Type | `String` | <p>multipart/form-data</p> |
+| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
+
+### Parameters - `Parameter`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| image | `File` | <p>The user's new profile picture</p> |
+
+### Success response example
+
+#### Success response example - `Success Response:`
+
+```json
+OK
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
 ## <a name='Current-user-profile'></a> Current user profile
 [Back to top](#top)
 
@@ -221,13 +264,13 @@ GET /user/profile/me
 
 ```json
 {
-    "id": 14,
-    "email": "j@j.com",
-    "name": "jimmy",
-    "phone": "8657777777",
-    "dob": "1991-08-15",
-    "city": "Alabaster",
-    "state": "Alabama",
+    "id": 11,
+    "email": "t@t.com",
+    "name": "Joey",
+    "phone": "6159468534",
+    "dob": "2000-03-24",
+    "city": "Knoxville",
+    "state": "TN",
     "location": {
         "type": "Point",
         "coordinates": [
@@ -235,15 +278,16 @@ GET /user/profile/me
             -84.0866346
         ]
     },
-    "createdAt": "2021-03-01T23:47:37.000Z",
-    "updatedAt": "2021-03-01T23:47:37.000Z",
+    "avatar": "https://jlemon.org/rat/api/v1/user/profile/11/avatar",
+    "createdAt": "2021-02-16T16:27:21.000Z",
+    "updatedAt": "2021-03-04T21:28:26.000Z",
     "gender": {
         "id": 1,
         "name": "Male"
     },
     "role": {
-        "id": 1,
-        "name": "Student"
+        "id": 2,
+        "name": "Tutor"
     }
 }
 ```
@@ -302,10 +346,10 @@ GET /user/nearby/:distance
 | UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='User-profile'></a> User profile
+## <a name='Other-user-profile'></a> Other user profile
 [Back to top](#top)
 
-<p>Get a user's profile information</p>
+<p>Get another user's profile information</p>
 
 ```
 GET /user/profile/:id
@@ -329,13 +373,13 @@ GET /user/profile/:id
 
 ```json
 {
-    "id": 14,
-    "email": "j@j.com",
-    "name": "jimmy",
-    "phone": "8657777777",
-    "dob": "1991-08-15",
-    "city": "Alabaster",
-    "state": "Alabama",
+    "id": 11,
+    "email": "t@t.com",
+    "name": "Joey",
+    "phone": "6159468534",
+    "dob": "2000-03-24",
+    "city": "Knoxville",
+    "state": "TN",
     "location": {
         "type": "Point",
         "coordinates": [
@@ -343,17 +387,101 @@ GET /user/profile/:id
             -84.0866346
         ]
     },
-    "createdAt": "2021-03-01T23:47:37.000Z",
-    "updatedAt": "2021-03-01T23:47:37.000Z",
+    "avatar": "https://jlemon.org/rat/api/v1/user/profile/11/avatar",
+    "createdAt": "2021-02-16T16:27:21.000Z",
+    "updatedAt": "2021-03-04T21:28:26.000Z",
     "gender": {
         "id": 1,
         "name": "Male"
     },
     "role": {
-        "id": 1,
-        "name": "Student"
+        "id": 2,
+        "name": "Tutor"
     }
 }
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='Update-user-location'></a> Update user location
+[Back to top](#top)
+
+<p>Update the user's location to provide more accurate nearby tutors</p>
+
+```
+POST /user/profile/edit/location
+```
+
+### Headers - `Request Headers`
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
+
+### Parameters - `Parameter`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| latitude | `Float` | <p>The new latitude value</p> |
+| longitude | `Float` | <p>The new longitude value</p> |
+
+### Success response example
+
+#### Success response example - `Success Response:`
+
+```json
+OK
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='Update-user-profile'></a> Update user profile
+[Back to top](#top)
+
+<p>Update a specific field of a user's profile</p>
+
+```
+POST /user/profile/edit/:field
+```
+
+### Headers - `Request Headers`
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
+
+### Parameters - `URL Parameters`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| field | `String` | <p>The field of the profile to update</p> |
+
+### Parameters - `Parameter`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| value | `String` | <p>The field value</p> |
+
+### Success response example
+
+#### Success response example - `Success Response:`
+
+```json
+OK
 ```
 
 ### Error response

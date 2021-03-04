@@ -1,5 +1,16 @@
+import crypto from 'crypto'
 import emailValidator from 'email-validator'
 import { BadRequestError } from './objects.js'
+
+/**
+ * Generate a random string with the given length
+ * @param {number} len The length of the resulting string
+ * @example
+ *     randString(30) => "be38cbbc30063121815a8148a8276e"
+ */
+export function randString (len) {
+    return crypto.randomBytes(Math.floor(len / 2)).toString('hex')
+}
 
 /**
  * Given a list of form value keys, check to see all values in the form exist.
