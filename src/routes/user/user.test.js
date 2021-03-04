@@ -1,13 +1,13 @@
 import supertest from 'supertest'
-
 import should from 'should' // eslint-disable-line no-unused-vars
+import { baseURL } from '../../constants.js'
 
-const api = supertest.agent('https://jlemon.org/rat/api/v1')
+const api = supertest.agent(baseURL)
 
 describe('User Endpoints', () => {
     it('should return unauthorized', done => {
         api
-            .get('/user/list')
+            .get('/user/profile/me')
             .auth('bad_token', { type: 'bearer' })
             .expect('Content-type', /json/)
             .expect(401)
