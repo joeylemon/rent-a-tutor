@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt'
+import fs from 'fs'
+import { baseURL, imagesDirectory } from '../../constants.js'
 import { validateForm } from '../../utils.js'
-import { BadRequestError } from '../../objects.js'
+import { BadRequestError, SuccessResponse } from '../../objects.js'
 import User from '../../db/models/user.js'
 import Gender from '../../db/models/gender.js'
 import Role from '../../db/models/role.js'
@@ -17,8 +19,8 @@ export async function registerUser (form) {
     return User.create(form)
 }
 
-export function getUserByID (id) {
-    return User.findOne({
+export async function getUserByID (id) {
+    const user = await User.findOne({
         include: [{
             model: Gender,
             as: 'gender'
@@ -28,6 +30,10 @@ export function getUserByID (id) {
         }],
         where: { id: id }
     })
+
+    user.avatar = baseURL + user.getAvatarURL()
+
+    return user
 }
 
 export function getUserByEmail (email) {
@@ -49,4 +55,65 @@ export function getNearbyTutors (me, distance) {
         mapToModel: true,
         replacements: [me.location.coordinates[0], me.location.coordinates[1], distance]
     })
+}
+
+export async function updateUserProfile (me, field, value) {
+    if (!value) { throw new BadRequestError('missing value') }
+
+    me = await User.findOne({
+        where: { id: me.id }
+    })
+
+    if (!(field in me)) { throw new BadRequestError(`profile field ${field} doesnt' exist`) }
+
+    me[field] = value
+    await me.save()
+
+    return new SuccessResponse(`updated user ${field} to ${value}`)
+}
+
+export async function updateUserLocation (me, form) {
+    validateForm(form, ['latitude', 'longitude'])
+    const latitude = parseFloat(form.latitude)
+    const longitude = parseFloat(form.longitude)
+
+    const point = { type: 'Point', coordinates: [latitude, longitude] }
+
+    me = await User.findOne({
+        where: { id: me.id }
+    })
+
+    me.location = point
+    await me.save()
+
+    return new SuccessResponse(`updated user location to (${latitude},${longitude})`)
+}
+
+export async function updateAvatar (me, file) {
+    if (!file) throw new BadRequestError('missing image file')
+
+    me = await User.findOne({
+        where: { id: me.id }
+    })
+    const oldFilepath = me.getAvatarFilepath()
+
+    me.avatar = file.filename
+    await me.save()
+
+    // Delete the previous avatar if the user had one
+    if (oldFilepath) {
+        fs.unlinkSync(oldFilepath)
+    }
+
+    return new SuccessResponse('updated user avatar')
+}
+
+export async function getAvatarPath (id) {
+    const user = await User.findOne({
+        where: { id: id }
+    })
+
+    if (!user.avatar) { return `${imagesDirectory}/default_avatar.png` }
+
+    return user.getAvatarFilepath()
 }

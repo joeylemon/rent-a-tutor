@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize'
+import { uploadDestination } from '../../constants.js'
 import db from '../db.js'
 import Gender from './gender.js'
 import Role from './role.js'
@@ -6,32 +7,33 @@ import Role from './role.js'
 /**
  * @apiDefine UserReturn Return a user object
  * @apiSuccessExample Success Response:
- *   {
- *       "id": 14,
- *       "email": "j@j.com",
- *       "name": "jimmy",
- *       "phone": "8657777777",
- *       "dob": "1991-08-15",
- *       "city": "Alabaster",
- *       "state": "Alabama",
- *       "location": {
- *           "type": "Point",
- *           "coordinates": [
- *               35.9116543,
- *               -84.0866346
- *           ]
- *       },
- *       "createdAt": "2021-03-01T23:47:37.000Z",
- *       "updatedAt": "2021-03-01T23:47:37.000Z",
- *       "gender": {
- *           "id": 1,
- *           "name": "Male"
- *       },
- *       "role": {
- *           "id": 1,
- *           "name": "Student"
- *       }
- *   }
+ * {
+ *     "id": 11,
+ *     "email": "t@t.com",
+ *     "name": "Joey",
+ *     "phone": "6159468534",
+ *     "dob": "2000-03-24",
+ *     "city": "Knoxville",
+ *     "state": "TN",
+ *     "location": {
+ *         "type": "Point",
+ *         "coordinates": [
+ *             35.9116543,
+ *             -84.0866346
+ *         ]
+ *     },
+ *     "avatar": "https://jlemon.org/rat/api/v1/user/profile/11/avatar",
+ *     "createdAt": "2021-02-16T16:27:21.000Z",
+ *     "updatedAt": "2021-03-04T21:28:26.000Z",
+ *     "gender": {
+ *         "id": 1,
+ *         "name": "Male"
+ *     },
+ *     "role": {
+ *         "id": 2,
+ *         "name": "Tutor"
+ *     }
+ * }
  */
 /**
  * @apiDefine UserSimpleArrayReturn Return an array of simplified user objects
@@ -45,7 +47,17 @@ import Role from './role.js'
  *     "role": "Tutor"
  *  }]
  */
-export default class User extends Sequelize.Model { }
+export default class User extends Sequelize.Model {
+    getAvatarFilepath () {
+        if (!this.avatar) return
+
+        return `${uploadDestination}/${this.avatar}`
+    }
+
+    getAvatarURL () {
+        return `/user/profile/${this.id}/avatar`
+    }
+}
 
 User.init({
     id: {
@@ -61,7 +73,8 @@ User.init({
     state: Sequelize.STRING(20),
     location: Sequelize.GEOMETRY('POINT'),
     genderId: Sequelize.INTEGER(10),
-    roleId: Sequelize.INTEGER(10)
+    roleId: Sequelize.INTEGER(10),
+    avatar: Sequelize.STRING(64)
 }, {
     sequelize: db,
     tableName: 'user',

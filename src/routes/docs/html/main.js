@@ -289,10 +289,6 @@ function init ($, _, locale, Handlebars, apiProject, apiData, Prism, sampleReque
         }
     }
 
-    // render pagetitle
-    var title = apiProject.title ? apiProject.title : 'apiDoc: ' + apiProject.name + ' - ' + apiProject.version
-    $(document).attr('title', title)
-
     // remove loader
     $('#loader').remove()
 
