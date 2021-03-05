@@ -26,31 +26,7 @@ router.get('/profile/me', authorize, async (req, res, next) => {
 })
 
 /**
- * @api {post} /user/profile/edit/:field 2. Update user profile
- * @apiDescription Update a specific field of a user's profile
- * @apiPermission Token
- * @apiName UserUpdateProfile
- * @apiGroup UserGroup
- *
- * @apiParam (URL Parameters) {String} field The field of the profile to update
- * @apiParam {String} value The field value
- *
- * @apiUse SuccessResponse
- * @apiUse UnauthorizedError
- * @apiUse BadRequestError
- * @apiUse DatabaseError
- * @apiUse Header
- */
-router.post('/profile/edit/:field', authorize, async (req, res, next) => {
-    try {
-        res.status(200).send(await UserService.updateUserProfile(res.locals.user, req.params.field, req.body.value))
-    } catch (err) {
-        next(err)
-    }
-})
-
-/**
- * @api {post} /user/profile/edit/location 3. Update user location
+ * @api {post} /user/profile/edit/location 2. Update user location
  * @apiDescription Update the user's location to provide more accurate nearby tutors
  * @apiPermission Token
  * @apiName UserUpdateLocation
@@ -74,7 +50,7 @@ router.post('/profile/edit/location', authorize, async (req, res, next) => {
 })
 
 /**
- * @api {post} /user/profile/edit/avatar 4. Update user avatar
+ * @api {post} /user/profile/edit/avatar 3. Update user avatar
  * @apiDescription Upload a new image to be the user's avatar
  *
  * Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so,
@@ -96,6 +72,30 @@ router.post('/profile/edit/location', authorize, async (req, res, next) => {
 router.post('/profile/edit/avatar', authorize, multerUpload.single('image'), async (req, res, next) => {
     try {
         res.status(200).send(await UserService.updateAvatar(res.locals.user, req.file))
+    } catch (err) {
+        next(err)
+    }
+})
+
+/**
+ * @api {post} /user/profile/edit/:field 4. Update user profile
+ * @apiDescription Update a specific field of a user's profile
+ * @apiPermission Token
+ * @apiName UserUpdateProfile
+ * @apiGroup UserGroup
+ *
+ * @apiParam (URL Parameters) {String} field The field of the profile to update
+ * @apiParam {String} value The field value
+ *
+ * @apiUse SuccessResponse
+ * @apiUse UnauthorizedError
+ * @apiUse BadRequestError
+ * @apiUse DatabaseError
+ * @apiUse Header
+ */
+router.post('/profile/edit/:field', authorize, async (req, res, next) => {
+    try {
+        res.status(200).send(await UserService.updateUserProfile(res.locals.user, req.params.field, req.body.value))
     } catch (err) {
         next(err)
     }

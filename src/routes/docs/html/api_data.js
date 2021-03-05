@@ -372,7 +372,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "/user/profile/edit/avatar",
-    "title": "4. Update user avatar",
+    "title": "3. Update user avatar",
     "description": "<p>Upload a new image to be the user's avatar</p> <p>Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so, so you can try it out at the <a href=\"https://jlemon.org/rat/api/v1/docs/multipart.html\">multipart/form test page</a></p>",
     "permission": [
       {
@@ -617,7 +617,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "/user/profile/edit/location",
-    "title": "3. Update user location",
+    "title": "2. Update user location",
     "description": "<p>Update the user's location to provide more accurate nearby tutors</p>",
     "permission": [
       {
@@ -707,7 +707,7 @@ define({ "api": [
   {
     "type": "post",
     "url": "/user/profile/edit/:field",
-    "title": "2. Update user profile",
+    "title": "4. Update user profile",
     "description": "<p>Update a specific field of a user's profile</p>",
     "permission": [
       {
