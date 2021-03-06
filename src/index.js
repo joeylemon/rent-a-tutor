@@ -10,6 +10,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 
 import { RequestError, UndefinedRouteError, InternalServerError } from './objects.js'
+import { getRequestInformation } from './utils.js'
 import { logger } from './constants.js'
 
 import docs from './routes/docs/router.js'
@@ -55,20 +56,20 @@ app.use('/api/v1', router)
 // Error handler middleware
 app.use((err, req, res, next) => {
     if (err instanceof RequestError) {
-        logger.child({ error: err.toJSON() }).error()
-        return res.status(err.code).json(err.toJSON())
+        logger.child({ request: getRequestInformation(req), error: err }).error()
+        return res.status(err.code).json(err)
     }
 
     const internalErr = new InternalServerError()
     internalErr.message = err.toString()
-    logger.child({ error: internalErr }).error()
+    logger.child({ request: getRequestInformation(req), error: internalErr }).error()
     res.status(500).json(internalErr)
 })
 
 // Unknown routes
 app.all('*', (req, res) => {
     const err = new UndefinedRouteError()
-    res.status(err.code).json(err.toJSON())
+    res.status(err.code).json(err)
 })
 
 const server = app.listen(6055, function () {

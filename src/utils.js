@@ -13,6 +13,17 @@ export function randString (len) {
 }
 
 /**
+ * Extract the useful information from a request object
+ * @param {Request} req The request object
+ * @example
+ *     logger.child({ request: getRequestInformation(req) }).info()
+ */
+export function getRequestInformation (req) {
+    if (req.body.password) delete req.body.password
+    return { path: req.url, method: req.method, body: req.body, src: req.headers['x-forwarded-for'], agent: req.headers['user-agent'] }
+}
+
+/**
  * Given a list of form value keys, check to see all values in the form exist.
  * If not, throw an error describing the invalid data
  * @param {object} form The req.body object from a request
