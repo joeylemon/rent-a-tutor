@@ -31,7 +31,7 @@ export async function authorize (req, res, next) {
 
         // Find user with token and id
         const user = await User.findOne({ where: { id: decoded.id } })
-        if (!user) { return next(new BadRequestError('cannot find user')) }
+        if (!user) { return next(new UnauthorizedError('user does not exist in database')) }
 
         // Save the user and token values in the response object
         res.locals.user = user
@@ -39,9 +39,7 @@ export async function authorize (req, res, next) {
 
         next()
     } catch (err) {
-        if (err instanceof jwt.JsonWebTokenError) {
-            return next(new UnauthorizedError(err.toString()))
-        }
+        if (err instanceof jwt.JsonWebTokenError) { return next(new UnauthorizedError(err.toString())) }
         next(err)
     }
 }
