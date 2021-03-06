@@ -19,4 +19,19 @@ describe('Auth Endpoints', () => {
             })
             .catch(err => done(err))
     })
+
+    it('should not allow registration', done => {
+        api
+            .post('/auth/register')
+            .send({ email: 'test@test.net', password: '12345678' })
+            .expect('Content-type', /json/)
+            .expect(400)
+            .then(res => {
+                res.body.should.be.instanceof(Object)
+                res.body.should.have.property('message')
+                res.body.message.should.containEql('missing')
+                done()
+            })
+            .catch(err => done(err))
+    })
 })

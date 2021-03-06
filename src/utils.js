@@ -1,6 +1,12 @@
 import crypto from 'crypto'
-import emailValidator from 'email-validator'
 import { BadRequestError } from './objects.js'
+
+const regexPatterns = {
+    // eslint-disable-next-line
+    email: /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/,
+    // eslint-disable-next-line
+    phone: /^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/
+}
 
 /**
  * Generate a random string with the given length
@@ -24,6 +30,31 @@ export function getRequestInformation (req) {
 }
 
 /**
+ * Check if the given email is valid
+ * @param {String} email The email to validate
+ * @example
+ *     validateEmail("a@b") => false
+ *     validateEmail("t@t.com") => true
+ */
+function validateEmail (email) {
+    if (!email) { return false }
+
+    if (email.length > 254) { return false }
+
+    var valid = regexPatterns.email.test(email)
+    if (!valid) { return false }
+
+    // Further checking of some things regex can't handle
+    var parts = email.split('@')
+    if (parts[0].length > 64) { return false }
+
+    var domainParts = parts[1].split('.')
+    if (domainParts.some(function (part) { return part.length > 63 })) { return false }
+
+    return true
+}
+
+/**
  * Given a list of form value keys, check to see all values in the form exist.
  * If not, throw an error describing the invalid data
  * @param {object} form The req.body object from a request
@@ -39,12 +70,12 @@ export function validateForm (form, defs) {
     if (invalidKey) { throw new BadRequestError(`${invalidKey} is missing`) }
 
     // Validate emails
-    if (form.email && !emailValidator.validate(form.email)) { throw new BadRequestError('email is invalid') }
+    if (form.email && !validateEmail(form.email)) { throw new BadRequestError('email is invalid') }
 
     // Validate passwords
     if (form.password) {
         if (form.password.length < 8) { throw new BadRequestError('password is too short') } else if (form.password.length > 70) { throw new BadRequestError('password is too long') }
     }
 
-    if (form.phone && !/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/.test(form.phone)) { throw new BadRequestError('phone number is invalid') }
+    if (form.phone && !regexPatterns.phone.test(form.phone)) { throw new BadRequestError('phone number is invalid') }
 }
