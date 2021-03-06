@@ -5,60 +5,89 @@ import { baseURL } from '../../constants.js'
 const api = supertest.agent(baseURL)
 
 describe('User Endpoints', () => {
-    it('should return unauthorized', done => {
-        api
-            .get('/user/profile/me')
-            .auth('bad_token', { type: 'bearer' })
-            .expect('Content-type', /json/)
-            .expect(401)
-            .end((err, res) => {
-                if (err) return done(err)
+    let token
 
-                res.status.should.equal(401)
-                res.body.should.be.instanceof(Object)
-                res.body.should.have.property('code')
-                res.body.should.have.property('message')
-                done()
-            })
-    })
-
-    // it('should return list of users', done => {
-    //     api
-    //         .post('/auth/login')
-    //         .send({ email: 'test@test.net', password: '12345678' })
-    //         .expect('Content-type', /json/)
-    //         .expect(200)
-    //         .then(res => {
-    //             return api
-    //                 .get('/user/list')
-    //                 .auth(res.body.token, { type: 'bearer' })
-    //                 .expect('Content-type', /json/)
-    //                 .expect(200)
-    //         })
-    //         .then(res => {
-    //             res.body.should.be.instanceof(Array)
-    //             done()
-    //         })
-    //         .catch(err => done(err))
-    // })
-
-    it("shouldn't allow malformed api tokens", done => {
+    // Get an API token before performing tests
+    before(done => {
         api
             .post('/auth/login')
             .send({ email: 'test@test.net', password: '12345678' })
             .expect('Content-type', /json/)
             .expect(200)
             .then(res => {
-                return api
-                    .get('/user/profile/me')
-                    .auth('1' + res.body.token + '1', { type: 'bearer' })
-                    .expect('Content-type', /json/)
-                    .expect(401)
+                token = res.body.token
+                done()
             })
+            .catch(err => done(err))
+    })
+
+    it('should return user profile', done => {
+        api
+            .get('/user/profile/me')
+            .auth(token, { type: 'bearer' })
+            .expect('Content-type', /json/)
+            .expect(200)
             .then(res => {
                 res.body.should.be.instanceof(Object)
-                res.body.should.have.property('code')
-                res.body.should.have.property('message')
+                res.body.should.have.property('id')
+                res.body.should.have.property('email')
+                res.body.should.have.property('name')
+                res.body.should.have.property('phone')
+                done()
+            })
+            .catch(err => done(err))
+    })
+
+    it('should update user location', done => {
+        api
+            .post('/user/profile/edit/location')
+            .send({ latitude: '0', longitude: '0' })
+            .auth(token, { type: 'bearer' })
+            .expect('Content-type', /json/)
+            .expect(200)
+            .then(res => {
+                res.body.name.toLowerCase().should.equal('success')
+                done()
+            })
+            .catch(err => done(err))
+    })
+
+    it('should not allow strings for location floats', done => {
+        api
+            .post('/user/profile/edit/location')
+            .send({ latitude: 'abc', longitude: '0' })
+            .auth(token, { type: 'bearer' })
+            .expect('Content-type', /json/)
+            .expect(400)
+            .then(() => {
+                done()
+            })
+            .catch(err => done(err))
+    })
+
+    it('should update user name', done => {
+        api
+            .post('/user/profile/edit/name')
+            .send({ value: 'tester' })
+            .auth(token, { type: 'bearer' })
+            .expect('Content-type', /json/)
+            .expect(200)
+            .then(res => {
+                res.body.name.toLowerCase().should.equal('success')
+                res.body.message.should.containEql('tester')
+                done()
+            })
+            .catch(err => done(err))
+    })
+
+    it('should not edit invalid profile field', done => {
+        api
+            .post('/user/profile/edit/invalid_field')
+            .send({ value: 'tester' })
+            .auth(token, { type: 'bearer' })
+            .expect('Content-type', /json/)
+            .expect(400)
+            .then(() => {
                 done()
             })
             .catch(err => done(err))

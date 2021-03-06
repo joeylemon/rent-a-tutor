@@ -66,7 +66,7 @@ export async function updateUserProfile (me, field, value) {
         where: { id: me.id }
     })
 
-    if (!(field in me)) { throw new BadRequestError(`profile field ${field} doesnt' exist`) }
+    if (!(field in me)) { throw new BadRequestError(`profile field ${field} does not exist`) }
 
     me[field] = value
     await me.save()
@@ -78,6 +78,8 @@ export async function updateUserLocation (me, form) {
     validateForm(form, ['latitude', 'longitude'])
     const latitude = parseFloat(form.latitude)
     const longitude = parseFloat(form.longitude)
+
+    if (isNaN(latitude) || isNaN(longitude)) { throw new BadRequestError(`(${form.latitude},${form.longitude}) is not a valid location`) }
 
     const point = { type: 'Point', coordinates: [latitude, longitude] }
 
