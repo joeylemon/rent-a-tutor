@@ -1,8 +1,8 @@
 /**
  * TODO:
  *
- * - endpoint to modify profile value
- * - endpoint to upload profile picture
+ * - messages between users
+ * - S3 for file uploads
  *
  */
 

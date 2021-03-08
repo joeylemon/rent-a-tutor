@@ -1,8 +1,21 @@
+import fs from 'fs'
+import path from 'path'
+
 import db from '../../db/db.js'
 import { BadRequestError } from '../../objects.js'
+import { dirs } from '../../constants.js'
 
 import Gender from '../../db/models/gender.js'
 import Role from '../../db/models/role.js'
+
+export function getEndpoints () {
+    const list = JSON.parse(fs.readFileSync(path.join(dirs.routes, 'endpoints.json')))
+
+    const endpoints = {}
+    for (const endpoint of list) { endpoints[endpoint.name] = endpoint.url }
+
+    return endpoints
+}
 
 export function getGenders () {
     return Gender.findAll()

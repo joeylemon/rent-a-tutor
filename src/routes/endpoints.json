@@ -1,4 +1,4 @@
-define({ "api": [
+[
   {
     "type": "post",
     "url": "/auth/login",
@@ -813,4 +813,4 @@ define({ "api": [
       }
     }
   }
-] });
+]

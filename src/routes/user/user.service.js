@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import fs from 'fs'
-import { baseURL, imagesDirectory } from '../../constants.js'
+import { baseURL, dirs } from '../../constants.js'
 import { validateForm } from '../../utils.js'
 import { BadRequestError, SuccessResponse } from '../../objects.js'
 import User from '../../db/models/user.js'
@@ -118,7 +118,7 @@ export async function getAvatarPath (id) {
     })
 
     if (!user) { throw new BadRequestError(`user with id ${id} doesn't exist`) }
-    if (!user.avatar) { return `${imagesDirectory}/default_avatar.png` }
+    if (!user.avatar) { return `${dirs.images}/default_avatar.png` }
 
     return user.getAvatarFilepath()
 }

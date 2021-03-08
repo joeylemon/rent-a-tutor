@@ -1,9 +1,9 @@
-[
+define({ "api": [
   {
     "type": "post",
     "url": "/auth/login",
-    "title": "Login",
-    "description": "<p>Authenticate the user with their email and password and receive an API token to use for further requests. Subsequent calls to the API should set the Authorization header with the token, such as:</p> <p><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOj._X_oyzQ9Lz-MedQeXUX7LdFNZyC3</code></p>",
+    "title": "1. Login",
+    "description": "<p>Authenticate the user with their email and password and receive an API token. Subsequent calls to the API should set the Authorization header with the API token, such as below:</p> <p><code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJpYXQiOj._X_oyzQ9Lz-MedQeXUX7LdFNZyC3</code></p> <p>Each API token expires in thirty days. The API token should be stored locally on the user's device to prevent logging in every time the application is opened.</p> <p>You can find more in-depth information on authorization in the <a href=\"https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth\">repository's README</a></p>",
     "name": "UserLogin",
     "group": "AuthGroup",
     "parameter": {
@@ -26,66 +26,47 @@
         ]
       }
     },
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n    \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF\",\n    \"expiration\": 1600809341558\n}",
+          "type": "json"
+        }
+      ]
+    },
     "sampleRequest": [
       {
         "url": "https://jlemon.org/rat/api/v1/auth/login"
       }
     ],
     "version": "0.0.0",
-    "filename": "/home/dustin/rat/routes/auth/auth.controller.js",
+    "filename": "/home/dustin/rat/src/routes/auth/auth.controller.js",
     "groupTitle": "Auth",
-    "groupDescription": "<p>This endpoint defines routes to authenticate users</p>",
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "token",
-            "description": "<p>The token string to put in the Authorization header</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "expiration",
-            "description": "<p>The UNIX timestamp at which the token expires</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success Response:",
-          "content": "{\n  \"token\": \"n8tMnthS$V5*8^iyu1HEhX63\",\n  \"expiration\": 1600809341558\n}",
-          "type": "json"
-        }
-      ]
-    },
+    "groupDescription": "<p>These endpoints define routes to authenticate users. There is in-depth documentation on the authorization process in the <a href=\"https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth\">repository's README</a>.</p>",
     "error": {
       "fields": {
         "Error 4xx": [
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "InvalidParameters",
-            "description": "<p>The request has missing or invalid parameters</p>"
+            "field": "BadRequestError",
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Error Response:",
-          "content": "{\n  \"code\": 403,\n  \"message\": \"The request has missing or invalid parameters.\"\n}",
-          "type": "json"
-        }
-      ]
+      }
     }
   },
   {
     "type": "post",
     "url": "/auth/register",
-    "title": "Register user",
+    "title": "2. Register user",
     "description": "<p>Register a new user with the application</p>",
     "name": "UserRegister",
     "group": "AuthGroup",
@@ -116,80 +97,62 @@
           {
             "group": "Parameter",
             "type": "String",
-            "optional": true,
+            "optional": false,
+            "field": "city",
+            "description": "<p>The user's city</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "state",
+            "description": "<p>The user's state</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
             "field": "phone",
             "description": "<p>The user's phone number</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
-            "optional": true,
+            "optional": false,
             "field": "dob",
             "description": "<p>The user's date of birth</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "genderId",
+            "description": "<p>The user's gender ID</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "roleId",
+            "description": "<p>The user's role ID</p>"
           }
         ]
       }
     },
     "version": "0.0.0",
-    "filename": "/home/dustin/rat/routes/auth/auth.controller.js",
+    "filename": "/home/dustin/rat/src/routes/auth/auth.controller.js",
     "groupTitle": "Auth",
-    "groupDescription": "<p>This endpoint defines routes to authenticate users</p>",
+    "groupDescription": "<p>These endpoints define routes to authenticate users. There is in-depth documentation on the authorization process in the <a href=\"https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth\">repository's README</a>.</p>",
     "sampleRequest": [
       {
         "url": "https://jlemon.org/rat/api/v1/auth/register"
       }
     ],
     "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "id",
-            "description": "<p>The user's unique id number</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "email",
-            "description": "<p>The user's email</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "password",
-            "description": "<p>The user's password</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "name",
-            "description": "<p>The user's full name</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "phone",
-            "description": "<p>The user's phone number</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "dob",
-            "description": "<p>The user's date of birth</p>"
-          }
-        ]
-      },
       "examples": [
         {
           "title": "Success Response:",
-          "content": "{\n  \"id\": 1,\n  \"email\": \"joeyclemon@gmail.com\",\n  \"password\": \"$2b$10$De765bJQ6XJV7CgloIxGkOfpetjiDzsbfcWkApas1Ez3DsjHkGJ5S\",\n  \"name\": \"Joey Lemon\",\n  \"phone\": \"6159468534\"\n}",
+          "content": "{\n    \"id\": 11,\n    \"email\": \"t@t.com\",\n    \"name\": \"Joey\",\n    \"phone\": \"6159468534\",\n    \"dob\": \"2000-03-24\",\n    \"city\": \"Knoxville\",\n    \"state\": \"TN\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"avatar\": \"https://jlemon.org/rat/api/v1/user/profile/11/avatar\",\n    \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n    \"updatedAt\": \"2021-03-04T21:28:26.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 2,\n        \"name\": \"Tutor\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -200,25 +163,153 @@
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "InvalidParameters",
-            "description": "<p>The request has missing or invalid parameters</p>"
+            "field": "BadRequestError",
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
           }
         ]
-      },
-      "examples": [
-        {
-          "title": "Error Response:",
-          "content": "{\n  \"code\": 403,\n  \"message\": \"The request has missing or invalid parameters.\"\n}",
-          "type": "json"
-        }
-      ]
+      }
     }
   },
   {
     "type": "get",
-    "url": "/user/list",
-    "title": "List users",
-    "description": "<p>Get the list of all registered users</p>",
+    "url": "/lists/cities/:state",
+    "title": "4. List of U.S. cities",
+    "description": "<p>Retrieve a list of U.S. cities within a state</p>",
+    "name": "ListsCities",
+    "group": "ListsGroup",
+    "parameter": {
+      "fields": {
+        "URL Parameters": [
+          {
+            "group": "URL Parameters",
+            "type": "String",
+            "optional": false,
+            "field": "state",
+            "description": "<p>The state to find cities within</p>"
+          }
+        ]
+      }
+    },
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/lists/cities/:state"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
+    "groupTitle": "Lists",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists. Use these endpoints to populate front-end dropdowns. such as profile creation genders.</p>",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/lists/genders",
+    "title": "1. List of genders",
+    "description": "<p>Retrieve the list of genders</p>",
+    "name": "ListsGenders",
+    "group": "ListsGroup",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/lists/genders"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
+    "groupTitle": "Lists",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists. Use these endpoints to populate front-end dropdowns. such as profile creation genders.</p>",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/lists/roles",
+    "title": "2. List of user roles",
+    "description": "<p>Retrieve the list of user roles</p>",
+    "name": "ListsRoles",
+    "group": "ListsGroup",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/lists/roles"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
+    "groupTitle": "Lists",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists. Use these endpoints to populate front-end dropdowns. such as profile creation genders.</p>",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/lists/states",
+    "title": "3. List of U.S. states",
+    "description": "<p>Retrieve the list of U.S. states</p>",
+    "name": "ListsStates",
+    "group": "ListsGroup",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/lists/states"
+      }
+    ],
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/lists/lists.controller.js",
+    "groupTitle": "Lists",
+    "groupDescription": "<p>These endpoints define routes to retrieve serverside lists. Use these endpoints to populate front-end dropdowns. such as profile creation genders.</p>",
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/user/profile/me",
+    "title": "1. Current user profile",
+    "description": "<p>Get the current user's profile information</p>",
     "permission": [
       {
         "name": "Token",
@@ -226,75 +317,22 @@
         "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
       }
     ],
-    "name": "ListUsers",
+    "name": "CurrentUserProfile",
     "group": "UserGroup",
     "version": "0.0.0",
-    "filename": "/home/dustin/rat/routes/user/user.controller.js",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
     "groupTitle": "User",
-    "groupDescription": "<p>This endpoint defines routes to update users.</p>",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
     "sampleRequest": [
       {
-        "url": "https://jlemon.org/rat/api/v1/user/list"
+        "url": "https://jlemon.org/rat/api/v1/user/profile/me"
       }
     ],
     "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "User[]",
-            "optional": false,
-            "field": "_",
-            "description": "<p>List of users</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "_.id",
-            "description": "<p>The user's unique id number</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "_.email",
-            "description": "<p>The user's email</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "_.password",
-            "description": "<p>The user's password</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "_.name",
-            "description": "<p>The user's full name</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "_.phone",
-            "description": "<p>The user's phone number</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": true,
-            "field": "_.dob",
-            "description": "<p>The user's date of birth</p>"
-          }
-        ]
-      },
       "examples": [
         {
           "title": "Success Response:",
-          "content": "[{\n  \"id\": 1,\n  \"email\": \"joeyclemon@gmail.com\",\n  \"password\": \"$2b$10$De765bJQ6XJV7CgloIxGkOfpetjiDzsbfcWkApas1Ez3DsjHkGJ5S\",\n  \"name\": \"Joey Lemon\",\n  \"phone\": \"6159468534\"\n}]",
+          "content": "{\n    \"id\": 11,\n    \"email\": \"t@t.com\",\n    \"name\": \"Joey\",\n    \"phone\": \"6159468534\",\n    \"dob\": \"2000-03-24\",\n    \"city\": \"Knoxville\",\n    \"state\": \"TN\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"avatar\": \"https://jlemon.org/rat/api/v1/user/profile/11/avatar\",\n    \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n    \"updatedAt\": \"2021-03-04T21:28:26.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 2,\n        \"name\": \"Tutor\"\n    }\n}",
           "type": "json"
         }
       ]
@@ -305,18 +343,444 @@
           {
             "group": "Error 4xx",
             "optional": false,
-            "field": "Unauthorized",
-            "description": "<p>The request presents invalid authentication values</p>"
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
           }
         ]
-      },
+      }
+    },
+    "header": {
+      "fields": {
+        "Request Headers": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/user/profile/edit/avatar",
+    "title": "3. Update user avatar",
+    "description": "<p>Upload a new image to be the user's avatar</p> <p>Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so, so you can try it out at the <a href=\"https://jlemon.org/rat/api/v1/docs/multipart.html\">multipart/form test page</a></p>",
+    "permission": [
+      {
+        "name": "Token",
+        "title": "The Authorization header must be set",
+        "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
+      }
+    ],
+    "name": "UserEditAvatar",
+    "group": "UserGroup",
+    "header": {
+      "fields": {
+        "Request Headers": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>multipart/form-data</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "File",
+            "optional": false,
+            "field": "image",
+            "description": "<p>The user's new profile picture</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
+    "groupTitle": "User",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "success": {
       "examples": [
         {
-          "title": "Error Response:",
-          "content": "{\n  \"code\": 401,\n  \"message\": \"The given authentication is invalid. Please check the API token in the Authorization header.\"\n}",
+          "title": "Success Response:",
+          "content": "{\n    \"name\": \"Success\",\n    \"id\": 1,\n    \"code\": 200,\n    \"message\": \"...\"\n}",
           "type": "json"
         }
       ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequestError",
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/user/nearby/:distance",
+    "title": "5. Find nearby tutors",
+    "description": "<p>Get nearby tutors ordered by distance</p>",
+    "permission": [
+      {
+        "name": "Token",
+        "title": "The Authorization header must be set",
+        "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
+      }
+    ],
+    "name": "UserNearby",
+    "group": "UserGroup",
+    "parameter": {
+      "fields": {
+        "URL Parameters": [
+          {
+            "group": "URL Parameters",
+            "type": "Number",
+            "optional": false,
+            "field": "distance",
+            "description": "<p>The distance in miles to search</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
+    "groupTitle": "User",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/user/nearby/:distance"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": " [{\n   \"id\": 11,\n   \"name\": \"Joey\",\n   \"phone\": \"6159468534\",\n   \"dob\": \"2000-03-24\",\n   \"gender\": \"Male\",\n   \"role\": \"Tutor\"\n}]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Request Headers": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "get",
+    "url": "/user/profile/:id",
+    "title": "6. View other user profile",
+    "description": "<p>Get another user's profile information</p>",
+    "permission": [
+      {
+        "name": "Token",
+        "title": "The Authorization header must be set",
+        "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
+      }
+    ],
+    "name": "UserProfile",
+    "group": "UserGroup",
+    "parameter": {
+      "fields": {
+        "URL Parameters": [
+          {
+            "group": "URL Parameters",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>The id of the user to retrieve</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
+    "groupTitle": "User",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/user/profile/:id"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n    \"id\": 11,\n    \"email\": \"t@t.com\",\n    \"name\": \"Joey\",\n    \"phone\": \"6159468534\",\n    \"dob\": \"2000-03-24\",\n    \"city\": \"Knoxville\",\n    \"state\": \"TN\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"avatar\": \"https://jlemon.org/rat/api/v1/user/profile/11/avatar\",\n    \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n    \"updatedAt\": \"2021-03-04T21:28:26.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 2,\n        \"name\": \"Tutor\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequestError",
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Request Headers": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/user/profile/edit/location",
+    "title": "2. Update user location",
+    "description": "<p>Update the user's location to provide more accurate nearby tutors</p>",
+    "permission": [
+      {
+        "name": "Token",
+        "title": "The Authorization header must be set",
+        "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
+      }
+    ],
+    "name": "UserUpdateLocation",
+    "group": "UserGroup",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Float",
+            "optional": false,
+            "field": "latitude",
+            "description": "<p>The new latitude value</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Float",
+            "optional": false,
+            "field": "longitude",
+            "description": "<p>The new longitude value</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
+    "groupTitle": "User",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/user/profile/edit/location"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n    \"name\": \"Success\",\n    \"id\": 1,\n    \"code\": 200,\n    \"message\": \"...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequestError",
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Request Headers": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "post",
+    "url": "/user/profile/edit/:field",
+    "title": "4. Update user profile",
+    "description": "<p>Update a specific field of a user's profile</p>",
+    "permission": [
+      {
+        "name": "Token",
+        "title": "The Authorization header must be set",
+        "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
+      }
+    ],
+    "name": "UserUpdateProfile",
+    "group": "UserGroup",
+    "parameter": {
+      "fields": {
+        "URL Parameters": [
+          {
+            "group": "URL Parameters",
+            "type": "String",
+            "optional": false,
+            "field": "field",
+            "description": "<p>The field of the profile to update</p>"
+          }
+        ],
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "value",
+            "description": "<p>The field value</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
+    "groupTitle": "User",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/user/profile/edit/:field"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n    \"name\": \"Success\",\n    \"id\": 1,\n    \"code\": 200,\n    \"message\": \"...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequestError",
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
     },
     "header": {
       "fields": {
@@ -332,4 +796,4 @@
       }
     }
   }
-]
+] });

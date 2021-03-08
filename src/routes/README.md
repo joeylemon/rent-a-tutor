@@ -7,10 +7,11 @@
    - [1. Login](#1.-Login)
    - [2. Register user](#2.-Register-user)
  - [ListsGroup](#ListsGroup)
-   - [1. List of genders](#1.-List-of-genders)
-   - [2. List of user roles](#2.-List-of-user-roles)
-   - [3. List of U.S. states](#3.-List-of-U.S.-states)
-   - [4. List of U.S. cities](#4.-List-of-U.S.-cities)
+   - [1. List of endpoints](#1.-List-of-endpoints)
+   - [2. List of genders](#2.-List-of-genders)
+   - [3. List of user roles](#3.-List-of-user-roles)
+   - [4. List of U.S. states](#4.-List-of-U.S.-states)
+   - [5. List of U.S. cities](#5.-List-of-U.S.-cities)
  - [UserGroup](#UserGroup)
    - [1. Current user profile](#1.-Current-user-profile)
    - [2. Update user location](#2.-Update-user-location)
@@ -128,7 +129,16 @@ POST /auth/register
 
 # <a name='ListsGroup'></a> ListsGroup
 
-## <a name='1.-List-of-genders'></a> 1. List of genders
+## <a name='1.-List-of-endpoints'></a> 1. List of endpoints
+[Back to top](#top)
+
+<p>Retrieve a list of all API endpoints</p>
+
+```
+GET /lists/endpoints
+```
+
+## <a name='2.-List-of-genders'></a> 2. List of genders
 [Back to top](#top)
 
 <p>Retrieve the list of genders</p>
@@ -145,7 +155,7 @@ GET /lists/genders
 |----------|------------|---------------------------------------|
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='2.-List-of-user-roles'></a> 2. List of user roles
+## <a name='3.-List-of-user-roles'></a> 3. List of user roles
 [Back to top](#top)
 
 <p>Retrieve the list of user roles</p>
@@ -162,7 +172,7 @@ GET /lists/roles
 |----------|------------|---------------------------------------|
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='3.-List-of-U.S.-states'></a> 3. List of U.S. states
+## <a name='4.-List-of-U.S.-states'></a> 4. List of U.S. states
 [Back to top](#top)
 
 <p>Retrieve the list of U.S. states</p>
@@ -179,7 +189,7 @@ GET /lists/states
 |----------|------------|---------------------------------------|
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='4.-List-of-U.S.-cities'></a> 4. List of U.S. cities
+## <a name='5.-List-of-U.S.-cities'></a> 5. List of U.S. cities
 [Back to top](#top)
 
 <p>Retrieve a list of U.S. cities within a state</p>

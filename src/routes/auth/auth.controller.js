@@ -16,7 +16,7 @@ const router = express.Router()
  * device to prevent logging in every time the application is opened.
  *
  * You can find more in-depth information on authorization in the [repository's README](https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth)
- * @apiName UserLogin
+ * @apiName login
  * @apiGroup AuthGroup
  *
  * @apiParam {String} email The user's email
@@ -43,7 +43,7 @@ router.post('/login', async (req, res, next) => {
 /**
  * @api {post} /auth/register 2. Register user
  * @apiDescription Register a new user with the application
- * @apiName UserRegister
+ * @apiName register
  * @apiGroup AuthGroup
  *
  * @apiParam {String} email The user's email

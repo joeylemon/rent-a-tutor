@@ -5,9 +5,25 @@ import * as ListService from './lists.service.js'
 const router = express.Router()
 
 /**
- * @api {get} /lists/genders 1. List of genders
+ * @api {get} /lists/endpoints 1. List of endpoints
+ * @apiDescription Retrieve a list of all API endpoints
+ * @apiName get_endpoints
+ * @apiGroup ListsGroup
+ *
+ * @apiSampleRequest /lists/endpoints
+ */
+router.get('/endpoints', async (req, res, next) => {
+    try {
+        res.status(200).json(ListService.getEndpoints())
+    } catch (err) {
+        next(err)
+    }
+})
+
+/**
+ * @api {get} /lists/genders 2. List of genders
  * @apiDescription Retrieve the list of genders
- * @apiName ListsGenders
+ * @apiName get_genders
  * @apiGroup ListsGroup
  *
  * @apiUse DatabaseError
@@ -23,9 +39,9 @@ router.get('/genders', async (req, res, next) => {
 })
 
 /**
- * @api {get} /lists/roles 2. List of user roles
+ * @api {get} /lists/roles 3. List of user roles
  * @apiDescription Retrieve the list of user roles
- * @apiName ListsRoles
+ * @apiName get_roles
  * @apiGroup ListsGroup
  *
  * @apiUse DatabaseError
@@ -41,9 +57,9 @@ router.get('/roles', async (req, res, next) => {
 })
 
 /**
- * @api {get} /lists/states 3. List of U.S. states
+ * @api {get} /lists/states 4. List of U.S. states
  * @apiDescription Retrieve the list of U.S. states
- * @apiName ListsStates
+ * @apiName get_states
  * @apiGroup ListsGroup
  *
  * @apiUse DatabaseError
@@ -59,9 +75,9 @@ router.get('/states', async (req, res, next) => {
 })
 
 /**
- * @api {get} /lists/cities/:state 4. List of U.S. cities
+ * @api {get} /lists/cities/:state 5. List of U.S. cities
  * @apiDescription Retrieve a list of U.S. cities within a state
- * @apiName ListsCities
+ * @apiName get_cities
  * @apiGroup ListsGroup
  *
  * @apiParam (URL Parameters) {String} state The state to find cities within

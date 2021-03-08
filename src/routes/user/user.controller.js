@@ -9,7 +9,7 @@ const router = express.Router()
  * @api {get} /user/profile/me 1. Current user profile
  * @apiDescription Get the current user's profile information
  * @apiPermission Token
- * @apiName CurrentUserProfile
+ * @apiName get_current_user_profile
  * @apiGroup UserGroup
  *
  * @apiUse UserReturn
@@ -29,7 +29,7 @@ router.get('/profile/me', authorize, async (req, res, next) => {
  * @api {post} /user/profile/edit/location 2. Update user location
  * @apiDescription Update the user's location to provide more accurate nearby tutors
  * @apiPermission Token
- * @apiName UserUpdateLocation
+ * @apiName update_user_location
  * @apiGroup UserGroup
  *
  * @apiParam {Float} latitude The new latitude value
@@ -56,7 +56,7 @@ router.post('/profile/edit/location', authorize, async (req, res, next) => {
  * Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so,
  * so you can try it out at the [multipart/form test page](https://jlemon.org/rat/api/v1/docs/multipart.html)
  * @apiPermission Token
- * @apiName UserEditAvatar
+ * @apiName update_user_avatar
  * @apiGroup UserGroup
  *
  * @apiHeader {String} Content-Type multipart/form-data
@@ -81,7 +81,7 @@ router.post('/profile/edit/avatar', authorize, multerUpload.single('image'), asy
  * @api {post} /user/profile/edit/:field 4. Update user profile
  * @apiDescription Update a specific field of a user's profile
  * @apiPermission Token
- * @apiName UserUpdateProfile
+ * @apiName update_user_profile
  * @apiGroup UserGroup
  *
  * @apiParam (URL Parameters) {String} field The field of the profile to update
@@ -105,7 +105,7 @@ router.post('/profile/edit/:field', authorize, async (req, res, next) => {
  * @api {get} /user/nearby/:distance 5. Find nearby tutors
  * @apiDescription Get nearby tutors ordered by distance
  * @apiPermission Token
- * @apiName UserNearby
+ * @apiName get_nearby_tutors
  * @apiGroup UserGroup
  *
  * @apiParam (URL Parameters) {Number} distance The distance in miles to search
@@ -127,7 +127,7 @@ router.get('/nearby/:distance', authorize, async (req, res, next) => {
  * @api {get} /user/profile/:id 6. View other user profile
  * @apiDescription Get another user's profile information
  * @apiPermission Token
- * @apiName UserProfile
+ * @apiName get_user_profile
  * @apiGroup UserGroup
  *
  * @apiParam (URL Parameters) {Number} id The id of the user to retrieve

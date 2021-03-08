@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize'
-import { uploadDestination } from '../../constants.js'
+import { dirs } from '../../constants.js'
 import db from '../db.js'
 import Gender from './gender.js'
 import Role from './role.js'
@@ -51,7 +51,7 @@ export default class User extends Sequelize.Model {
     getAvatarFilepath () {
         if (!this.avatar) return
 
-        return `${uploadDestination}/${this.avatar}`
+        return `${dirs.uploads}/${this.avatar}`
     }
 
     getAvatarURL () {

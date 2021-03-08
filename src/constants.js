@@ -10,17 +10,20 @@ export const baseURL = JSON.parse(fs.readFileSync(path.resolve('package.json')))
 // A custom logger
 export const logger = pino()
 
-// Absolute path to the file upload directory
-export const uploadDestination = path.resolve('uploads/')
-
-// Absolute path to the images directory
-export const imagesDirectory = path.resolve('src/img/')
+// Absolute paths to project directories
+export const dirs = {
+    src: path.resolve('src/'),
+    routes: path.resolve('src/routes/'),
+    docs: path.resolve('src/routes/docs/'),
+    images: path.resolve('src/img/'),
+    uploads: path.resolve('uploads/')
+}
 
 // Multer uploader to save images to the upload folder and check their file type
 export const multerUpload = multer({
     storage: multer.diskStorage({
         destination: function (req, file, cb) {
-            cb(null, uploadDestination)
+            cb(null, dirs.uploads)
         },
         filename: function (req, file, cb) {
             cb(null, randString(30) + path.extname(file.originalname))
