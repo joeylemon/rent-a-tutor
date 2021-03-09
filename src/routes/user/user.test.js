@@ -1,6 +1,7 @@
 import supertest from 'supertest'
 import should from 'should' // eslint-disable-line no-unused-vars
 import { baseURL } from '../../utils/constants.js'
+import { randString } from '../../utils/utils.js'
 
 const api = supertest.agent(baseURL)
 
@@ -39,22 +40,32 @@ describe('User Endpoints', () => {
     })
 
     it('should update user location', done => {
+        const randLat = Math.floor(Math.random() * 80)
+        const randLong = Math.floor(Math.random() * 80)
         api
-            .post('/user/profile/edit/location')
-            .send({ latitude: '0', longitude: '0' })
+            .put('/user/profile/me')
+            .send({ latitude: `${randLat}`, longitude: `${randLong}` })
             .auth(token, { type: 'bearer' })
             .expect('Content-type', /json/)
             .expect(200)
             .then(res => {
                 res.body.name.toLowerCase().should.equal('success')
-                done()
+                api.get('/user/profile/me')
+                    .auth(token, { type: 'bearer' })
+                    .expect('Content-type', /json/)
+                    .expect(200)
+                    .then(res => {
+                        res.body.location.coordinates.should.eql([randLat, randLong])
+                        done()
+                    })
+                    .catch(err => done(err))
             })
             .catch(err => done(err))
     })
 
     it('should not allow strings for location floats', done => {
         api
-            .post('/user/profile/edit/location')
+            .put('/user/profile/me')
             .send({ latitude: 'abc', longitude: '0' })
             .auth(token, { type: 'bearer' })
             .expect('Content-type', /json/)
@@ -66,28 +77,54 @@ describe('User Endpoints', () => {
     })
 
     it('should update user name', done => {
+        const randName = randString(15)
         api
-            .post('/user/profile/edit/name')
-            .send({ value: 'tester' })
+            .put('/user/profile/me')
+            .send({ name: randName })
             .auth(token, { type: 'bearer' })
             .expect('Content-type', /json/)
             .expect(200)
             .then(res => {
                 res.body.name.toLowerCase().should.equal('success')
-                res.body.message.should.containEql('tester')
-                done()
+                api.get('/user/profile/me')
+                    .auth(token, { type: 'bearer' })
+                    .expect('Content-type', /json/)
+                    .expect(200)
+                    .then(res => {
+                        res.body.name.should.eql(randName)
+                        done()
+                    })
+                    .catch(err => done(err))
             })
             .catch(err => done(err))
     })
 
     it('should not edit invalid profile field', done => {
         api
-            .post('/user/profile/edit/invalid_field')
+            .put('/user/profile/me/invalid_field')
             .send({ value: 'tester' })
             .auth(token, { type: 'bearer' })
             .expect('Content-type', /json/)
             .expect(400)
             .then(() => {
+                done()
+            })
+            .catch(err => done(err))
+    })
+
+    it('should list nearby tutors', done => {
+        api
+            .get('/user/nearby/100000/1')
+            .auth(token, { type: 'bearer' })
+            .expect('Content-type', /json/)
+            .expect(200)
+            .then(res => {
+                res.body.should.be.instanceof(Object)
+                res.body.should.have.property('next')
+                res.body.should.have.property('tutors')
+                res.body.tutors.should.be.instanceof(Array)
+                res.body.tutors.length.should.not.eql(0)
+                res.body.tutors[0].should.have.property('distance')
                 done()
             })
             .catch(err => done(err))

@@ -90,9 +90,8 @@
         </div>
     </div>
     <div class="container">
-        <p><span class="method">POST</span> https://jlemon.org/rat/api/v1/user/profile/edit/avatar</p>
-        <form action="https://jlemon.org/rat/api/v1/user/profile/edit/avatar" method="post"
-            enctype="multipart/form-data">
+        <p><span class="method">PUT</span> https://jlemon.org/rat/api/v1/user/profile/me/avatar</p>
+        <form action="https://jlemon.org/rat/api/v1/user/profile/me/avatar" method="put" enctype="multipart/form-data">
             <p class="response" id="resp"></p>
             <label for="1-file-upload">
                 Select file
@@ -119,7 +118,7 @@
             const $resp = $(this).find("#resp")
             $.ajax({
                 url: this.action,
-                type: 'POST',
+                type: 'PUT',
                 headers: {
                     "Authorization": $("#auth").val()
                 },

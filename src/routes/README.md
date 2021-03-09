@@ -14,11 +14,11 @@
    - [5. List of U.S. cities](#5.-List-of-U.S.-cities)
  - [UserGroup](#UserGroup)
    - [1. Current user profile](#1.-Current-user-profile)
-   - [2. Update user location](#2.-Update-user-location)
-   - [3. Update user avatar](#3.-Update-user-avatar)
-   - [4. Update user profile](#4.-Update-user-profile)
-   - [5. Find nearby tutors](#5.-Find-nearby-tutors)
-   - [6. View other user profile](#6.-View-other-user-profile)
+   - [2. Update user profile](#2.-Update-user-profile)
+   - [3. Upload user avatar](#3.-Upload-user-avatar)
+   - [4. Get user profile values](#4.-Get-user-profile-values)
+   - [5. View other user profile](#5.-View-other-user-profile)
+   - [6. Find nearby tutors](#6.-Find-nearby-tutors)
 
 ___
 
@@ -272,13 +272,13 @@ GET /user/profile/me
 | UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='2.-Update-user-location'></a> 2. Update user location
+## <a name='2.-Update-user-profile'></a> 2. Update user profile
 [Back to top](#top)
 
-<p>Update the user's location to provide more accurate nearby tutors</p>
+<p>Update fields of a user's profile</p>
 
 ```
-POST /user/profile/edit/location
+PUT /user/profile/me
 ```
 
 ### Headers - `Request Headers`
@@ -291,8 +291,16 @@ POST /user/profile/edit/location
 
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
-| latitude | `Float` | <p>The new latitude value</p> |
-| longitude | `Float` | <p>The new longitude value</p> |
+| email | `String` | <p>The user's email</p> |
+| name | `String` | <p>The user's name</p> |
+| city | `String` | <p>The user's city</p> |
+| state | `String` | <p>The user's state</p> |
+| phone | `String` | <p>The user's phone number</p> |
+| dob | `String` | <p>The user's date of birth</p> |
+| genderId | `String` | <p>The user's gender ID</p> |
+| roleId | `String` | <p>The user's role ID</p> |
+| latitude | `String` | <p>The user's latitude</p> |
+| longitude | `String` | <p>The user's longitude</p> |
 
 ### Success response example
 
@@ -313,17 +321,17 @@ POST /user/profile/edit/location
 
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
-| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
 | UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
+| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='3.-Update-user-avatar'></a> 3. Update user avatar
+## <a name='3.-Upload-user-avatar'></a> 3. Upload user avatar
 [Back to top](#top)
 
 <p>Upload a new image to be the user's avatar</p> <p>Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so, so you can try it out at the <a href="https://jlemon.org/rat/api/v1/docs/multipart.html">multipart/form test page</a></p>
 
 ```
-POST /user/profile/edit/avatar
+PUT /user/profile/me/avatar
 ```
 
 ### Headers - `Request Headers`
@@ -362,13 +370,13 @@ POST /user/profile/edit/avatar
 | UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='4.-Update-user-profile'></a> 4. Update user profile
+## <a name='4.-Get-user-profile-values'></a> 4. Get user profile values
 [Back to top](#top)
 
-<p>Update a specific field of a user's profile</p>
+<p>Get specific fields of a user's profile</p>
 
 ```
-POST /user/profile/edit/:field
+GET /user/profile/me/:fields
 ```
 
 ### Headers - `Request Headers`
@@ -381,13 +389,7 @@ POST /user/profile/edit/:field
 
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
-| field | `String` | <p>The field of the profile to update</p> |
-
-### Parameters - `Parameter`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| value | `String` | <p>The field value</p> |
+| fields | `String` | <p>The comma-separated list of profile fields to retrieve</p> |
 
 ### Success response example
 
@@ -395,10 +397,10 @@ POST /user/profile/edit/:field
 
 ```json
 {
-    "name": "Success",
-    "id": 1,
-    "code": 200,
-    "message": "..."
+    "name": "Joey",
+    "dob": "2000-03-24",
+    "phone": "6159468534",
+    "city": "Knoxville"
 }
 ```
 
@@ -409,55 +411,9 @@ POST /user/profile/edit/:field
 | Name     | Type       | Description                           |
 |----------|------------|---------------------------------------|
 | UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
-| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='5.-Find-nearby-tutors'></a> 5. Find nearby tutors
-[Back to top](#top)
-
-<p>Get nearby tutors ordered by distance</p>
-
-```
-GET /user/nearby/:distance
-```
-
-### Headers - `Request Headers`
-
-| Name    | Type      | Description                          |
-|---------|-----------|--------------------------------------|
-| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
-
-### Parameters - `URL Parameters`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| distance | `Number` | <p>The distance in miles to search</p> |
-
-### Success response example
-
-#### Success response example - `Success Response:`
-
-```json
- [{
-   "id": 11,
-   "name": "Joey",
-   "phone": "6159468534",
-   "dob": "2000-03-24",
-   "gender": "Male",
-   "role": "Tutor"
-}]
-```
-
-### Error response
-
-#### Error response - `Error 4xx`
-
-| Name     | Type       | Description                           |
-|----------|------------|---------------------------------------|
-| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
-| DatabaseError |  | <p>500 - An error occurred with the database</p> |
-
-## <a name='6.-View-other-user-profile'></a> 6. View other user profile
+## <a name='5.-View-other-user-profile'></a> 5. View other user profile
 [Back to top](#top)
 
 <p>Get another user's profile information</p>
@@ -509,6 +465,60 @@ GET /user/profile/:id
         "id": 2,
         "name": "Tutor"
     }
+}
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
+| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='6.-Find-nearby-tutors'></a> 6. Find nearby tutors
+[Back to top](#top)
+
+<p>Get nearby tutors ordered by distance. Results are paginated, where the next page URL is given in the result if it exists.</p>
+
+```
+GET /user/nearby/:distance/:page
+```
+
+### Headers - `Request Headers`
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
+
+### Parameters - `URL Parameters`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| distance | `Number` | <p>The distance in miles to search</p> |
+| page | `Number` | <p>The page to retrieve</p> |
+
+### Success response example
+
+#### Success response example - `Success Response:`
+
+```json
+{
+    "next": "https://jlemon.org/rat/api/v1/user/nearby/500/2",
+    "tutors": [
+        {
+            "id": 11,
+            "name": "Bobby",
+            "city": "Knoxville",
+            "state": "TN",
+            "dob": "2000-03-24",
+            "gender": "Male",
+            "role": "Tutor",
+            "distance": 6.8858799822053545
+        }
+    ]
 }
 ```
 

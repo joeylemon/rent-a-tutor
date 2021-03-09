@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize'
 import { dirs } from '../../utils/constants.js'
+import { BadRequestError } from '../../utils/errors.js'
 import db from '../db.js'
 import Gender from './gender.js'
 import Role from './role.js'
@@ -35,18 +36,6 @@ import Role from './role.js'
  *     }
  * }
  */
-/**
- * @apiDefine UserSimpleArrayReturn Return an array of simplified user objects
- * @apiSuccessExample Success Response:
- *   [{
- *     "id": 11,
- *     "name": "Joey",
- *     "phone": "6159468534",
- *     "dob": "2000-03-24",
- *     "gender": "Male",
- *     "role": "Tutor"
- *  }]
- */
 export default class User extends Sequelize.Model {
     getAvatarFilepath () {
         if (!this.avatar) return
@@ -56,6 +45,20 @@ export default class User extends Sequelize.Model {
 
     getAvatarURL () {
         return `/user/profile/${this.id}/avatar`
+    }
+
+    setLatitude (lat) {
+        const latitude = parseFloat(lat)
+        if (isNaN(latitude)) { throw new BadRequestError(`${lat} is not a valid latitude value`) }
+
+        this.location = { type: 'Point', coordinates: [latitude, this.location.coordinates[1]] }
+    }
+
+    setLongitude (long) {
+        const longitude = parseFloat(long)
+        if (isNaN(longitude)) { throw new BadRequestError(`${long} is not a valid longitude value`) }
+
+        this.location = { type: 'Point', coordinates: [this.location.coordinates[0], longitude] }
     }
 }
 

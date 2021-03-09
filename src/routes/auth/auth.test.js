@@ -20,7 +20,7 @@ describe('Auth Endpoints', () => {
             .catch(err => done(err))
     })
 
-    it('should not allow registration', done => {
+    it('should not allow registration without all values', done => {
         api
             .post('/auth/register')
             .send({ email: 'test@test.net', password: '12345678' })
@@ -35,7 +35,7 @@ describe('Auth Endpoints', () => {
             .catch(err => done(err))
     })
 
-    it('should return unauthorized', done => {
+    it('should return unauthorized with a bad token', done => {
         api
             .get('/user/profile/me')
             .auth('bad_token', { type: 'bearer' })
@@ -50,27 +50,5 @@ describe('Auth Endpoints', () => {
                 res.body.should.have.property('message')
                 done()
             })
-    })
-
-    it('should not allow malformed api tokens', done => {
-        api
-            .post('/auth/login')
-            .send({ email: 'test@test.net', password: '12345678' })
-            .expect('Content-type', /json/)
-            .expect(200)
-            .then(res => {
-                return api
-                    .get('/user/profile/me')
-                    .auth('1' + res.body.token + '1', { type: 'bearer' })
-                    .expect('Content-type', /json/)
-                    .expect(401)
-            })
-            .then(res => {
-                res.body.should.be.instanceof(Object)
-                res.body.should.have.property('code')
-                res.body.should.have.property('message')
-                done()
-            })
-            .catch(err => done(err))
     })
 })

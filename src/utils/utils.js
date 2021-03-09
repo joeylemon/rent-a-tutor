@@ -59,15 +59,18 @@ function validateEmail (email) {
  * If not, throw an error describing the invalid data
  * @param {object} form The req.body object from a request
  * @param {array} defs The array of values that should be in the form
+ * @param {boolean} allowMissing Should we not throw an error if one of the definitions is missing?
  * @example
  *     validateForm({a: 1, b: "hello"}, ["a", "b"])
  */
-export function validateForm (form, defs) {
+export function validateForm (form, defs, allowMissing = false) {
     if (!form) { throw new BadRequestError('form is missing') }
 
     // Ensure all given definitions are included in the form
-    const invalidKey = defs.find(d => !form[d])
-    if (invalidKey) { throw new BadRequestError(`${invalidKey} is missing`) }
+    if (!allowMissing) {
+        const invalidKey = defs.find(d => !form[d])
+        if (invalidKey) { throw new BadRequestError(`${invalidKey} is missing`) }
+    }
 
     // Validate emails
     if (form.email && !validateEmail(form.email)) { throw new BadRequestError('email is invalid') }

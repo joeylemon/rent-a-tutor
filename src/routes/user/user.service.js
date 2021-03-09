@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import fs from 'fs'
-import { baseURL, dirs } from '../../utils/constants.js'
+import { PAGINATION_PAGE_SIZE, baseURL, dirs } from '../../utils/constants.js'
 import { validateForm } from '../../utils/utils.js'
 import { BadRequestError, SuccessResponse } from '../../utils/errors.js'
 import User from '../../db/models/user.js'
@@ -51,46 +51,59 @@ export function getUserByEmail (email) {
     })
 }
 
-export function getNearbyTutors (me, distance) {
-    return db.query('select u.id, u.name, u.city, u.state, u.dob, g.name as gender, r.name as role, ST_Distance_Sphere(POINT(?, ?), u.location) * .000621371192 as distance from user u left join gender g on g.id = u.genderId left join role r on r.id = u.roleId where u.roleId = 2 having distance <= ? order by distance asc', {
+export function getUserValuesByID (id, attributes) {
+    return User.findOne({
+        attributes: attributes,
+        where: { id: id }
+    })
+}
+
+export async function getNearbyTutors (me, distance, pageNum) {
+    const page = parseInt(pageNum)
+    if (isNaN(page) || page <= 0) { throw new BadRequestError('page number is invalid') }
+
+    const limit = PAGINATION_PAGE_SIZE
+    const offset = (page - 1) * PAGINATION_PAGE_SIZE
+
+    const nearby = await db.query('select u.id, u.name, u.city, u.state, u.dob, g.name as gender, r.name as role, ST_Distance_Sphere(POINT(:latitude, :longitude), u.location) * .000621371192 as distance from user u left join gender g on g.id = u.genderId left join role r on r.id = u.roleId where u.roleId = 2 having distance <= :distance order by distance asc limit :limit offset :offset', {
         model: User,
         mapToModel: true,
-        replacements: [me.location.coordinates[0], me.location.coordinates[1], distance]
+        replacements: {
+            latitude: me.location.coordinates[0],
+            longitude: me.location.coordinates[1],
+            distance: distance,
+            limit: limit,
+            offset: offset
+        }
     })
+
+    const response = { next: null, tutors: nearby }
+    if (nearby.length === limit) { response.next = `${baseURL}/user/nearby/${distance}/${page + 1}` }
+
+    return response
 }
 
-export async function updateUserProfile (me, field, value) {
-    if (!value) { throw new BadRequestError('missing value') }
+export async function updateUserProfile (me, form) {
+    // Ensure correct formats for values
+    validateForm(form, ['email', 'phone'], true)
 
     me = await User.findOne({
         where: { id: me.id }
     })
 
-    if (!(field in me)) { throw new BadRequestError(`profile field ${field} does not exist`) }
+    // Make sure at least something was given
+    if (!Object.keys(form).find(key => form[key] !== '')) { throw new BadRequestError('no updated values given') }
 
-    me[field] = value
+    // Update every user value given in the form
+    for (const key of Object.keys(form)) { if (form[key]) me[key] = form[key] }
+
+    // Update the user's location if new values were given
+    if (form.latitude) { me.setLatitude(form.latitude) }
+    if (form.longitude) { me.setLongitude(form.longitude) }
+
     await me.save()
 
-    return new SuccessResponse(`updated user ${field} to ${value}`)
-}
-
-export async function updateUserLocation (me, form) {
-    validateForm(form, ['latitude', 'longitude'])
-    const latitude = parseFloat(form.latitude)
-    const longitude = parseFloat(form.longitude)
-
-    if (isNaN(latitude) || isNaN(longitude)) { throw new BadRequestError(`(${form.latitude},${form.longitude}) is not a valid location`) }
-
-    const point = { type: 'Point', coordinates: [latitude, longitude] }
-
-    me = await User.findOne({
-        where: { id: me.id }
-    })
-
-    me.location = point
-    await me.save()
-
-    return new SuccessResponse(`updated user location to (${latitude},${longitude})`)
+    return new SuccessResponse('updated user profile')
 }
 
 export async function updateAvatar (me, file) {

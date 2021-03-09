@@ -26,37 +26,45 @@ router.get('/profile/me', authorize, async (req, res, next) => {
 })
 
 /**
- * @api {post} /user/profile/edit/location 2. Update user location
- * @apiDescription Update the user's location to provide more accurate nearby tutors
+ * @api {put} /user/profile/me 2. Update user profile
+ * @apiDescription Update fields of a user's profile
  * @apiPermission Token
- * @apiName update_user_location
+ * @apiName update_user_profile
  * @apiGroup UserGroup
  *
- * @apiParam {Float} latitude The new latitude value
- * @apiParam {Float} longitude The new longitude value
+ * @apiParam {String} email The user's email
+ * @apiParam {String} name The user's name
+ * @apiParam {String} city The user's city
+ * @apiParam {String} state The user's state
+ * @apiParam {String} phone The user's phone number
+ * @apiParam {String} dob The user's date of birth
+ * @apiParam {String} genderId The user's gender ID
+ * @apiParam {String} roleId The user's role ID
+ * @apiParam {String} latitude The user's latitude
+ * @apiParam {String} longitude The user's longitude
  *
  * @apiUse SuccessResponse
- * @apiUse BadRequestError
  * @apiUse UnauthorizedError
+ * @apiUse BadRequestError
  * @apiUse DatabaseError
  * @apiUse Header
  */
-router.post('/profile/edit/location', authorize, async (req, res, next) => {
+router.put('/profile/me', authorize, async (req, res, next) => {
     try {
-        res.status(200).send(await UserService.updateUserLocation(res.locals.user, req.body))
+        res.status(200).send(await UserService.updateUserProfile(res.locals.user, req.body))
     } catch (err) {
         next(err)
     }
 })
 
 /**
- * @api {post} /user/profile/edit/avatar 3. Update user avatar
+ * @api {put} /user/profile/me/avatar 3. Upload user avatar
  * @apiDescription Upload a new image to be the user's avatar
  *
  * Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so,
  * so you can try it out at the [multipart/form test page](https://jlemon.org/rat/api/v1/docs/multipart.html)
  * @apiPermission Token
- * @apiName update_user_avatar
+ * @apiName update_user_profile_avatar
  * @apiGroup UserGroup
  *
  * @apiHeader {String} Content-Type multipart/form-data
@@ -69,7 +77,7 @@ router.post('/profile/edit/location', authorize, async (req, res, next) => {
  * @apiUse Header
  * @apiSampleRequest off
  */
-router.post('/profile/edit/avatar', authorize, multerUpload.single('image'), async (req, res, next) => {
+router.put('/profile/me/avatar', authorize, multerUpload.single('image'), async (req, res, next) => {
     try {
         res.status(200).send(await UserService.updateAvatar(res.locals.user, req.file))
     } catch (err) {
@@ -78,53 +86,35 @@ router.post('/profile/edit/avatar', authorize, multerUpload.single('image'), asy
 })
 
 /**
- * @api {post} /user/profile/edit/:field 4. Update user profile
- * @apiDescription Update a specific field of a user's profile
+ * @api {get} /user/profile/me/:fields 4. Get user profile values
+ * @apiDescription Get specific fields of a user's profile
  * @apiPermission Token
- * @apiName update_user_profile
+ * @apiName get_user_profile_values
  * @apiGroup UserGroup
  *
- * @apiParam (URL Parameters) {String} field The field of the profile to update
- * @apiParam {String} value The field value
+ * @apiParam (URL Parameters) {String} fields The comma-separated list of profile fields to retrieve
  *
- * @apiUse SuccessResponse
+ * @apiSuccessExample Success Response:
+ * {
+ *     "name": "Joey",
+ *     "dob": "2000-03-24",
+ *     "phone": "6159468534",
+ *     "city": "Knoxville"
+ * }
  * @apiUse UnauthorizedError
- * @apiUse BadRequestError
  * @apiUse DatabaseError
  * @apiUse Header
  */
-router.post('/profile/edit/:field', authorize, async (req, res, next) => {
+router.get('/profile/me/:fields', authorize, async (req, res, next) => {
     try {
-        res.status(200).send(await UserService.updateUserProfile(res.locals.user, req.params.field, req.body.value))
+        res.status(200).send(await UserService.getUserValuesByID(res.locals.user.id, req.params.fields.split(',')))
     } catch (err) {
         next(err)
     }
 })
 
 /**
- * @api {get} /user/nearby/:distance 5. Find nearby tutors
- * @apiDescription Get nearby tutors ordered by distance
- * @apiPermission Token
- * @apiName get_nearby_tutors
- * @apiGroup UserGroup
- *
- * @apiParam (URL Parameters) {Number} distance The distance in miles to search
- *
- * @apiUse UserSimpleArrayReturn
- * @apiUse UnauthorizedError
- * @apiUse DatabaseError
- * @apiUse Header
- */
-router.get('/nearby/:distance', authorize, async (req, res, next) => {
-    try {
-        res.status(200).json(await UserService.getNearbyTutors(res.locals.user, req.params.distance))
-    } catch (err) {
-        next(err)
-    }
-})
-
-/**
- * @api {get} /user/profile/:id 6. View other user profile
+ * @api {get} /user/profile/:id 5. View other user profile
  * @apiDescription Get another user's profile information
  * @apiPermission Token
  * @apiName get_user_profile
@@ -150,6 +140,47 @@ router.get('/profile/:id/avatar', async (req, res, next) => {
     try {
         const filepath = await UserService.getAvatarPath(req.params.id)
         res.sendFile(filepath)
+    } catch (err) {
+        next(err)
+    }
+})
+
+/**
+ * @api {get} /user/nearby/:distance/:page 6. Find nearby tutors
+ * @apiDescription Get nearby tutors ordered by distance. Results are paginated, where the next page URL
+ * is given in the result if it exists.
+ * @apiPermission Token
+ * @apiName get_nearby_tutors
+ * @apiGroup UserGroup
+ *
+ * @apiParam (URL Parameters) {Number} distance The distance in miles to search
+ * @apiParam (URL Parameters) {Number} page The page to retrieve
+ *
+ * @apiSuccessExample Success Response:
+ * {
+ *     "next": "https://jlemon.org/rat/api/v1/user/nearby/500/2",
+ *     "tutors": [
+ *         {
+ *             "id": 11,
+ *             "name": "Bobby",
+ *             "city": "Knoxville",
+ *             "state": "TN",
+ *             "dob": "2000-03-24",
+ *             "gender": "Male",
+ *             "role": "Tutor",
+ *             "distance": 6.8858799822053545
+ *         }
+ *     ]
+ * }
+ *
+ * @apiUse BadRequestError
+ * @apiUse UnauthorizedError
+ * @apiUse DatabaseError
+ * @apiUse Header
+ */
+router.get('/nearby/:distance/:page', authorize, async (req, res, next) => {
+    try {
+        res.status(200).json(await UserService.getNearbyTutors(res.locals.user, req.params.distance, req.params.page))
     } catch (err) {
         next(err)
     }
