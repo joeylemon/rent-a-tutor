@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import { BadRequestError } from './objects.js'
+import { BadRequestError } from './errors.js'
 
 const regexPatterns = {
     // eslint-disable-next-line

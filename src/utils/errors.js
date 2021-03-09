@@ -100,10 +100,3 @@ export class UndefinedRouteError extends RequestError {
         super(desc, name, code, id)
     }
 }
-
-export class Token {
-    constructor (token, expiration) {
-        this.token = token
-        this.expiration = expiration
-    }
-}

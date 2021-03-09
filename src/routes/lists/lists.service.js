@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import db from '../../db/db.js'
-import { BadRequestError } from '../../utils/objects.js'
+import { BadRequestError } from '../../utils/errors.js'
 import { dirs } from '../../utils/constants.js'
 
 import Gender from '../../db/models/gender.js'

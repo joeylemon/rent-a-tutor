@@ -9,7 +9,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import { RequestError, UndefinedRouteError, InternalServerError } from './utils/objects.js'
+import { RequestError, UndefinedRouteError, InternalServerError } from './utils/errors.js'
 import { getRequestInformation } from './utils/utils.js'
 import { logger } from './utils/constants.js'
 
