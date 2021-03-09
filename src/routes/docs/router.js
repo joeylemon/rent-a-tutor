@@ -4,7 +4,7 @@ import fs from 'fs'
 import apidoc from 'apidoc'
 import apidocmd from 'apidoc-markdown'
 
-import { dirs } from '../../constants.js'
+import { dirs } from '../../utils/constants.js'
 
 /**
  * Automatically generate documentation files from in-line comments in the project

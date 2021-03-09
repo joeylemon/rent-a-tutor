@@ -2,10 +2,10 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
 import User from '../../db/models/user.js'
-import { Token, UnauthorizedError, BadRequestError } from '../../objects.js'
-import { API_TOKEN_EXPIRE_TIME } from '../../constants.js'
-import { JWT_KEY } from '../../secrets.js'
-import { validateForm } from '../../utils.js'
+import { Token, UnauthorizedError, BadRequestError } from '../../utils/objects.js'
+import { API_TOKEN_EXPIRE_TIME } from '../../utils/constants.js'
+import { JWT_KEY } from '../../utils/secrets.js'
+import { validateForm } from '../../utils/utils.js'
 
 /**
  * This checks the Authorization header for a valid JWT token and then searches the

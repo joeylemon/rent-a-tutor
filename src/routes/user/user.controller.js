@@ -1,6 +1,6 @@
 import express from 'express'
 import { authorize } from '../auth/auth.service.js'
-import { multerUpload } from '../../constants.js'
+import { multerUpload } from '../../utils/constants.js'
 import * as UserService from './user.service.js'
 
 const router = express.Router()

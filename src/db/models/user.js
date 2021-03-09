@@ -1,5 +1,5 @@
 import Sequelize from 'sequelize'
-import { dirs } from '../../constants.js'
+import { dirs } from '../../utils/constants.js'
 import db from '../db.js'
 import Gender from './gender.js'
 import Role from './role.js'
