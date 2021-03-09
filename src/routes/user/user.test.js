@@ -1,6 +1,6 @@
 import supertest from 'supertest'
 import should from 'should' // eslint-disable-line no-unused-vars
-import { baseURL } from '../../constants.js'
+import { baseURL } from '../../utils/constants.js'
 
 const api = supertest.agent(baseURL)
 

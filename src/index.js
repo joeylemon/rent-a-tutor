@@ -9,9 +9,9 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
-import { RequestError, UndefinedRouteError, InternalServerError } from './objects.js'
-import { getRequestInformation } from './utils.js'
-import { logger } from './constants.js'
+import { RequestError, UndefinedRouteError, InternalServerError } from './utils/objects.js'
+import { getRequestInformation } from './utils/utils.js'
+import { logger } from './utils/constants.js'
 
 import docs from './routes/docs/router.js'
 import auth from './routes/auth/auth.controller.js'
