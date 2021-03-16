@@ -1,8 +1,8 @@
 import supertest from 'supertest'
 import should from 'should' // eslint-disable-line no-unused-vars
-import { baseURL } from '../../utils/constants.js'
+import { BASE_URL } from '../../utils/constants.js'
 
-const api = supertest.agent(baseURL)
+const api = supertest.agent(BASE_URL)
 
 describe('Auth Endpoints', () => {
     it('should log in', done => {

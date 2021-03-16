@@ -1,23 +1,34 @@
 import supertest from 'supertest'
 import should from 'should' // eslint-disable-line no-unused-vars
 import axios from 'axios'
-import { baseURL } from '../../utils/constants.js'
+import faker from 'faker'
+import { BASE_URL } from '../../utils/constants.js'
 import { randString } from '../../utils/utils.js'
 
-const api = supertest.agent(baseURL)
+const api = supertest.agent(BASE_URL)
 
 describe('User Endpoints', () => {
     let token
     let userID
 
-    // Get an API token before performing tests
-    before(done => {
+    it('should register a new user', done => {
         api
-            .post('/auth/login')
-            .send({ email: 'test@test.net', password: '12345678' })
+            .post('/auth/register')
+            .send({
+                email: faker.internet.email(),
+                password: faker.internet.password(12),
+                name: faker.name.findName(),
+                city: faker.address.city(),
+                state: faker.address.state(),
+                phone: faker.phone.phoneNumberFormat(0),
+                dob: faker.date.past().toISOString().split('T')[0],
+                genderId: Math.floor(Math.random() * 2) + 1,
+                roleId: Math.floor(Math.random() * 2) + 1
+            })
             .expect('Content-type', /json/)
             .expect(200)
             .then(res => {
+                res.body.should.have.property('token')
                 token = res.body.token
                 done()
             })
@@ -163,6 +174,19 @@ describe('User Endpoints', () => {
                 res.body.tutors.should.be.instanceof(Array)
                 res.body.tutors.length.should.not.eql(0)
                 res.body.tutors[0].should.have.property('distance')
+                done()
+            })
+            .catch(err => done(err))
+    })
+
+    it('should delete the user', done => {
+        api
+            .delete('/user/profile/me')
+            .auth(token, { type: 'bearer' })
+            .expect('Content-type', /json/)
+            .expect(200)
+            .then(res => {
+                res.body.name.toLowerCase().should.equal('success')
                 done()
             })
             .catch(err => done(err))

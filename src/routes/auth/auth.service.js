@@ -79,7 +79,10 @@ export async function register (form) {
 
     form.password = await bcrypt.hash(form.password, 10)
 
-    const newUser = await User.create(form)
+    await User.create(form)
+    const newUser = await User.findOne({
+        where: { email: form.email }
+    })
 
     return getAPIToken(newUser)
 }
