@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt'
 import fs from 'fs'
 import { PAGINATION_PAGE_SIZE, baseURL, dirs } from '../../utils/constants.js'
 import { validateForm } from '../../utils/utils.js'
@@ -8,15 +7,13 @@ import Gender from '../../db/models/gender.js'
 import Role from '../../db/models/role.js'
 import db from '../../db/db.js'
 
-export async function registerUser (form) {
-    validateForm(form, ['email', 'password', 'name', 'city', 'state', 'phone', 'dob', 'genderId', 'roleId'])
+export async function deleteUser (me) {
+    const avatarFilepath = me.getAvatarFilepath()
+    if (avatarFilepath) { fs.unlinkSync(avatarFilepath) }
 
-    const existingUser = await getUserByEmail(form.email)
-    if (existingUser) { throw new BadRequestError('email already exists') }
+    await me.destroy()
 
-    form.password = await bcrypt.hash(form.password, 10)
-
-    return User.create(form)
+    return new SuccessResponse(`user with id ${me.id} has been deleted`)
 }
 
 export async function getUserByID (id) {
@@ -87,9 +84,7 @@ export async function updateUserProfile (me, form) {
     // Ensure correct formats for values
     validateForm(form, ['email', 'phone'], true)
 
-    me = await User.findOne({
-        where: { id: me.id }
-    })
+    await me.reload()
 
     // Make sure at least something was given
     if (!Object.keys(form).find(key => form[key] !== '')) { throw new BadRequestError('no updated values given') }
@@ -109,9 +104,7 @@ export async function updateUserProfile (me, form) {
 export async function updateAvatar (me, file) {
     if (!file) throw new BadRequestError('missing image file')
 
-    me = await User.findOne({
-        where: { id: me.id }
-    })
+    await me.reload()
     const oldFilepath = me.getAvatarFilepath()
 
     me.avatar = file.filename
