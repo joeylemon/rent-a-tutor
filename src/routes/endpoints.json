@@ -26,15 +26,6 @@
         ]
       }
     },
-    "success": {
-      "examples": [
-        {
-          "title": "Success Response:",
-          "content": "{\n    \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF\",\n    \"expiration\": 1600809341558\n}",
-          "type": "json"
-        }
-      ]
-    },
     "sampleRequest": [
       {
         "url": "https://jlemon.org/rat/api/v1/auth/login"
@@ -44,6 +35,15 @@
     "filename": "/home/dustin/rat/src/routes/auth/auth.controller.js",
     "groupTitle": "Auth",
     "groupDescription": "<p>These endpoints define routes to authenticate users. There is in-depth documentation on the authorization process in the <a href=\"https://github.com/rent-a-tutor/backend/tree/master/src/routes/auth\">repository's README</a>.</p>",
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n    \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF\",\n    \"expiration\": 1600809341558\n}",
+          "type": "json"
+        }
+      ]
+    },
     "error": {
       "fields": {
         "Error 4xx": [
@@ -152,7 +152,7 @@
       "examples": [
         {
           "title": "Success Response:",
-          "content": "{\n    \"id\": 11,\n    \"email\": \"t@t.com\",\n    \"name\": \"Joey\",\n    \"phone\": \"6159468534\",\n    \"dob\": \"2000-03-24\",\n    \"city\": \"Knoxville\",\n    \"state\": \"TN\",\n    \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n            35.9116543,\n            -84.0866346\n        ]\n    },\n    \"avatar\": \"https://jlemon.org/rat/api/v1/user/profile/11/avatar\",\n    \"createdAt\": \"2021-02-16T16:27:21.000Z\",\n    \"updatedAt\": \"2021-03-04T21:28:26.000Z\",\n    \"gender\": {\n        \"id\": 1,\n        \"name\": \"Male\"\n    },\n    \"role\": {\n        \"id\": 2,\n        \"name\": \"Tutor\"\n    }\n}",
+          "content": "{\n    \"token\": \"eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF\",\n    \"expiration\": 1600809341558\n}",
           "type": "json"
         }
       ]
@@ -323,6 +323,76 @@
     }
   },
   {
+    "type": "delete",
+    "url": "/user/profile/me",
+    "title": "3. Delete user",
+    "description": "<p>Delete the user's account</p>",
+    "permission": [
+      {
+        "name": "Token",
+        "title": "The Authorization header must be set",
+        "description": "<p>The Authorization header must be set with a valid API token. For example:</p> <p><code>Authorization: Bearer n8tMnthS$V5*8^iyu1HEhX63</code></p>"
+      }
+    ],
+    "name": "delete_user_profile",
+    "group": "UserGroup",
+    "version": "0.0.0",
+    "filename": "/home/dustin/rat/src/routes/user/user.controller.js",
+    "groupTitle": "User",
+    "groupDescription": "<p>These endpoints define routes to interact with users.</p>",
+    "sampleRequest": [
+      {
+        "url": "https://jlemon.org/rat/api/v1/user/profile/me"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success Response:",
+          "content": "{\n    \"name\": \"Success\",\n    \"id\": 1,\n    \"code\": 200,\n    \"message\": \"...\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "UnauthorizedError",
+            "description": "<p>401 - The request presents invalid authentication values</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "BadRequestError",
+            "description": "<p>400 - The request has missing or invalid parameters</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DatabaseError",
+            "description": "<p>500 - An error occurred with the database</p>"
+          }
+        ]
+      }
+    },
+    "header": {
+      "fields": {
+        "Request Headers": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p>"
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "get",
     "url": "/user/profile/me",
     "title": "1. Current user profile",
@@ -389,7 +459,7 @@
   {
     "type": "get",
     "url": "/user/nearby/:distance/:page",
-    "title": "6. Find nearby tutors",
+    "title": "7. Find nearby tutors",
     "description": "<p>Get nearby tutors ordered by distance. Results are paginated, where the next page URL is given in the result if it exists.</p>",
     "permission": [
       {
@@ -479,7 +549,7 @@
   {
     "type": "get",
     "url": "/user/profile/:id",
-    "title": "5. View other user profile",
+    "title": "6. View other user profile",
     "description": "<p>Get another user's profile information</p>",
     "permission": [
       {
@@ -562,7 +632,7 @@
   {
     "type": "get",
     "url": "/user/profile/me/:fields",
-    "title": "4. Get user profile values",
+    "title": "5. Get user profile values",
     "description": "<p>Get specific fields of a user's profile</p>",
     "permission": [
       {
@@ -785,7 +855,7 @@
   {
     "type": "put",
     "url": "/user/profile/me/avatar",
-    "title": "3. Upload user avatar",
+    "title": "4. Upload user avatar",
     "description": "<p>Upload a new image to be the user's avatar</p> <p>Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so, so you can try it out at the <a href=\"https://jlemon.org/rat/api/v1/docs/multipart.html\">multipart/form test page</a></p>",
     "permission": [
       {

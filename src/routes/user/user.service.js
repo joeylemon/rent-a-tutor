@@ -1,6 +1,5 @@
-import bcrypt from 'bcrypt'
 import fs from 'fs'
-import { PAGINATION_PAGE_SIZE, baseURL, dirs } from '../../utils/constants.js'
+import { PAGINATION_PAGE_SIZE, BASE_URL, dirs } from '../../utils/constants.js'
 import { validateForm } from '../../utils/utils.js'
 import { BadRequestError, SuccessResponse } from '../../utils/errors.js'
 import User from '../../db/models/user.js'
@@ -8,15 +7,13 @@ import Gender from '../../db/models/gender.js'
 import Role from '../../db/models/role.js'
 import db from '../../db/db.js'
 
-export async function registerUser (form) {
-    validateForm(form, ['email', 'password', 'name', 'city', 'state', 'phone', 'dob', 'genderId', 'roleId'])
+export async function deleteUser (me) {
+    const avatarFilepath = me.getAvatarFilepath()
+    if (avatarFilepath) { fs.unlinkSync(avatarFilepath) }
 
-    const existingUser = await getUserByEmail(form.email)
-    if (existingUser) { throw new BadRequestError('email already exists') }
+    await me.destroy()
 
-    form.password = await bcrypt.hash(form.password, 10)
-
-    return User.create(form)
+    return new SuccessResponse(`user with id ${me.id} has been deleted`)
 }
 
 export async function getUserByID (id) {
@@ -33,7 +30,7 @@ export async function getUserByID (id) {
 
     if (!user) { throw new BadRequestError(`user with id ${id} doesn't exist`) }
 
-    user.avatar = baseURL + user.getAvatarURL()
+    user.avatar = BASE_URL + user.getAvatarURL()
 
     return user
 }
@@ -65,6 +62,8 @@ export async function getNearbyTutors (me, distance, pageNum) {
     const limit = PAGINATION_PAGE_SIZE
     const offset = (page - 1) * PAGINATION_PAGE_SIZE
 
+    await me.reload()
+
     const nearby = await db.query('select u.id, u.name, u.city, u.state, u.dob, g.name as gender, r.name as role, ST_Distance_Sphere(POINT(:latitude, :longitude), u.location) * .000621371192 as distance from user u left join gender g on g.id = u.genderId left join role r on r.id = u.roleId where u.roleId = 2 having distance <= :distance order by distance asc limit :limit offset :offset', {
         model: User,
         mapToModel: true,
@@ -78,7 +77,7 @@ export async function getNearbyTutors (me, distance, pageNum) {
     })
 
     const response = { next: null, tutors: nearby }
-    if (nearby.length === limit) { response.next = `${baseURL}/user/nearby/${distance}/${page + 1}` }
+    if (nearby.length === limit) { response.next = `${BASE_URL}/user/nearby/${distance}/${page + 1}` }
 
     return response
 }
@@ -87,9 +86,7 @@ export async function updateUserProfile (me, form) {
     // Ensure correct formats for values
     validateForm(form, ['email', 'phone'], true)
 
-    me = await User.findOne({
-        where: { id: me.id }
-    })
+    await me.reload()
 
     // Make sure at least something was given
     if (!Object.keys(form).find(key => form[key] !== '')) { throw new BadRequestError('no updated values given') }
@@ -109,9 +106,7 @@ export async function updateUserProfile (me, form) {
 export async function updateAvatar (me, file) {
     if (!file) throw new BadRequestError('missing image file')
 
-    me = await User.findOne({
-        where: { id: me.id }
-    })
+    await me.reload()
     const oldFilepath = me.getAvatarFilepath()
 
     me.avatar = file.filename

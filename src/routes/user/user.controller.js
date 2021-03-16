@@ -58,7 +58,28 @@ router.put('/profile/me', authorize, async (req, res, next) => {
 })
 
 /**
- * @api {put} /user/profile/me/avatar 3. Upload user avatar
+ * @api {delete} /user/profile/me 3. Delete user
+ * @apiDescription Delete the user's account
+ * @apiPermission Token
+ * @apiName delete_user_profile
+ * @apiGroup UserGroup
+ *
+ * @apiUse SuccessResponse
+ * @apiUse UnauthorizedError
+ * @apiUse BadRequestError
+ * @apiUse DatabaseError
+ * @apiUse Header
+ */
+router.delete('/profile/me', authorize, async (req, res, next) => {
+    try {
+        res.status(200).send(await UserService.deleteUser(res.locals.user))
+    } catch (err) {
+        next(err)
+    }
+})
+
+/**
+ * @api {put} /user/profile/me/avatar 4. Upload user avatar
  * @apiDescription Upload a new image to be the user's avatar
  *
  * Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so,
@@ -86,7 +107,7 @@ router.put('/profile/me/avatar', authorize, multerUpload.single('image'), async 
 })
 
 /**
- * @api {get} /user/profile/me/:fields 4. Get user profile values
+ * @api {get} /user/profile/me/:fields 5. Get user profile values
  * @apiDescription Get specific fields of a user's profile
  * @apiPermission Token
  * @apiName get_user_profile_values
@@ -114,7 +135,7 @@ router.get('/profile/me/:fields', authorize, async (req, res, next) => {
 })
 
 /**
- * @api {get} /user/profile/:id 5. View other user profile
+ * @api {get} /user/profile/:id 6. View other user profile
  * @apiDescription Get another user's profile information
  * @apiPermission Token
  * @apiName get_user_profile
@@ -146,7 +167,7 @@ router.get('/profile/:id/avatar', async (req, res, next) => {
 })
 
 /**
- * @api {get} /user/nearby/:distance/:page 6. Find nearby tutors
+ * @api {get} /user/nearby/:distance/:page 7. Find nearby tutors
  * @apiDescription Get nearby tutors ordered by distance. Results are paginated, where the next page URL
  * is given in the result if it exists.
  * @apiPermission Token

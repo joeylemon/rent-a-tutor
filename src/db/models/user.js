@@ -51,14 +51,18 @@ export default class User extends Sequelize.Model {
         const latitude = parseFloat(lat)
         if (isNaN(latitude)) { throw new BadRequestError(`${lat} is not a valid latitude value`) }
 
-        this.location = { type: 'Point', coordinates: [latitude, this.location.coordinates[1]] }
+        const longitude = this.location ? this.location.coordinates[1] : 0
+
+        this.location = { type: 'Point', coordinates: [latitude, longitude] }
     }
 
     setLongitude (long) {
         const longitude = parseFloat(long)
         if (isNaN(longitude)) { throw new BadRequestError(`${long} is not a valid longitude value`) }
 
-        this.location = { type: 'Point', coordinates: [this.location.coordinates[0], longitude] }
+        const latitude = this.location ? this.location.coordinates[0] : 0
+
+        this.location = { type: 'Point', coordinates: [latitude, longitude] }
     }
 }
 

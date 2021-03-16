@@ -68,3 +68,21 @@ export async function login (form) {
 
     return getAPIToken(user)
 }
+
+export async function register (form) {
+    validateForm(form, ['email', 'password', 'name', 'city', 'state', 'phone', 'dob', 'genderId', 'roleId'])
+
+    const existingUser = await User.findOne({
+        where: { email: form.email }
+    })
+    if (existingUser) { throw new BadRequestError('email already exists') }
+
+    form.password = await bcrypt.hash(form.password, 10)
+
+    await User.create(form)
+    const newUser = await User.findOne({
+        where: { email: form.email }
+    })
+
+    return getAPIToken(newUser)
+}

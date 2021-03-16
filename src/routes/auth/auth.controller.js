@@ -1,6 +1,5 @@
 import express from 'express'
 import * as AuthService from './auth.service.js'
-import * as UserService from '../user/user.service.js'
 
 const router = express.Router()
 
@@ -21,12 +20,8 @@ const router = express.Router()
  *
  * @apiParam {String} email The user's email
  * @apiParam {String} password The user's password
- * @apiSuccessExample Success Response:
- *     {
- *         "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
- *         "expiration": 1600809341558
- *     }
  *
+ * @apiUse TokenResponse
  * @apiUse BadRequestError
  * @apiUse DatabaseError
  *
@@ -56,13 +51,13 @@ router.post('/login', async (req, res, next) => {
  * @apiParam {String} genderId The user's gender ID
  * @apiParam {String} roleId The user's role ID
  *
- * @apiUse UserReturn
+ * @apiUse TokenResponse
  * @apiUse BadRequestError
  * @apiUse DatabaseError
  */
 router.post('/register', async (req, res, next) => {
     try {
-        res.status(200).json(await UserService.registerUser(req.body))
+        res.status(200).json(await AuthService.register(req.body))
     } catch (err) {
         next(err)
     }

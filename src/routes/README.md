@@ -15,10 +15,11 @@
  - [UserGroup](#UserGroup)
    - [1. Current user profile](#1.-Current-user-profile)
    - [2. Update user profile](#2.-Update-user-profile)
-   - [3. Upload user avatar](#3.-Upload-user-avatar)
-   - [4. Get user profile values](#4.-Get-user-profile-values)
-   - [5. View other user profile](#5.-View-other-user-profile)
-   - [6. Find nearby tutors](#6.-Find-nearby-tutors)
+   - [3. Delete user](#3.-Delete-user)
+   - [4. Upload user avatar](#4.-Upload-user-avatar)
+   - [5. Get user profile values](#5.-Get-user-profile-values)
+   - [6. View other user profile](#6.-View-other-user-profile)
+   - [7. Find nearby tutors](#7.-Find-nearby-tutors)
 
 ___
 
@@ -90,31 +91,8 @@ POST /auth/register
 
 ```json
 {
-    "id": 11,
-    "email": "t@t.com",
-    "name": "Joey",
-    "phone": "6159468534",
-    "dob": "2000-03-24",
-    "city": "Knoxville",
-    "state": "TN",
-    "location": {
-        "type": "Point",
-        "coordinates": [
-            35.9116543,
-            -84.0866346
-        ]
-    },
-    "avatar": "https://jlemon.org/rat/api/v1/user/profile/11/avatar",
-    "createdAt": "2021-02-16T16:27:21.000Z",
-    "updatedAt": "2021-03-04T21:28:26.000Z",
-    "gender": {
-        "id": 1,
-        "name": "Male"
-    },
-    "role": {
-        "id": 2,
-        "name": "Tutor"
-    }
+    "token": "eyJhbGciOiJIUzI.eyJlbWFpbCI6InRlc3RAdGVz._X_oyzQ9Lz-MedQeXUX7LdF",
+    "expiration": 1600809341558
 }
 ```
 
@@ -325,7 +303,45 @@ PUT /user/profile/me
 | BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='3.-Upload-user-avatar'></a> 3. Upload user avatar
+## <a name='3.-Delete-user'></a> 3. Delete user
+[Back to top](#top)
+
+<p>Delete the user's account</p>
+
+```
+DELETE /user/profile/me
+```
+
+### Headers - `Request Headers`
+
+| Name    | Type      | Description                          |
+|---------|-----------|--------------------------------------|
+| Authorization | `String` | <p>The user's API token, set like <code>Authorization: Bearer eyJhbGciOiJIUzI1NiIsIn...</code></p> |
+
+### Success response example
+
+#### Success response example - `Success Response:`
+
+```json
+{
+    "name": "Success",
+    "id": 1,
+    "code": 200,
+    "message": "..."
+}
+```
+
+### Error response
+
+#### Error response - `Error 4xx`
+
+| Name     | Type       | Description                           |
+|----------|------------|---------------------------------------|
+| UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
+| BadRequestError |  | <p>400 - The request has missing or invalid parameters</p> |
+| DatabaseError |  | <p>500 - An error occurred with the database</p> |
+
+## <a name='4.-Upload-user-avatar'></a> 4. Upload user avatar
 [Back to top](#top)
 
 <p>Upload a new image to be the user's avatar</p> <p>Files must be uploaded with the multipart/form-data header. This documentation page is unable to do so, so you can try it out at the <a href="https://jlemon.org/rat/api/v1/docs/multipart.html">multipart/form test page</a></p>
@@ -370,7 +386,7 @@ PUT /user/profile/me/avatar
 | UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='4.-Get-user-profile-values'></a> 4. Get user profile values
+## <a name='5.-Get-user-profile-values'></a> 5. Get user profile values
 [Back to top](#top)
 
 <p>Get specific fields of a user's profile</p>
@@ -413,7 +429,7 @@ GET /user/profile/me/:fields
 | UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='5.-View-other-user-profile'></a> 5. View other user profile
+## <a name='6.-View-other-user-profile'></a> 6. View other user profile
 [Back to top](#top)
 
 <p>Get another user's profile information</p>
@@ -478,7 +494,7 @@ GET /user/profile/:id
 | UnauthorizedError |  | <p>401 - The request presents invalid authentication values</p> |
 | DatabaseError |  | <p>500 - An error occurred with the database</p> |
 
-## <a name='6.-Find-nearby-tutors'></a> 6. Find nearby tutors
+## <a name='7.-Find-nearby-tutors'></a> 7. Find nearby tutors
 [Back to top](#top)
 
 <p>Get nearby tutors ordered by distance. Results are paginated, where the next page URL is given in the result if it exists.</p>

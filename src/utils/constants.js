@@ -4,9 +4,6 @@ import multer from 'multer'
 import fs from 'fs'
 import { randString } from './utils.js'
 
-// The base URL for the API
-export const baseURL = JSON.parse(fs.readFileSync(path.resolve('package.json'))).apidoc.url
-
 // A custom logger
 export const logger = pino()
 
@@ -43,8 +40,11 @@ export const multerUpload = multer({
     }
 })
 
+// The base URL for the API
+export const BASE_URL = JSON.parse(fs.readFileSync(path.resolve('package.json'))).apidoc.url
+
 // The amount of time (in seconds) that an API token will expire after it was issued
-export const API_TOKEN_EXPIRE_TIME = 2592000
+export const API_TOKEN_EXPIRE_TIME = 60 * 60 * 24 * 30
 
 // How many results to include in a paginated endpoint
 export const PAGINATION_PAGE_SIZE = 50
