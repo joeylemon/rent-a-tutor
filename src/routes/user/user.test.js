@@ -1,5 +1,6 @@
 import supertest from 'supertest'
 import should from 'should' // eslint-disable-line no-unused-vars
+import axios from 'axios'
 import { baseURL } from '../../utils/constants.js'
 import { randString } from '../../utils/utils.js'
 
@@ -7,6 +8,7 @@ const api = supertest.agent(baseURL)
 
 describe('User Endpoints', () => {
     let token
+    let userID
 
     // Get an API token before performing tests
     before(done => {
@@ -34,6 +36,7 @@ describe('User Endpoints', () => {
                 res.body.should.have.property('email')
                 res.body.should.have.property('name')
                 res.body.should.have.property('phone')
+                userID = res.body.id
                 done()
             })
             .catch(err => done(err))
@@ -50,15 +53,14 @@ describe('User Endpoints', () => {
             .expect(200)
             .then(res => {
                 res.body.name.toLowerCase().should.equal('success')
-                api.get('/user/profile/me')
+                return api.get('/user/profile/me')
                     .auth(token, { type: 'bearer' })
                     .expect('Content-type', /json/)
                     .expect(200)
-                    .then(res => {
-                        res.body.location.coordinates.should.eql([randLat, randLong])
-                        done()
-                    })
-                    .catch(err => done(err))
+            })
+            .then(res => {
+                res.body.location.coordinates.should.eql([randLat, randLong])
+                done()
             })
             .catch(err => done(err))
     })
@@ -86,16 +88,52 @@ describe('User Endpoints', () => {
             .expect(200)
             .then(res => {
                 res.body.name.toLowerCase().should.equal('success')
-                api.get('/user/profile/me')
+                return api.get('/user/profile/me')
                     .auth(token, { type: 'bearer' })
                     .expect('Content-type', /json/)
                     .expect(200)
-                    .then(res => {
-                        res.body.name.should.eql(randName)
-                        done()
-                    })
-                    .catch(err => done(err))
             })
+            .then(res => {
+                res.body.name.should.eql(randName)
+                done()
+            })
+            .catch(err => done(err))
+    })
+
+    it('should update user avatar', done => {
+        let randImgBuffer
+
+        axios
+            // download random image
+            .get('https://picsum.photos/50', { responseType: 'arraybuffer' })
+
+            // upload the random image as the user avatar
+            .then(res => {
+                randImgBuffer = Buffer.from(res.data, 'binary')
+
+                return api
+                    .put('/user/profile/me/avatar')
+                    .attach('image', randImgBuffer, 'default_avatar.png')
+                    .auth(token, { type: 'bearer' })
+                    .expect('Content-type', /json/)
+                    .expect(200)
+            })
+
+            // download the newly uploaded avatar
+            .then(res => {
+                res.body.name.toLowerCase().should.equal('success')
+
+                return api
+                    .get(`/user/profile/${userID}/avatar`)
+                    .expect(200)
+            })
+
+            // ensure the random image is the same as the avatar
+            .then(res => {
+                Buffer.compare(randImgBuffer, Buffer.from(res.body, 'binary')).should.equal(0)
+                done()
+            })
+
             .catch(err => done(err))
     })
 
