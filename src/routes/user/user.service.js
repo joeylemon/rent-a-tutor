@@ -64,7 +64,7 @@ export async function getNearbyTutors (me, distance, pageNum) {
 
     await me.reload()
 
-    const nearby = await db.query('select u.id, u.name, u.city, u.state, u.dob, g.name as gender, r.name as role, ST_Distance_Sphere(POINT(:latitude, :longitude), u.location) * .000621371192 as distance from user u left join gender g on g.id = u.genderId left join role r on r.id = u.roleId where u.roleId = 2 having distance <= :distance order by distance asc limit :limit offset :offset', {
+    const nearby = await db.query('select u.id, u.name, u.city, u.state, u.dob, null as avatar, g.name as gender, r.name as role, ST_Distance_Sphere(POINT(:latitude, :longitude), u.location) * .000621371192 as distance from user u left join gender g on g.id = u.genderId left join role r on r.id = u.roleId where u.roleId = 2 having distance <= :distance order by distance asc limit :limit offset :offset', {
         model: User,
         mapToModel: true,
         replacements: {
@@ -76,6 +76,10 @@ export async function getNearbyTutors (me, distance, pageNum) {
         }
     })
 
+    // Add avatar url to object
+    for (const u of nearby) { u.avatar = `${BASE_URL}/user/profile/${u.id}/avatar` }
+
+    // Add the next page's URL if there is another page
     const response = { next: null, tutors: nearby }
     if (nearby.length === limit) { response.next = `${BASE_URL}/user/nearby/${distance}/${page + 1}` }
 

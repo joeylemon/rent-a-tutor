@@ -58,7 +58,7 @@ describe('User Endpoints', () => {
         const randLong = Math.floor(Math.random() * 80)
         api
             .put('/user/profile/me')
-            .send({ latitude: `${randLat}`, longitude: `${randLong}` })
+            .send({ latitude: randLat.toString(), longitude: randLong.toString() })
             .auth(token, { type: 'bearer' })
             .expect('Content-type', /json/)
             .expect(200)
