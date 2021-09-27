@@ -1,5 +1,5 @@
 # rent-a-tutor backend
-![Node.js Tests](https://github.com/rent-a-tutor/backend/workflows/Node.js%20Tests/badge.svg)
+![Tests](https://github.com/joeylemon/rent-a-tutor/workflows/Node.js%20Tests/badge.svg)
 
 The Node.js API code to operate the backend of the rent-a-tutor services.
 
